@@ -1,0 +1,37 @@
+01 조건부확률과 Bayes 정리
+<Chapter 1>
+sample space / event / exclusive / probability / conditional probability / law of total probability / Bayes theroem(제거) / binary symmetric channel(제거) / independent
+02 독립사건과 확률
+permutation / group permutation / circular permutation / combination / binomial theorem / Sterling's formula / reliability (제거)
+03 확률변수의 정의
+<Chapter 2> Random Variables
+random variable / events defined by RV / CDF / discrete RV and PMF / dirac delta function
+04 이산확률변수와 연속확률변수
+continuous RV / PDF / example / example(uniform)
+05 확률변수의 평균과 분산
+<Chapter 3> Moments of Random Variables
+expectation / example (Poisson) / example (exponential) / variance / LOTUS / E is linear
+06 조건부 평균
+example(geometric) / insight for mean and variance / conditional expectation(제거) / example(제거) / example(제거) / Chevysev inequality
+07 여러가지 이산확률분포
+<Chapter 4> Special distributions
+Bernoulli distribution / binomial distribution / geometric distrution / memoryless property
+08 지수분포와 어랑분포
+Poisson distribution / exponential distribution / difference and differential equations(제거) / relation between ED and PD / Erlang distribution / gamma function / uniform distrubution
+09 정규분포
+normal distribution / approximation by binomial distribution / error function / Gaussian mixture model / Pascal distribution / moment generating function
+10 다중변수 및 연합분포
+<Chapter 5> Multiple Random Variables
+abstract formulation / example / bivariate CDF / discrete joint distrubution (bivariate PMF) / calculation / example / continuous joint distribution (bivariate PDF) / example / example
+11 연합확률밀도함수와 조건부확률밀도함수
+conditional distribution / example / conditional expectation and variance
+12 조건부 평균과 공분산
+"bivariate expectation의 정의가 없다." / E[Y|X] / example / bivariate LOTUS / bivariate expectation is linear / E[E[X|Y]]=E[X]
+covariance / uncorrelated / Pearson correlation coefficient(rho) / |rho|\le 1 / rho and linear relation
+13 상관계수와 연합확률분포
+meaning of rho / many joint RV / random process / markov process / multinomial distribution / bivariate normal distribution / multivariate normal distribution
+14 확률변수의 변환함수
+affine function(뒤로) / quadratic function(뒤로) / general case (앞으로) / example / LOTUS 증명
+15 연속확률변수의 합과 컨볼루션
+16 이산확률변수의 합과 컨볼루션
+17 두 변수의 변환함수

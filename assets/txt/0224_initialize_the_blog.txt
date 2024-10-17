@@ -1,0 +1,128 @@
+테디노트 동영상
+ - https://www.youtube.com/watch?v=ACzFIAOsfpM
+A to Z GitHub Blog Jekyll minimal mistakes
+ - https://eona1301.github.io/a_to_z/GithubBlog/
+
+재설치 순서
+(1) "C:\GitHub"의 "govin08.github.io" 폴더를 백업해놓고 삭제한다.
+(2) minimal-mistake 복제 <"C//Github", gitbash>
+ $ git clone https://github.com/mmistakes/minimal-mistakes
+ - "minimal-mistakes"라는 이름의 폴더가 생성된다. 이 폴더의 이름을 "govin08.github.io"로 바꾼다.
+(3) 깃허브 repo에 연결 <"C//Github//govin08.github.io", gitbash>
+ ($ git config -l)
+ ($ git remote -v)
+ ($ git remote remove origin)
+ $ git remote add origin https://github.com/govin08/govin08.github.io
+ ($ git remote set-url origin https://github.com/govin08/govin08.github.io)
+ $ git add .
+ $ git commit -m "reinitialized"
+ $ git push -u origin master --force
+(4) 백업한 폴더에서 파일, 폴더 등을 업데이트한다.
+ - "_posts", "_pages", "_data"는 폴더째로 복사한다.
+ - "assets", "images"도 폴더째로 복사한다.
+ - "_config.yml"은 신중을 기해 수정한다. (6)번 항목 참
+ $ git add .
+ $ git commit -m "reinitialized2"
+ $ git push origin master
+(5) 로컬호스트 및 웹에서 잘 동작하는지 확인
+ $ gem install bundler
+ $ (bundle install)
+ $ bundle exec jekyll serve
+ - http://127.0.0.1:4000에 접속하면 로컬호스트에서 잘 동작하는 것을 확인할 수 있다.
+ - https://govin08.github.io에 접속하면 웹에서 잘 동작하는 것을 확인할 수 있다.
+(6) "_config.yml" 설정방법
+[15] EP04
+minimal_mistakes_skin    : "dirt"
+[18] EP04
+locale                   : "ko-KR"
+title                    : "의지와 표상으로서의 수학"
+title_separator          : "|"
+subtitle                 : "The Mathematics as Will and Representation"
+name                     : "Govin"
+description              : "Govin's webpage"
+url                      : "https://govin08.github.io"
+[26] EP04
+repository               : "govin08/govin08.github.io"
+teaser                   : "/assets/images/dim_image.jpg"
+logo                     : "/assets/images/zergling.png"
+[30] EP04
+breadcrumbs              : true
+[32] EP05
+comments:
+  provider               : "disqus"
+  disqus:
+    shortname            : "govin08"
+[97] EP05
+# Analytics
+analytics:
+  provider               : "google-gtag"
+  google:
+    tracking_id          : "G-Q6X61CZRFH"
+    anonymize_ip         : false # true, false (default)
+[105] EP04, EP06
+# Site Author
+author:
+  name             : "sj kim"
+  avatar           : "/assets/logo.ico/android-chrome-192x192.png"
+  bio              : "**수학, 머신러닝, 문학을 좋아합니다.**<br> 소통을 좋아합니다."
+  location         : "Korea"
+  email            : #"govindah08@gmail.com"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:govindah08@gmail.com"
+    - label: #"Website"
+      icon: #"fas fa-fw fa-link"
+      url: #"https://govin08.github.io"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/govin08"
+[123] EP06
+# Site Footer
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/govin08"
+[198] EP06, 에러 발생, 수정하지 않을 것을 권고
+timezone: Asia/Seoul
+[217] EP07(주석 풀기)
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+  layouts:
+    category: archive-taxonomy
+    tag: archive-taxonomy
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
+% "_pages/category-arhchive.md", "_data/navigation.yml"와 연관되어 있음
+
+[254] EP04
+# Defaults
+defaults:
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: false
+      related: false
+      show_date: true
+  - scope:
+      path: "_pages"
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: false
+      related: false
+      show_date: true
+date_format: "%Y-%m-%d"
+

@@ -1,0 +1,14 @@
+주피터 노트북을 마크다운으로 변경
+jupyter nbconvert --output-dir='./_posts' --to markdown assets/ipynb/2023-05-04-genetic_algorithm.ipynb
+
+초안(draft)을 4000 포트에 게시
+bundle exec jekyll serve --draft
+
+preamble
+
+layout: single
+title:  "genetic algorithm으로 시험에서 만점 받기"
+categories: machine_learning
+tag: [genetic algorithm]
+toc: true
+author_profile: false
