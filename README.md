@@ -35,5 +35,6 @@
 ## 수정 (2024. 10. 17)
 이에, 새 repo를 파서 이 repo로 깃헙블로그를 다시 연결시켰다.
 이제 기존 문제가 해결되었고 깃허브 잔디에도 잘 반영된다.
-
-아울러, genetic algorithm, interpolation의 두 글을 가려놓았다.
+기타 변경사항은 다음과 같다.
+- genetic algorithm, interpolation의 두 글을 가려놓았다.
+- [어떤 블로그](https://velog.io/@eona1301/Github-Blog-Jekyll-minimal-mistakes-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0)의 내용을 참고하여 불필요해보이는 파일 및 폴더들을 제거했다.
