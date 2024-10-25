@@ -181,6 +181,23 @@ li ol {
   margin-top: 0.5em;
 }
 
+/* parenthesis list, added in 2024-10-25 */
+
+ol.parenthesis {
+  counter-reset: list;
+  list-style-type: none;
+  // margin-left: 0.5em;  /* 설정가능 */
+  padding-left: 0.5em;  /* 설정가능 */
+}
+
+ol.parenthesis > li {
+  counter-increment: list;
+}
+
+ol.parenthesis > li::before {
+  content: "(" counter(list, lower-alpha) ") ";
+}
+
 /*
    Media and embeds
    ========================================================================== */
