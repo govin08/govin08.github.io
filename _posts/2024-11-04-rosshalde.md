@@ -8,7 +8,7 @@ author_profile: false
 
 # 1. 헤세 소설 읽기
 
-<!-- ![colmena_1]({{site.url}}\images\2024-07-14-cela\front.jpg){: .img-40-center} -->
+![rosshalde_1]({{site.url}}\images\2024-11-04-rosshalde\rosshalde_1.png){: .img-40-center}
 
 올해 5월에 어느 독서모임에 참여하느라 헤세의 「싯달타」를 다시 읽었다.
 그러다 문득, 헤세의 소설들 중 아직 읽지 않은 소설들을 마저 읽고 싶다는 생각이 들었다.
@@ -35,12 +35,14 @@ author_profile: false
 이번에 두 권의 책 「로스할데」와 「게르투르트」를 집어서 읽었다.
 둘다 헤세의 초기 소설들로 「페터 카멘친트」와 「크눌프」에서와 같이 조금 덜 정제되었지만 아름다운 느낌을 주는 소설들이다.
 이제는 열 편의 소설을 읽게 된 것이고 앞으로 두 편을 더 보면 헤세의 모든 장편소설을 읽은 셈이 된다.
-물론, 헤세가 쓴 단편소설집들과 산문집, 시집들은 거의 읽은 게 없기도 하고, 「페터 카멘친트」나 「황야의 이리」 같은 소설들은 읽은지 너무 오래되어서 큰 의미가 있다고도 생각이 되지 않기 때문에 아직 갈 길이 멀기는 하다.
+물론, 헤세가 쓴 단편소설집들과 산문집, 시집들은 거의 읽은 게 없기도 하고, 「페터 카멘친트」나 「황야의 이리」 같은 소설들은 읽은지 너무 오래되어서 큰 의미가 있다고 생각되지 않기 때문에 아직 갈 길이 멀기는 하다.
 그래도 *헤세의 소설을 다 봤다*는 사실 자체는 뿌듯할 것 같다.
 다만 목표가 얼마 남지 않았다고 하여 서두르고 싶지는 않다.
 이럴 때일수록 조금 더 천천히 생각하고 찬찬히 읽을 필요가 있다.
 
 # 2. 예술가가 등장하는 소설들
+
+![rosshalde_2]({{site.url}}\images\2024-11-04-rosshalde\rosshalde_2.png){: .img-40-center}
 
 가장 좋아하는 작가가 헤세이다보니, 어느덧 나만의 헤세론(Hesse 論)이 생겼다.
 즉, 내가 생각하기로, 헤세의 소설들은 다음과 같은 세가지 특징이 있다고 생각된다.
@@ -76,6 +78,8 @@ author_profile: false
 그러니 예술에 대한 헤세의 조예와 관심이 남달랐을 것이고 소설 속에서 예술을 업으로 하는 인물들이 자주 나오는 게 아닌가 싶다.
 
 # 3. 「로스할데」
+
+![rosshalde_3]({{site.url}}\images\2024-11-04-rosshalde\rosshalde_3.png){: .img-40-center}
 
 200페이지 남짓의 「로스할데」는 이야기의 줄기가 그렇게까지 뚜렷하지는 않은 소설이다.
 사건이라고 할만한 것이 그렇게 많지 않은, 그래서 그런 면에서는 조금 심심할 수 있는 소설이다.
@@ -185,6 +189,8 @@ author_profile: false
 피에르의 장례를 치른 후 페라구트가 아델레와 알베르트에게 작별인사를 하는 것으로 소설은 끝난다.
 
 # 4. 감상
+
+![rosshalde_4]({{site.url}}\images\2024-11-04-rosshalde\rosshalde_4.png){: .img-40-center}
 
 ## 4.1 헤세와 마리아
 
@@ -446,7 +452,7 @@ author_profile: false
 > 그리고 이 귀중한 시간을 단 한순간이라도 헛되이 보내지 않으리라 굳게 다짐했다.
 
 - 소설 정보
-  - 책이름 : [「로스할데」](https://www.hdmh.co.kr/front/book/bookDetail?idx=2326)
+  - 책이름 : [「로스할데」](https://www.hdmh.co.kr/front/book/bookDetail?idx=2326){:target="_blank"}
   - 작가 : 헤르만 헤세
   - 출판사 : 현대문학
   - 최초출판연도 : 1914년
@@ -455,6 +461,6 @@ author_profile: false
 - 참고자료
   - [「로스할데」](https://www.yes24.com/Product/Goods/8964318), 헤르만 헤세, 현대문학, 2013
   - [Wikipedia : Hermann Hesse](https://en.wikipedia.org/wiki/Hermann_Hesse){:target="_blank"}
-  - [「Demian」](https://www.amazon.com/Demian-Perennial-Classics-Hermann-Hesse/dp/B006TQVKDA){:target="_blank"} , Hermann Hesse, Harper Perennial, 1999
-  - [「클링조어의 마지막 여름」](https://www.yes24.com/Product/Goods/3619028), 헤르만 헤세, 민음사, 2009
+  - [「Demian」](https://www.amazon.com/Demian-Perennial-Classics-Hermann-Hesse/dp/B006TQVKDA){:target="_blank"}, Hermann Hesse, Harper Perennial, 1999
+  - [「클링조어의 마지막 여름」](https://www.yes24.com/Product/Goods/3619028){:target="_blank"}, 헤르만 헤세, 민음사, 2009
   - 소담출판사의 헤세 소설들 : 「수레바퀴아래서」, 「데미안」, 「크눌프, 그 삶의 세 이야기」, 「싯달타」, 「지와 사랑」
