@@ -461,6 +461,7 @@ author_profile: false
   - 최초출판연도 : 1914년
 - 그림 출처
   - [playground AI](https://playground.com/){:target="_blank"}
+  - chatGPT
 - 참고자료
   - [「로스할데」](https://www.yes24.com/Product/Goods/8964318), 헤르만 헤세, 현대문학, 2013
   - [Wikipedia : Hermann Hesse](https://en.wikipedia.org/wiki/Hermann_Hesse){:target="_blank"}
