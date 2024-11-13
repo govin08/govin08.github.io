@@ -37,14 +37,14 @@ $$S=\{x:(x,y)\in R\}\times\{y:(x,y)\in R\}$$
 말이 복잡하다.
 그냥 그림으로 보면 쉽다.
 
-![alt text]({{site.url}}\images\2024-11-13-rectangle_rotation\rectangle_rotation.png){: .img-50-center}
+![alt text]({{site.url}}\images\2024-11-13-rectangle_rotation\rectangle_rotation.png){: .img-30-center}
 
-위 그림에서 직사각형 $R=\square ABCD$가 $xy$평면 위에 있고, 이 직사각형의 $x$축 기준으로의 최솟값이 $D$에서 최댓값이 $B$에서 발생하고, $y$축 기준으로의 최솟값이 $A$에서 최댓값이 $C$에서 발생하고 있으니, $B$와 $D$를 각각 지나는 수직선과 $A$와 $C$를 각각 지나는 수평선을 그어서 만들어지는 새로운 직사각형 $S=\square EFGH$를 생각했을 때, 이 $S$의 넓이는 언제 최대가 되며, 최댓값은 얼마인가?
+위 그림에서 직사각형 $R=\square ABCD$의 $x$축 기준으로의 최솟값이 $D$에서 최댓값이 $B$에서 발생하고, $y$축 기준으로의 최솟값이 $A$에서 최댓값이 $C$에서 발생하고 있으니, $B$와 $D$를 각각 지나는 수직선과 $A$와 $C$를 각각 지나는 수평선을 그어서 만들어지는 새로운 직사각형 $S=\square EFGH$를 생각했을 때, 이 $S$의 넓이는 언제 최대가 되며, 최댓값은 얼마인가?
 
 # 2. 풀이
 
 당연히, 문제는 각도 $\angle BAF$를 $\theta$로 두어 접근할 수 있고, 일반성을 잃지 않고 $0\le\theta\le\frac\pi2$라고 가정할 수 있다.
-문제를 풀기 전에 생각해보면, 당연히 $\theta=\frac\pi4$인 경우에 최댓값이 되지 않을까, 하고 생각해볼 수 있다.
+문제를 풀기 전에 생각해보면, 당연하게도 $\theta=\frac\pi4$인 경우에 최댓값이 되지 않을까, 하고 생각해볼 수 있다.
 그럼 왜 그때 최대가 되며, 그 의미는 무엇일지.
 
 주어진 $\theta$의 범위에서 $S$의 두 변의 길이는
@@ -133,9 +133,12 @@ EH
 $$
 
 가 된다.
-재밌는건, $\angle CAB$는 $\phi$와 같다고 볼 수 있으니까, 선분 $AC$와 각도 $\angle CAF$를 통해 보면 그림으로부터 $EH=\sqrt{a^2+b^2}\sin(\theta+\phi)$이 명확하다는 거다.
+재밌는건, $\angle CAB$는 $\phi$와 같다고 볼 수 있으니까, 선분 $AC$와 각도 $\angle CAF$를 통해 보면 그림으로부터 $EH=\sqrt{a^2+b^2}\sin(\theta+\phi)$라는 식이 명확하다는 거다.
 $EF$도 마찬가지다.
-여하튼, $A(\theta)$는
+
+![alt text]({{site.url}}\images\2024-11-13-rectangle_rotation\rectangle_rotation_2.png){: .img-30-center}
+
+여하튼, 그러면
 
 $$
 \begin{align*}
@@ -158,3 +161,8 @@ A\left(\frac\pi4\right)
 $$
 
 이 되어 이전 결과와 일치한다.
+
+## P.S.
+
+이 블로그의 단점 중 하나는, 최근 포스트만 너무 강조되어 표시된다는 거다.
+아직 Fourier Analysis의 A1과 2단원의 내용을 다 쓰지 못했는데, 도중에 다른 글을 써버리면 이전 글이 묻혀버리는 것 같은 느낌이 들어 아쉽다.
