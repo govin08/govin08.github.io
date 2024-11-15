@@ -39,7 +39,9 @@ $$S=\{x:(x,y)\in R\}\times\{y:(x,y)\in R\}$$
 
 ![alt text]({{site.url}}\images\2024-11-13-rectangle_rotation\rectangle_rotation.png){: .img-30-center}
 
+<div class="notice--info" markdown="1">
 위 그림에서 직사각형 $R=\square ABCD$의 $x$축 기준으로의 최솟값이 $D$에서 최댓값이 $B$에서 발생하고, $y$축 기준으로의 최솟값이 $A$에서 최댓값이 $C$에서 발생하고 있으니, $B$와 $D$를 각각 지나는 수직선과 $A$와 $C$를 각각 지나는 수평선을 그어서 만들어지는 새로운 직사각형 $S=\square EFGH$를 생각했을 때, 이 $S$의 넓이는 언제 최대가 되며, 최댓값은 얼마인가?
+</div>
 
 # 2. 풀이
 
