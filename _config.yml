@@ -87,7 +87,7 @@ author:
   name             : "sj kim"
   avatar           : "/assets/images/logo2.png"
   bio              : "**수학**, **머신러닝**, **소설**을 좋아합니다."
-  location         : "Korea"
+  # location         : "Korea"
   # email            : "govindah08@gmail.com"
   links:
     - label: "Email"
@@ -96,6 +96,10 @@ author:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/govin08"
+    - label: "Korea"
+      icon: "fas fa-fw fa-map-marker-alt"
+      url: "https://www.google.com/maps?q=dobong_gu"
+
 
 
 # Site Footer
