@@ -152,7 +152,7 @@ author_profile: false
 
 ## 8.11 작가는 글을 쓰면서 얻는 보상은 망각이다. (p. 295)
 
-> 작가의 삶이란 가시밭길이다. 우선 가난과 세상의 냉대를 견뎌야 한다. 어느 정도 성공을 거두고 나서는 살얼음판을 걸어야 한다. 그리고 변덕스러운 대중에 휘둘린다. // 작가를 흔드는 인간들은 수두룩하다. ... 하지만 작가는 한 가지 보상을 얻는다. 뭔가 마음에 맺힌 것이 있다면 괴로운 기억, 친구를 저세상으로 떠나보낸 슬픔, 짝사랑, 상처받은 자존심, 배은망덕한 인간에 대한 분노, 어떤 감정이든, 어떤 번뇌든 그저 글로 풀어 버리기만 하면 된다. 그걸 소설의 주제로, 수필의 소재로 활용하면 모든 것을 잊을 수 있다. 작가는 유일한 자유인이다.
+> 작가의 삶이란 가시밭길이다. 우선 가난과 세상의 냉대를 견뎌야 한다. 어느 정도 성공을 거두고 나서는 살얼음판을 걸어야 한다. 그리고 변덕스러운 대중에 휘둘린다. 작가를 흔드는 인간들은 수두룩하다. ... 하지만 작가는 한 가지 보상을 얻는다. 뭔가 마음에 맺힌 것이 있다면 괴로운 기억, 친구를 저세상으로 떠나보낸 슬픔, 짝사랑, 상처받은 자존심, 배은망덕한 인간에 대한 분노, 어떤 감정이든, 어떤 번뇌든 그저 글로 풀어 버리기만 하면 된다. 그걸 소설의 주제로, 수필의 소재로 활용하면 모든 것을 잊을 수 있다. 작가는 유일한 자유인이다.
 > I began to meditate upon the writer's life. It is full of tribulation. First he must endure poverty and the world's indifference; then, having achieved a measure of success, he must submit with a good grace to its hazards. He depends upon a fickle public. ... But he has one compensation. Whenever he has anything on his mind, whether it be a harassing reflection, grief at the death of a friend, unrequited love, wounded pride, anger at the treachery of someone to whom he has shown kindness, in short any emotion or any perplexing thought, he has only to put it down in black and white, using it as the theme of a story or the decoration of an essay, to forget all about it. He is the only free man.
 
 # 참고한 자료들
