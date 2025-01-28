@@ -1,3 +1,11 @@
+---
+layout: single
+title:  "서머싯 몸 - 「케이크와 맥주」"
+categories: literature
+tags: [maugham]
+author_profile: false
+---
+
 지난 주 목요일(1/23)에 있었던 「케이크와 맥주」 지정도서 모임 후기입니다.
 
 # 1. 책 선정 계기
