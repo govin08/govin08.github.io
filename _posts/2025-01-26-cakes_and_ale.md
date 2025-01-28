@@ -6,6 +6,8 @@ tags: [maugham]
 author_profile: false
 ---
 
+![cakes_and_ale]({{site.url}}\images\2024-12-26-maugham\cakes_and_ale.jpg){: .img-40-center}
+
 # 0. 지정도서모임 주관
 
 평소에 책읽는 걸 좋아하고 또 독서모임에 참여하는 것도 좋아하지만, 직접 모임을 열어본 적은 거의 없었다.
@@ -14,7 +16,7 @@ author_profile: false
 
 작년 말, 「달과 6펜스」를 읽으면서 서머싯 몸이 쓴 다른 책이 무엇이 있을지 살폈다.
 「인간의 굴레에서」, 「면도날」 등이 유명하다는 것은 알고 있었으나 「케이크와 맥주」는 처음 들어보는 책이었다.
-제목이 조금 귀여워서 눈이 가기도 했다.
+제목이 귀여운데다 표지가 예뻐서 눈이 가기도 했다.
 이후 구글에 간단히 검색해봤는데, '토머스 하디를 비판한 소설'이라는 수식어가 눈에 띄었다.
 
 토머스 하디라면 재작년(2023)에 열심히 읽었던 기억이 있다.
@@ -231,11 +233,11 @@ Canada Gutenberg project에서 서머싯 몸의 책에 대한 원문을 무상�
 > 
 > I began to meditate upon the writer's life. It is full of tribulation. First he must endure poverty and the world's indifference; then, having achieved a measure of success, he must submit with a good grace to its hazards. He depends upon a fickle public. ... But he has one compensation. Whenever he has anything on his mind, whether it be a harassing reflection, grief at the death of a friend, unrequited love, wounded pride, anger at the treachery of someone to whom he has shown kindness, in short any emotion or any perplexing thought, he has only to put it down in black and white, using it as the theme of a story or the decoration of an essay, to forget all about it. He is the only free man.
 
-<!-- # 9. 후기
+# 9. 후기
 
 개인적으로는 이 소설이 참 재미있었습니다. 마치 래퍼들이 디스전을 벌이듯, 선대의 작가 토머스 하디와 동시대 작가 휴 월폴을 비판하는 서머싯 몸의 태도가 참 재미있었습니다. '인지'가 있으면 '메타인지'가 있듯, 물리physics가 있으면 메타물리metaphysics가 있고 논리학logic이 있으면 메타논리학metalogic이 있듯, 이 소설은 마치 '메타문학meta-literature'과 같은 소설이 아니었나, 그래서 더 재밌지 않았나 하는 생각이었습니다.
 
-처음 주최한 모임이라 미숙한 점이 많았는데, 참석해주신 분들이 그 빈자리를 잘 채워주신 것 같아서 감사했습니다.
+<!-- 처음 주최한 모임이라 미숙한 점이 많았는데, 참석해주신 분들이 그 빈자리를 잘 채워주신 것 같아서 감사했습니다.
 주최해주시는 분들에 대한 고마움을 다시 한 번 느끼게 됩니다.
 
 참석해주신 모든 분들 감사했습니다. -->
