@@ -467,7 +467,7 @@ $$
 
 그렇게 해서 얻어진 augmented matrix의 왼쪽행렬은 아까처럼 항등행렬은 아니다.
 대신 reduced row echelon form(RREF)이 되었다.
-RREF는 해를 확정적으로 구할 수 없는 상태에서 얻을 수 있는 최선이다.
+RREF는, 비가역행렬을 row operation으로 항등행렬을 바꿀 수 없는 상태에서 얻을 수 있는 최선이다.
 이 augmented matrix를 연립방정식의 형태로 다시 써보면
 
 $$
