@@ -58,7 +58,7 @@ $$n^\perp=\{(x,y,z):ax+by+cz=0\}$$
 또한, 일차연립방정식의 해를 구한다는 것은 아핀공간들의 교집합을 구한다는 것이다.
 그런데 아핀 공간들의 교집합은 여전히 아핀공간이므로 ([증명생략](https://math.stackexchange.com/q/297201)) 연립방정식의 해는 항상 아핀공간을 이루게 된다.
 
-# 2. 일차연립방정식
+# 2. 일차연립방정식 (가우스 소거법)
 
 ## 2.1 변수 2개, 식 2개
 
@@ -419,8 +419,8 @@ $$
 
 은 변수가 세 개이고 식이 두 개이다.
 그러면 연립방정식이 풀리지 않는다.
-즉, $x$, $y$, $z$를 deterministic하게 확정하는 것이 불가능하다.
-왜나하면, 삼차원 평면에서 두 평면이 만나는 도형은 일반적으로 직선(교선)이 될 것이기 때문이다.
+즉, $x$, $y$, $z$를 deterministic하게 확정하는 것이 불가능한 부정不定 연립방정식이다.
+기하학적으로 봐도, 삼차원 공간에서 두 평면이 만나는 도형은 일반적으로 직선(교선)이 될 것이다.
 하지만 지금까지 하던 대로 gauss elimination을 해보면 의미있는 결과를 얻을 수 있다.
 즉, 직선(affine space)을 효율적으로 묘사할 수 있는 표현식을 찾을 수 있다.
 
@@ -490,15 +490,29 @@ A
 &=\left\{\left(\frac23z+\frac43,\frac83z-\frac{11}3,z\right):z\in\mathbb R\right\}\\
 &=\left\{z\left(\frac23,\frac83,1\right)+\left(\frac43,-\frac{11}3,0\right):z\in\mathbb R\right\}\\
 &=\left(\frac43,-\frac{11}3,0\right) + \left\langle\left(\frac23,\frac83,1\right)\right\rangle\\
-&=\left(\frac43,-\frac{11}3,0\right) + \left\langle\left(2,8,3\right)\right\rangle\\
-&=(2,-1,1) + \langle(2,8,3)\rangle\\
+% &=\left(\frac43,-\frac{11}3,0\right) + \left\langle\left(2,8,3\right)\right\rangle
+% &=(2,-1,1) + \langle(2,8,3)\rangle\\
 \end{align*}
 $$
 
 이 된다.
 이때 $\left\langle\left(\frac23,\frac83,1\right)\right\rangle\$는 벡터 $\left(\frac23,\frac83,1\right)$의 span이다.
 즉 해당 벡터를 basis로 하는 일차원 부분공간을 뜻한다.
-위 계산의 마지막에서 $v+W$가 affine space이고 $w\in W$이면 $v+W=(v+w)+W$임을 활용했고, 이때 $w=\frac13(2,8,3)$으로 두었다.
+따라서, $A$는 3차원 공간 상에서 점 $\left(\frac43,-\frac{11}3,0\right)$를 지나고 방향벡터가 $\left(\frac23,\frac83,1\right)$인 직선이다.
+
+원래의 연립방정식은 $(x,y,z)=(2,-1,1)$을 하나의 해로 가진다.
+이번에는 해공간 $A$의 표현식으로 해당 근이 표현될 수 있는지를 살펴보려 한다.
+해공간 $A$의 한 원소 $a$는
+
+$$a=\left(\frac43,-\frac{11}3,0\right)+z\left(\frac23,\frac83,1\right)$$
+
+와 같이 표현될 수 있는데 여기에 $z=1$을 대입하면 $a=(2,-1,1)$이 구해진다.
+더 나아가, $v+W$가 affine space이고 $w\in v+W$이면 $v+W=w+W$임을 활용하여 $A$를
+
+$$A=(2,-1,1) + \langle(2,8,3)\rangle$$
+
+로 간단히 표현할 수도 있다.
+이때 subspace의 basis vector 또한 적당히 실수배하여 간단한 형태로 바꿨다.
 따라서 $A$는 일차원 affine space가 된다.
 즉, 이것은 점 $(2,-1,1)$을 지나고 벡터 $(2,8,3)$의 방향을 향하는 직선이다.
 
@@ -571,12 +585,13 @@ R_1 \leftarrow R_1+\frac12R_2\\
 $$
 
 이다.
+이번에도 RREF가 얻어졌다.
 따라서
 
 $$
 \begin{align*}
 x&&&&-\frac1{10}z-\frac15w&=\frac45\\
-&&y&&-\frac{11}5z-\frac75w&=-\frac{22}3
+&&y&&-\frac{11}5z-\frac75w&=-\frac{22}5
 \end{align*}
 $$
 
@@ -586,20 +601,31 @@ $$
 \begin{align*}
 A
 &=\left\{(x,y,z,w):2x-y+2z+w=6,6x+2y-5z-4w=-4\right\}\\
-&=\left\{(x,y,z,w):x=\frac1{10}z+\frac15w+\frac45,y=\frac{11}5z+\frac75w-\frac{22}3\right\}\\
-&=\left(\frac45,-\frac{22}3,0,0\right)
+&=\left\{(x,y,z,w):x=\frac1{10}z+\frac15w+\frac45,y=\frac{11}5z+\frac75w-\frac{22}5\right\}\\
+&=\left(\frac45,-\frac{22}5,0,0\right)
     +\left\langle\left(\frac1{10},\frac{11}5,1,0\right),
     \left(\frac15,\frac75,0,1\right)\right\rangle\\
-&=\left(\frac45,-\frac{22}3,0,0\right)
-    +\left\langle\left(1,22,10,0\right),
-    \left(1,7,0,5\right)\right\rangle
+% &=\left(\frac45,-\frac{22}5,0,0\right)
+%     +\left\langle\left(1,22,10,0\right),
+%     \left(1,7,0,5\right)\right\rangle
 \end{align*}
 $$
-<!-- (1, 3, 4, -1) -->
 
 이 된다.
-따라서, $A$는 4차원 공간 상에서 $\left(\frac45,-\frac{22}3,0,0\right)$를 지나고 두 벡터 $(1,22,10,0)$, $(1,7,0,5)$를 basis로 하는 평면이다.
+따라서, $A$는 4차원 공간 상에서 점 $\left(\frac45,-\frac{22}5,0,0\right)$를 지나고 두 벡터 $\left(\frac1{10},\frac{11}5,1,0\right)$, $\left(\frac15,\frac75,0,1\right)$를 basis로 하는 평면이다.
 
+실제로 $(x,y,z,w)=(1,3,4,-1)$는 연립방정식의 한 근인데 $A$의 한 원소 $a$의 표현식
+
+$$a = \left(\frac45,-\frac{22}5,0,0\right)+z\left(\frac1{10},\frac{11}5,1,0\right)+w\left(\frac15,\frac75,0,1\right)$$
+
+에 $z=4$, $w=-1$을 대입하면 $a=(1,3,4,-1)$이 얻어진다.
+그러면, $A$ 또한 더 간단한 형태인
+
+$$
+A=(1,3,4,-1) +\langle(1,22,10,0), (1,7,0,5)\rangle
+$$
+
+으로 쓸 수도 있고, $A$를 점 $(1,3,4,-1)$을 지나고 두 벡터 $(1,22,10,0)$, $(1,7,0,5)$를 basis로 하는 평면이라고 말할 수도 있을 것이다.
 
 # 3. code implementation
 
@@ -607,7 +633,7 @@ $$
 그래서 그런지 `numpy`나 `scipy`에서 가우스 소거법을 말그대로 실행하는 코드는 찾지 못했다.
 연립방정식을 '푸는' 메소드 `numpy.linalg.solve(a,b)`는 있어도 가우스 소거법의 각 과정을 학습 목적상으로 구현해주는 코드는 없어 보이는 것이다.
 그러니까, 어떤 연립방정식이 주어졌을 때 그 연립방정식에 대해 가우스 소거법을 적용한 결과인 augmented matrix 형태를 얻을 수 있다면 참 좋겠는데, 그런 것을 제공하는 라이브러리는 못찾겠다.
-아마도 `numpy.linalg.solve` 내에 가우스 소거법이 들어가있겠지만, trivial한 경우 (해집합이 공집합이거나 무한집합인 경우)에 대해서는 오류를 낼 뿐이지 affine space의 단초가 되는 augmented matrix를 결과로 도출하지는 않는 것이다.
+아마도 `numpy.linalg.solve` 내에 가우스 소거법이 들어가있겠지만, trivial한 경우 (해집합이 공집합이거나 무한집합인 경우)에 대해서는 예외처리되어 별도의 메시지를 낼 뿐이지 affine space의 단초가 되는 augmented matrix를 결과로 도출하지는 않는 것이다.
 
 물론, 그렇게 어려운 알고리즘이 아니니 직접 구현할 수도 있을 것이다.
 [`geeksforgeeks`](https://www.geeksforgeeks.org/dsa/gaussian-elimination/)에 보니 가우스 소거법 코드가 있다.
@@ -667,10 +693,10 @@ gaussianElimination(mat)
 DDPG를 공부해야 한다면, 나는 공부할 수 있을 수도 있다.
 말하자면, 내 이해력은 그래도 충분할 지도 모르는 것이다.
 하지만 실제로 내가 그것을 해낼 수 있을지, 아니면 해내게 될는지 하는 것은 모르는 일이다.
-이제껏 많은 이해해야 하는 것들을 이해하지 못한 경우와 해내야 하는 것을 해내지 못한 경우가 수두룩했으니.
+이제껏 이해해야 하는 것들을 이해하지 못한 경우와 해내야 하는 것을 해내지 못한 경우가 수두룩했으니.
 DDPG를 '구현'해내기까지 해야 한다면 더 열심히 해야 하는 부분이 있다.
 
-하지만, '열심히' 한다는 것과 '원리를 이해'하는 것은, 부차적인 문제가 되어야 한다는 것이다.
+하지만, '열심히' 한다는 것과 '원리를 이해'하는 것은, 부차적인 문제가 되어야 한다.
 중요한 것은 해당되는 일에 몰입할 수 있는 환경과 마음상태를 조성하는 것이다.
 그것이 갖춰지고 나면, 나는 열심히 하는 사람이고 또 원리를 이해하려고 하는 사람이라고 생각한다.
 나는 여건이 갖춰지면 가치있는 무언가를 만들어내는 사람이라고 생각한다.
