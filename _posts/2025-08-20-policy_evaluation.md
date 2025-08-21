@@ -16,11 +16,12 @@ toc: true
 그리고 Sutton 책에서는 Dynamic Programming도 RL의 맥락 속에 포함되어 있다.
 
 이전에 공부했을 때처럼 2장의 Multi Armed Bandit은 읽지 않았다.
-Sarsa와 Q-learning을 보려면 6장의 Temporal-Difference Learning을 알아야해서 여기부터 읽어보니, 어느 정도 잘 읽혔다.
-사실 이전에는 TD라는 것의 의미 자체를 이해하지 못했는데, 이번에는 이해하게 되었다.
+SARSA와 Q-learning을 보려면 6장의 Temporal-Difference Learning을 알아야해서 여기부터 읽어보니, 어느 정도 잘 읽혔다.
+사실 이전에는 TD라는 것의 의미 자체를 이해하지 못했는데, 이번에는 이해하게 되었고 SARSA와 Q-learing도 이해하게 되었다.
 TD가 dynamic programing과 Monte Carlo의 절충이라고 할 때, 그렇다면 그 둘도 알아야 할텐데, MC는 별로 보기가 싫어서 DP를 먼저 보았다.
 즉, 4장의 Dynamic Programming을 읽었다.
-그리고 거의 다 아는 내용일지언정, 배경지식을 알아야 하니 3장도 쭉 다 읽었다.
+(나중에 3장 Monte Carlo Simulation도 다 읽었다.)
+그리고 거의 다 아는 내용일지언정, 배경지식을 알아야 하니 3장 Finite Markov Decision Process도 쭉 다 읽었다.
 3장에서는 늘 그렇듯 가장 중요하면서 조금 어려운 것이 Bellman equation 네 개 (v, q, optimal v, optimal q)인데 그걸 다시 보았다.
 다 이해하지는 못했고, 그래도 (ordinary) Bellman equation 두 개는 이해했다.
 
