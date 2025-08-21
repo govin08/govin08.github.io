@@ -2,7 +2,7 @@
 layout: single
 title: "Policy Evaluation과 Contraction Principle"
 categories: machine learning
-tags: [linear algebra, matrix]
+tags: [reinforcement learing, dynamic programming, Bellman equation, policy evaluation, contraction principle, fixed point]
 use_math: true
 publish: false
 author_profile: false
