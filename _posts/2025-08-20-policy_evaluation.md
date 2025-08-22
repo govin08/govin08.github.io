@@ -68,7 +68,7 @@ $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots\tag{3.1}$$
 
 로 정의되는데 이때, $S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_t\in\mathcal R$이고 state space $\mathcal S$, action space $\mathcal A$, reward space $\mathcal R\subset\mathbb R$이 모두 유한집합이다.
 이 확률변수들의 나열을 trajectory라고도 한다.
-그리고 Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
+Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
 즉,
 
 $$
@@ -105,7 +105,7 @@ $$
 나같으면 식 (3.4)와 비슷하게 쓰기 위해
 
 $$
-p(r|s,a)=&= P\left\{R_{t+1}=r|S_{t-1}=s,A_{t-1}=a\right\}
+p(r|s,a)= P\left\{R_{t+1}=r|S_{t-1}=s,A_{t-1}=a\right\}
 $$
 
 라고 쓸 것 같고, 이게 (3.5)보다 일반적인 식이 될 것이다.
@@ -121,6 +121,7 @@ $$s'=f(s,a)$$
 그리고 정말 많은 강화학습 상황에서 이렇게 next state가 deterministic하게 주어지지, (3.4)에서처럼 stochastic하게 주어지지 않을 수도 있다.
 
 강화학습의 목적은 reward들의 cumulative sum $G_t$가 최대가 되도록 하는 것이다.
+$G_t$를 return이라고 부른다.
 trajectory는 일반적으로 끝날 수도 있고 (episodic task) 끝나지 않을 수도 있는데, 따라서 $G_t$는
 
 $$G_t=R_{t+1}+R_{t+2}+\cdots+R_T\tag{3.7}$$
@@ -140,4 +141,28 @@ $$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
 discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
 어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
 
-# 2. value function과 Bellman equation
+# 2. policy, value function, Bellman equation
+
+transition dynamics 혹은 환경모델은 환경이 어떻게 구성되어있느냐를 나타낸다.
+$S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준다.
+그렇다면 이것으로 식 (3.1)의 trajectory가 완전히 결정될 수는 없다.
+즉, $S_t$가 주어졌을 때 $A_t$가 어떻게 결정될 것인가 하는 문제가 남는다.
+이것을 결정하는 것이 정책(policy)이다.
+
+transition dynamics가 환경이 어떻게 변화하느냐 하는 것을 나타낸다면, policy는 agent가 주어진 상태에 대해 어떤 행동을 취할것이냐 하는 것을 나타낸다.
+policy $\pi$는 일반적으로 다음과 같이 조건부 확률
+
+$$\pi(a|s)=P\left\{A_t=a|S_t=s\right\}$$
+
+로 나타나고 다시 말해 $\pi(\cdot|s)$는 주어진 state $s$에 대한 action의 확률분포를 의미한다.
+이런 식의 stochastic policy가 일반적이지만, 좀 더 간단하게는 deterministic하게 action이 결정된다고 가정할 수도 있다.
+특히 DPG, DDPG에서 이러한 determistic한 policy가 쓰이는데, 이때는 $\pi$ 대신 $\mu$를 써서
+
+$$a=\mu(s)$$
+
+라는 notation을 썼던 것 같다.
+
+환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, trajectory 전체가 이론적으로는 모든 가능성이 확률적으로 결정된다.
+그러면 어떤 시점 $t$에서 $G_t$ 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
+이것을 value function이라고 하며, 즉 state만 인자로 받는 state-value-function $v(s)$과 state과 action 두 개를 인자로 받는 action-value-function $q(s,a)$이 있다.
+정확한 의미로 $q$는 $state-action-value-function$이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
