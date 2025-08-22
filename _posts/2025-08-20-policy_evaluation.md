@@ -54,3 +54,90 @@ Munkres의 책에서는 꼭 metric space일 필요가 없는 상황에서 특정
 해야 하는 일이 지극히 공학적이고 실용적이며 불가능에 가까워보이는 일인 것에 비해, 내가 관심을 가지는 것은 수학적이고 추상적이며 확실히 알 수 있는 것이라고 한다면, 그 간극에서 발생하는 부조리는 어쩌면 까뮈적인 부조리가 아닐까.
 따라서 블로그에 이런 글을 쓰는 것은 내 나름대로의 반항에 해당한다.
 쉬거나 취미생활을 하는 시간이 거의 없는 일상에서 어떻게든 수학 글을 써내려가는 것은, 어떻게든 내 일의 가치를 부여하고 싶은 내 나름대로의 까뮈적인 반항이다.
+
+# 1. Finite Markov Decision Process
+
+Sutton의 3장에는 Finite MDP에 대한 내용이 나온다.
+책을 읽어가면서 주요 식들은 책에서의 식번호와 같이 표기하려 한다.
+
+수학에서 확률과정(random process, stochastic process)이란, 확률변수들의 나열이다.
+혹은 collection of random variables라고 할 수도 있다.
+Finite MDP 또한 확률과정의 일종으로 Markov property를 만족시키는 다음과 같은 확률변수들의 나열
+
+$$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots\tag{3.1}$$
+
+로 정의되는데 이때, $S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_t\in\mathcal R$이고 state space $\mathcal S$, action space $\mathcal A$, reward space $\mathcal R\subset\mathbb R$이 모두 유한집합이다.
+이 확률변수들의 나열을 trajectory라고도 한다.
+그리고 Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
+즉,
+
+$$
+\begin{align*}
+&P\left\{S_t=s_t, R_t=r_t|\cdots, S_{t-2}=s_{t-2}, A_{t-2}=a_{t-2}, R_{t-1}=r_{t-1}, S_t=s_t, A_t=a_t\right\}\\
+=
+&P\left\{S_t=s_t, R_t=r_t|S_t=s_t, A_t=a_t\right\}
+\end{align*}
+$$
+
+임을 뜻한다.
+그 전에 어떤 과정을 거쳤건 간에, 다음 state과 reward를 예측하는 데에는 오로지 이전의 state와 action만이 영향을 미친다.
+그렇다면 위 식의 우변에 해당하는 확률식은 이 MDP를 characterize하는 아주 중요한 값이 된다.
+책에서의 식으로 쓰면
+
+$$p(s',r|s,a)=P\left\{S_t=s',R_t=r|S_{t-1}=s,A_{t-1}=a\right\}\tag{3.2}$$
+
+이 값은 transition dynamics라고 불린다.
+ <!-- (혹은 이 값보다는 덜 일반적인, 뒤에 나올 두 식 (3.4), (3.5)는) 여러 이름으로 불린다. -->
+<!-- transition dynamics,  model function of environment 등의 이름이 있다. -->
+실제로는, 위와 같이 일반적인 dynamics보다는 next state와 reward를 각각 따로 결정하는 다음의 두 식과 같이 주어지는 때가 더 많다.
+
+$$
+\begin{align*}
+p(s'|s,a)&= P\left\{S_t=s'|S_{t-1}=s,A_{t-1}=a\right\}\tag{3.4}\\
+r(s,a)&= \mathbb E\left[R_t|S_{t-1}=s,A_{t-1}=a\right]\tag{3.5}
+\end{align*}
+$$
+
+위의 식은 state transition probabilty, 아래 식은 reward function이라고 불리며 이 둘을 합쳐 환경모델이라고도 한다.
+그리고 물론, 식 (3.2)를 적절히 marginalize하면 (3.4)이 얻어지며, 그건 책에서도 잘 설명되고 있다.
+
+사실 식 (3.5)는 좀 의아하다.
+나같으면 식 (3.4)와 비슷하게 쓰기 위해
+
+$$
+p(r|s,a)=&= P\left\{R_{t+1}=r|S_{t-1}=s,A_{t-1}=a\right\}
+$$
+
+라고 쓸 것 같고, 이게 (3.5)보다 일반적인 식이 될 것이다.
+하지만 물론, 식 (3.5)가 강화학습 상황에서 더 유용하고 자주 나올만한 식이 될 것이다.
+예컨대 위의 식은 너무 추상적인 것이다.
+심지어, 많은 강화학습 상황에서 reward는 action에 의존하지 않아서 간략하게 $r(s)$로 쓰는 것으로 충분한 경우가 많다.
+
+마찬가지 관점에서, 식 (3.4)도 바꿔서 쓸 수 있다.
+
+$$s'=f(s,a)$$
+
+와 같이 쓸 수도 있는 것이다.
+그리고 정말 많은 강화학습 상황에서 이렇게 next state가 deterministic하게 주어지지, (3.4)에서처럼 stochastic하게 주어지지 않을 수도 있다.
+
+강화학습의 목적은 reward들의 cumulative sum $G_t$가 최대가 되도록 하는 것이다.
+trajectory는 일반적으로 끝날 수도 있고 (episodic task) 끝나지 않을 수도 있는데, 따라서 $G_t$는
+
+$$G_t=R_{t+1}+R_{t+2}+\cdots+R_T\tag{3.7}$$
+
+와 같이 유햔합으로 정의될 수도 있고
+
+$$G_t=R_{t+1}+R_{t+2}+\cdots$$
+
+와 같이 급수로 정의될 수도 있다.
+하지만 일반적으로는 discount factor $\gamma$를 적용하여 ($0\le\gamma\le1$)
+
+$$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
+
+로 정의하며, 이 정의는 참으로 적절하다.
+특히 $0\lt\gamma\lt1$일 때가 절묘하다.
+첫째로, 당연히 최근의 reward을 더 중요하게 여기고 예전의 reward는 덜 중요하게 여긴다는 점이 있지만, 그것보다는 둘째로, $G_t$가 well-defined된다는 점이 있다.
+discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
+어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
+
+# 2. value function과 Bellman equation
