@@ -165,4 +165,4 @@ $$a=\mu(s)$$
 환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, trajectory 전체가 이론적으로는 모든 가능성이 확률적으로 결정된다.
 그러면 어떤 시점 $t$에서 $G_t$ 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
 이것을 value function이라고 하며, 즉 state만 인자로 받는 state-value-function $v(s)$과 state과 action 두 개를 인자로 받는 action-value-function $q(s,a)$이 있다.
-정확한 의미로 $q$는 $state-action-value-function$이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
+정확한 의미로 $q$는 state-action-value-function이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
