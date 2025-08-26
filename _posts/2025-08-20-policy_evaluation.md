@@ -145,7 +145,7 @@ discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항�
 
 transition dynamics 혹은 환경모델은 환경이 어떻게 구성되어있느냐를 나타낸다.
 $S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준다.
-그렇다면 이것으로 식 (3.1)의 trajectory가 완전히 결정될 수는 없다.
+하지만 아직 이것으로 식 (3.1)의 trajectory가 완전히 결정될 수는 없다.
 즉, $S_t$가 주어졌을 때 $A_t$가 어떻게 결정될 것인가 하는 문제가 남는다.
 이것을 결정하는 것이 정책(policy)이다.
 
@@ -162,7 +162,75 @@ $$a=\mu(s)$$
 
 라는 notation을 썼던 것 같다.
 
-환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, trajectory 전체가 이론적으로는 모든 가능성이 확률적으로 결정된다.
-그러면 어떤 시점 $t$에서 $G_t$ 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
-이것을 value function이라고 하며, 즉 state만 인자로 받는 state-value-function $v(s)$과 state과 action 두 개를 인자로 받는 action-value-function $q(s,a)$이 있다.
+환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, 이론적으로는 모든 종류의 trajectory의 가능성이 확률적으로 결정된다.
+즉, 어떤 시점 $t$에서 $G_t$ 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
+이것을 가치함수(value function)이라고 한다.
+가치함수에는 두 가지가 있어서 state만 인자로 받는 state-value-function $v_\pi(s)$가 있고,  state과 action 두 개를 인자로 받는 action-value-function $q_\pi(s,a)$이 있다.
 정확한 의미로 $q$는 state-action-value-function이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
+환경은 이미 주어졌다는 가정 하에, 정책 $\pi$가 명시되어야 하므로 아랫첨자로 달려있다.
+상태 $s\in\mathcal S$에 대하여 $v_\pi(s)$를 식으로 적으면
+
+$$v_\pi(s) = \mathbb E\left[G_t|S_t=s\right]\tag{3.12}$$
+
+이며, 이것은 현재 상태 $s$에서 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
+상태 $s\in\mathcal S$와 행동 $a\in\mathcal A$에 대하여 $q_\pi(s,a)$를 식으로 적으면
+
+$$q_\pi(s,a)=\mathbb E\left[G_t|S_t=s,A_t=a\right]\tag{3.13}$$
+
+이며, 이것은 현재 상태 $s$에서 행동 $a$를 취하고 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
+
+<!-- 모든 상태 $s\in\mathcal S$에 대하여 식(3.14)가 성립한다.
+이것은 Bellman equation이라고 불린다. -->
+<!-- 하지만 그 전에  -->
+return에 대한 다음 식을 상기하자.
+
+$$
+\begin{align*}
+G_t
+&=R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+\cdots\\
+&=R_{t+1}+\gamma\left(R_{t+2}+\gamma R_{t+3}+\cdots\right)\\
+&=R_{t+1}+\gamma G_{t+1}
+\end{align*}
+\tag{3.9}
+$$
+
+그러면 모든 $s\in\mathcal S$에 대하여 다음과 같은 Bellman equation이 성립한다.
+
+$$
+\begin{align*}
+v_\pi(s)
+&=\mathbb E_\pi\left[G_t|S_t=s\right]\\
+&=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s\right]\\
+&=\sum_a\pi(a|s)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma v_\pi(s')\right)\tag{3.14}
+\end{align*}
+$$
+
+두번째 줄에는 (3.9)가 쓰였고 세번째줄과 네번재 줄에는 conditional expectation의 의미가 쓰였다.
+다섯번째 줄에는 Markov property가 쓰였고 여섯번째 줄에는 $\mathbb E$의 linearity가 쓰였다.
+일곱번째 줄에는 $v_\pi$의 정의가 변형된 형태로 쓰였다.
+이 중요한 식이, 처음 배울 때는 참 어렵게 느껴졌다.
+지금은 잘 이해가 간다.
+
+중요한 사실 중 하나는, 식 (3.14)가 복잡하게 생겼지만, 결국 $\lvert\mathcal S\rvert$개의 변수 $v_\pi(s)$에 대한 일차식이라는 것이다.
+그리고 식이 $\lvert\mathcal S\rvert$개 있으므로, 결국 변수가 $\lvert\mathcal S\rvert$개이고 식이 $\lvert\mathcal S\rvert$개인 일차연립방정식인 셈이다.
+
+방금 것은 $v$에 대한 Bellman equation이다.
+$q$에 대해서도 Bellman equation이 있다.
+모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여
+
+$$
+\begin{align*}
+q_\pi(s,a)
+&=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
+&=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
+&=\sum_{r, s'} p(r, s'|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(r, s'|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+\end{align*}
+$$
