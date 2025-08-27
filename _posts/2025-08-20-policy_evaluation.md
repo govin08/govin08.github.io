@@ -141,7 +141,7 @@ $$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
 discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
 어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
 
-# 2. policy, value function, Bellman equation
+# 2. policy, value functions
 
 transition dynamics 혹은 환경모델은 환경이 어떻게 구성되어있느냐를 나타낸다.
 $S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준다.
@@ -178,6 +178,8 @@ $$v_\pi(s) = \mathbb E\left[G_t|S_t=s\right]\tag{3.12}$$
 $$q_\pi(s,a)=\mathbb E\left[G_t|S_t=s,A_t=a\right]\tag{3.13}$$
 
 이며, 이것은 현재 상태 $s$에서 행동 $a$를 취하고 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
+
+# 3. Bellman equations
 
 <!-- 모든 상태 $s\in\mathcal S$에 대하여 식(3.14)가 성립한다.
 이것은 Bellman equation이라고 불린다. -->
