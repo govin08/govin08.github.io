@@ -19,7 +19,7 @@ SARSA와 Q-learning을 보려면 6장의 Temporal-Difference Learning을 알아�
 사실 이전에는 TD라는 것의 의미 자체를 이해하지 못했는데, 이번에는 이해하게 되었고 SARSA와 Q-learing도 분명히 이해하게 되었다.
 TD가 dynamic programing과 Monte Carlo의 절충이라고 할 때, 그렇다면 그 둘도 알아야 할텐데, MC는 별로 보기가 싫어서 DP를 먼저 보았다.
 즉, 4장의 Dynamic Programming을 읽었다.
-(나중에 3장 Monte Carlo Simulation도 다 읽었다.)
+(나중에 5장 Monte Carlo Simulation도 다 읽었다.)
 그리고 거의 다 아는 내용일지언정, 배경지식을 알아야 하니 3장 Finite Markov Decision Process도 쭉 다 읽었다.
 3장에서는 늘 그렇듯 가장 중요하면서 조금 어려운 것이 Bellman equation 네 개인데 그걸 다시 보았다.
 다 이해하지는 못했고, 그래도 (ordinary) Bellman equation 두 개는 이해했다.
@@ -136,7 +136,7 @@ $$G_t=R_{t+1}+R_{t+2}+\cdots$$
 $$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
 
 로 정의하며, 이 정의는 참으로 적절하다.
-특히 $0\lt\gamma\lt1$일 때가 절묘하다.
+특히 $0\le\gamma\lt1$일 때가 절묘하다.
 첫째로, 당연히 최근의 reward을 더 중요하게 여기고 예전의 reward는 덜 중요하게 여긴다는 점이 있지만, 그것보다는 둘째로, $G_t$가 well-defined된다는 점이 있다.
 discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
 어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
@@ -163,7 +163,7 @@ $$a=\mu(s)$$
 라는 notation을 썼던 것 같다.
 
 환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, 이론적으로는 모든 종류의 trajectory의 가능성이 확률적으로 결정된다.
-즉, 어떤 시점 $t$에서 $G_t$ 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
+다시말해, 어떤 시점 $t$에서 $G_t$의 기댓값, 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
 이것을 가치함수(value function)이라고 한다.
 가치함수에는 두 가지가 있어서 state만 인자로 받는 state-value-function $v_\pi(s)$가 있고,  state과 action 두 개를 인자로 받는 action-value-function $q_\pi(s,a)$이 있다.
 정확한 의미로 $q$는 state-action-value-function이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
