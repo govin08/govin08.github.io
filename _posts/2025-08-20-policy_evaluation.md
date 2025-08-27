@@ -55,7 +55,7 @@ Munkres의 책에서는 꼭 metric space일 필요가 없는 상황에서 특정
 따라서 블로그에 이런 글을 쓰는 것은 내 나름대로의 반항에 해당한다.
 쉬거나 취미생활을 하는 시간이 거의 없는 일상에서 어떻게든 수학 글을 써내려가는 것은, 어떻게든 내 일의 가치를 부여하고 싶은 내 나름대로의 까뮈적인 반항이다.
 
-# 1. Finite Markov Decision Process
+# 1. finite Markov Decision Process
 
 Sutton의 3장에는 Finite MDP에 대한 내용이 나온다.
 책을 읽어가면서 주요 식들은 책에서의 식번호와 같이 표기하려 한다.
@@ -111,7 +111,7 @@ $$
 라고 쓸 것 같고, 이게 (3.5)보다 일반적인 식이 될 것이다.
 하지만 물론, 식 (3.5)가 강화학습 상황에서 더 유용하고 자주 나올만한 식이 될 것이다.
 예컨대 위의 식은 너무 추상적인 것이다.
-심지어, 많은 강화학습 상황에서 reward는 action에 의존하지 않아서 간략하게 $r(s)$로 쓰는 것으로 충분한 경우가 많다.
+심지어, 많은 강화학습 상황에서 reward는 action에 의존하지 않아서 더 간략하게 $r(s)$로 쓰는 것으로 충분한 경우가 많다.
 
 마찬가지 관점에서, 식 (3.4)도 바꿔서 쓸 수 있다.
 
@@ -149,12 +149,13 @@ $S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준�
 즉, $S_t$가 주어졌을 때 $A_t$가 어떻게 결정될 것인가 하는 문제가 남는다.
 이것을 결정하는 것이 정책(policy)이다.
 
-transition dynamics가 환경이 어떻게 변화하느냐 하는 것을 나타낸다면, policy는 agent가 주어진 상태에 대해 어떤 행동을 취할것이냐 하는 것을 나타낸다.
+transition dynamics가 agent를 둘러싼 state들이 어떻게 변화하느냐 하는 것을 나타낸다면, policy는 agent가 주어진 상태에 대해 어떤 행동을 취할것이냐 하는 것을 나타낸다.
 policy $\pi$는 일반적으로 다음과 같이 조건부 확률
 
 $$\pi(a|s)=P\left\{A_t=a|S_t=s\right\}$$
 
-로 나타나고 다시 말해 $\pi(\cdot|s)$는 주어진 state $s$에 대한 action의 확률분포를 의미한다.
+로 나타난다.
+다시 말해 $\pi(\cdot|s)$는 주어진 state $s$에 대한 action의 확률분포를 의미한다.
 이런 식의 stochastic policy가 일반적이지만, 좀 더 간단하게는 deterministic하게 action이 결정된다고 가정할 수도 있다.
 특히 DPG, DDPG에서 이러한 determistic한 policy가 쓰이는데, 이때는 $\pi$ 대신 $\mu$를 써서
 
@@ -163,7 +164,7 @@ $$a=\mu(s)$$
 라는 notation을 썼던 것 같다.
 
 환경에 대한 모델 $p(s',r|s,a)$, $r(s,a)$와 agent의 정책 $\pi$이 주어지면, 이론적으로는 모든 종류의 trajectory의 가능성이 확률적으로 결정된다.
-다시말해, 어떤 시점 $t$에서 $G_t$의 기댓값, 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
+그러면, 어떤 시점 $t$에서 $G_t$의 기댓값, 즉 episode가 끝날때까지 혹은 영원히에 대한 보상의 합의 기댓값을 계산할 수 있다.
 이것을 가치함수(value function)이라고 한다.
 가치함수에는 두 가지가 있어서 state만 인자로 받는 state-value-function $v_\pi(s)$가 있고,  state과 action 두 개를 인자로 받는 action-value-function $q_\pi(s,a)$이 있다.
 정확한 의미로 $q$는 state-action-value-function이라고 불러야 할테지만, 그냥 action-value-function이라고만 불러도 구분이 되니 그렇게 부르는 것이라고 대학원에서 배웠던 것 같다.
@@ -218,11 +219,11 @@ $$
 지금은 잘 이해가 간다.
 
 중요한 사실 중 하나는, 식 (3.14)가 복잡하게 생겼지만, 결국 $\lvert\mathcal S\rvert$개의 변수 $v_\pi(s)$에 대한 일차식이라는 것이다.
-그리고 식이 $\lvert\mathcal S\rvert$개 있으므로, 결국 변수가 $\lvert\mathcal S\rvert$개이고 식이 $\lvert\mathcal S\rvert$개인 일차연립방정식인 셈이다.
+그리고 식이 $\lvert\mathcal S\rvert$개 있으므로, 변수가 $\lvert\mathcal S\rvert$개이고 식이 $\lvert\mathcal S\rvert$개인 일차연립방정식인 셈이다.
 
 방금 것은 $v$에 대한 Bellman equation이다.
 $q$에 대해서도 Bellman equation이 있다.
-모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여
+모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여 다음 식이 성립한다.
 
 $$
 \begin{align*}
@@ -234,5 +235,20 @@ q_\pi(s,a)
 &=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
 &=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
 &=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+\end{align*}
+$$
+
+이것은 변수가 $\vert\mathcal S\vert\vert\mathcal A\vert$개이고 식의 개수도 $\vert\mathcal S\vert\vert\mathcal A\vert$개인 연립일차방정식이다.
+Bellman equation들은 모두 서로 인접한 시간에서의 가치함수 값의 관계를 나타내는 식이다.
+예컨대, 상태 $s$에서의 가치 $v_\pi(s)$를 다음 상태 $s'$에서의 가치 $v_\pi(s')$의 일차결합으로 표현하는 것이다.
+그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶다.
+예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다.
+
+$$
+\begin{align*}
+v_\pi(s)
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+q_\pi(s,a)
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma v_\pi(s')\right]\\
 \end{align*}
 $$
