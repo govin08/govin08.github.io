@@ -68,6 +68,8 @@ $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots\tag{3.1}$$
 
 로 정의되는데 이때, $S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_t\in\mathcal R$이고 state space $\mathcal S$, action space $\mathcal A$, reward space $\mathcal R\subset\mathbb R$이 모두 유한집합이다.
 이 확률변수들의 나열을 trajectory라고도 한다.
+(그러니까 finite MDP는 $\mathscr F\left(\mathcal S, \mathcal A, p\right)$와 같이 정의할 수 있고 각 trajectory는 이 finite MDP의 한 원소라고 말할 수 있을 것 같다.)
+
 Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
 즉,
 
@@ -220,10 +222,13 @@ $$
 
 중요한 사실 중 하나는, 식 (3.14)가 복잡하게 생겼지만, 결국 $\lvert\mathcal S\rvert$개의 변수 $v_\pi(s)$에 대한 일차식이라는 것이다.
 그리고 식이 $\lvert\mathcal S\rvert$개 있으므로, 변수가 $\lvert\mathcal S\rvert$개이고 식이 $\lvert\mathcal S\rvert$개인 일차연립방정식인 셈이다.
+(3.14)은 서로 인접한 시간에서의 가치함수 값의 관계를 나타내는 식이다.
+예컨대, 상태 $s$에서의 가치 $v_\pi(s)$를 다음 상태 $s'$에서의 가치 $v_\pi(s')$의 일차결합으로 표현하는 것이다.
 
 방금 것은 $v$에 대한 Bellman equation이다.
 $q$에 대해서도 Bellman equation이 있다.
 모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여 다음 식이 성립한다.
+책에는 따로 식에 대한 라벨링이 되어 있지않은데 asterisk를 붙여 표시해보려 한다.
 
 $$
 \begin{align*}
@@ -234,21 +239,44 @@ q_\pi(s,a)
 &=\sum_{r, s'} p(r, s'|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
 &=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
 &=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14*}
 \end{align*}
 $$
 
 이것은 변수가 $\vert\mathcal S\vert\vert\mathcal A\vert$개이고 식의 개수도 $\vert\mathcal S\vert\vert\mathcal A\vert$개인 연립일차방정식이다.
-Bellman equation들은 모두 서로 인접한 시간에서의 가치함수 값의 관계를 나타내는 식이다.
-예컨대, 상태 $s$에서의 가치 $v_\pi(s)$를 다음 상태 $s'$에서의 가치 $v_\pi(s')$의 일차결합으로 표현하는 것이다.
-그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶다.
+그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
 예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다.
 
 $$
 \begin{align*}
 v_\pi(s)
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14**}\\
 q_\pi(s,a)
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma v_\pi(s')\right]\\
+&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma v_\pi(s')\right]\tag{3.14***}\\\\
 \end{align*}
 $$
+
+# 4. Bellman optimal equations
+
+(9월 3일에 다시 작성하기 시작) 쓰다보니 또 스크롤이 길어지고 있다.
+원래 정했던 목표보다 더 근본적인 것부터 써가고 있다.
+그게 맞긴 한데, 이정도로 길거면 글을 둘로 나누는 게 맞겠다.
+그러니까 이 절까지, bellman optimal equations까지만 이 글에서 다루고 다음 글에서 contraction principle과 관련된 것을 보는 것이 좋겠다.
+꽤 자세히 적어나가면서 Sutton의 책을 열심히 보게된다는 점은 좋다.
+마치 공자의 『논어』에 대하여 위나라의 하안이 『논어집해』를 쓰며 주석을 달아가는 느낌이랄까.
+
+---
+
+Sutton은 컴퓨터공학자라고 한다.
+첫 회사에서 만난, Texas A&M 대학교에서 석박통합과정으로 공부하고 있다는 분이, 어떤 사람이 '수학을 잘한다'라는 표현을 썼었다.
+그 분에게는 아무 말도 하지 않았지만 '수학을 잘한다'는 것에 대한 말의 의미에 대해 한참동안 고민했다.
+미적분이나 선형대수, 해석학이나 집합론, 위상수학과 측도론, 확률론 등의 기본 개념들에 대해 깊이 이해하고 그 원리를 명확하게 알려고 노력하는 것을 그 말한 분이 얼마나 해봤을까, 하고 생각했다.
+아마도 baby rudin의 엄밀한 reasoning을 따라가본 적은 없을 것 같은데.
+보통 컴퓨터공학을 전공한 분들이 말하는 '수학을 잘한다', '머리가 좋다'는 건 어떤 개념일까, 하는 의문은 이쪽 업계에 있으면서 자주 든다.
+새로 부임하셨던, 컴퓨터공학 출신의 교수님이 수학에 대해 포괄적으로 논하는 것도 들었지만, 글쎄, 내가 모르는 천재라면 모를까 수학은 그렇게 쉽게 정복될 수 있는 대상이 아니라는 생각이다.
+
+말이 길었는데, 나는 Sutton은 컴퓨터공학자임에도 불구하고 수학을 잘 아는 사람이라고 쓰려고 했다.
+그 근거는 어떤 정책이 더 나은 정책이며, 가장 좋은 정책인 최적정책을 정의하는 데에 집합론의 partial ordering을 쓰고 있기 때문이다.
+물론 이 개념은 학부 2학년 때 나오는 아주 기초적인 개념이고, 이해하는 데 몇 분 안 걸리는 개념일지도 모르겠다.
+하지만 나는 PoSet으로 optimal policy를 설명한 이 방식을 보고 이 책이 좋아졌고 Sutton이 좋아졌다.
+정말 적절하게 쓰였다고 생각되기 때문이다.
