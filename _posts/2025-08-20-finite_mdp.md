@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "Policy Evaluation과 Contraction Principle"
+title: "Finite MDP"
 categories: machine-learning
-tags: [reinforcement learing, dynamic programming, Bellman equation, policy evaluation, contraction principle, fixed point]
+tags: [reinforcement learing, finite markov decision process, markov property, Bellman equation]
 use_math: true
 publish: false
 author_profile: false
@@ -182,6 +182,37 @@ $$q_\pi(s,a)=\mathbb E\left[G_t|S_t=s,A_t=a\right]\tag{3.13}$$
 
 이며, 이것은 현재 상태 $s$에서 행동 $a$를 취하고 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
 
+Exercise 3.12, 13을 간단히 풀어보려 한다.
+$v_\pi$를 $q_\pi$로 표현해보고 반대도 표현해보라는 문제로, 바로 다음 절의 Bellman equation의 증명과 깊숙히 연관되어 있다.
+조금 헷갈리니까 자세히 쓰면 Exercise 3.12는
+
+$$
+\begin{align*}
+v_\pi(s)
+&=\mathbb E\left[G_t|S_t=s\right]\\
+&=\sum_s gP\left\{G_t=g|S_t=s\right\}\\
+&=\sum_s g\pi(a|s)P\left\{G_t=g|S_t=s, A_t=a\right\}\\
+&=\sum_a\pi(a|s)\mathbb E\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_a\pi(a|s)q_\pi(s,a)\tag{e3.12}
+\end{align*}
+$$
+
+이 될 것이다.
+Exercise 3.13은 간략하게
+
+$$
+\begin{align*}
+q_\pi(s,a)
+&=\mathbb E\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_{r,s'}p(r,s'|s,a)\mathbb E\left[R_{t+1}+\gamma R_{t+2}|S_t=s,A_t=a, R_{t+1}=r,S_{t+1}=s'\right]\\
+&=\sum_{r,s'}p(r,s'|s,a)\mathbb E\left[r+\gamma R_{t+2}|S_{t+1}=s'\right]\\
+&=\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\mathbb E\left[R_{t+2}|S_{t+1}=s'\right]\right)\\
+&=\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma v_\pi(s')\right)\tag{e3.13}
+\end{align*}
+$$
+
+와 같이 풀릴 수 있을 것이다.
+
 # 3. Bellman equations
 
 <!-- 모든 상태 $s\in\mathcal S$에 대하여 식(3.14)가 성립한다.
@@ -228,23 +259,24 @@ $$
 방금 것은 $v$에 대한 Bellman equation이다.
 $q$에 대해서도 Bellman equation이 있다.
 모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여 다음 식이 성립한다.
-책에는 따로 식에 대한 라벨링이 되어 있지않은데 asterisk를 붙여 표시해보려 한다.
+책에는 이것이 Exercise 3.17로 되어있는 듯하고, 따로 식에 대한 라벨링이 되어 있지않은데 asterisk를 붙여 표시해보려 한다.
 
 $$
 \begin{align*}
 q_\pi(s,a)
 &=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
 &=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
-&=\sum_{r, s'} p(r, s'|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(r, s'|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14*}
+&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14*}
 \end{align*}
 $$
 
 이것은 변수가 $\vert\mathcal S\vert\vert\mathcal A\vert$개이고 식의 개수도 $\vert\mathcal S\vert\vert\mathcal A\vert$개인 연립일차방정식이다.
-그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
+
+<!-- 그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
 예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다.
 
 $$
@@ -252,31 +284,6 @@ $$
 v_\pi(s)
 &=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14**}\\
 q_\pi(s,a)
-&=\sum_{r, s'} p(r, s'|s,a)\left(r+\gamma v_\pi(s')\right]\tag{3.14***}\\\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right]\tag{3.14***}
 \end{align*}
-$$
-
-# 4. Bellman optimal equations
-
-(9월 3일에 다시 작성하기 시작) 쓰다보니 또 스크롤이 길어지고 있다.
-원래 정했던 목표보다 더 근본적인 것부터 써가고 있다.
-그게 맞긴 한데, 이정도로 길거면 글을 둘로 나누는 게 맞겠다.
-그러니까 이 절까지, bellman optimal equations까지만 이 글에서 다루고 다음 글에서 contraction principle과 관련된 것을 보는 것이 좋겠다.
-꽤 자세히 적어나가면서 Sutton의 책을 열심히 보게된다는 점은 좋다.
-마치 공자의 『논어』에 대하여 위나라의 하안이 『논어집해』를 쓰며 주석을 달아가는 느낌이랄까.
-
----
-
-Sutton은 컴퓨터공학자라고 한다.
-첫 회사에서 만난, Texas A&M 대학교에서 석박통합과정으로 공부하고 있다는 분이, 어떤 사람이 '수학을 잘한다'라는 표현을 썼었다.
-그 분에게는 아무 말도 하지 않았지만 '수학을 잘한다'는 것에 대한 말의 의미에 대해 한참동안 고민했다.
-미적분이나 선형대수, 해석학이나 집합론, 위상수학과 측도론, 확률론 등의 기본 개념들에 대해 깊이 이해하고 그 원리를 명확하게 알려고 노력하는 것을 그 말한 분이 얼마나 해봤을까, 하고 생각했다.
-아마도 baby rudin의 엄밀한 reasoning을 따라가본 적은 없을 것 같은데.
-보통 컴퓨터공학을 전공한 분들이 말하는 '수학을 잘한다', '머리가 좋다'는 건 어떤 개념일까, 하는 의문은 이쪽 업계에 있으면서 자주 든다.
-새로 부임하셨던, 컴퓨터공학 출신의 교수님이 수학에 대해 포괄적으로 논하는 것도 들었지만, 글쎄, 내가 모르는 천재라면 모를까 수학은 그렇게 쉽게 정복될 수 있는 대상이 아니라는 생각이다.
-
-말이 길었는데, 나는 Sutton은 컴퓨터공학자임에도 불구하고 수학을 잘 아는 사람이라고 쓰려고 했다.
-그 근거는 어떤 정책이 더 나은 정책이며, 가장 좋은 정책인 최적정책을 정의하는 데에 집합론의 partial ordering을 쓰고 있기 때문이다.
-물론 이 개념은 학부 2학년 때 나오는 아주 기초적인 개념이고, 이해하는 데 몇 분 안 걸리는 개념일지도 모르겠다.
-하지만 나는 PoSet으로 optimal policy를 설명한 이 방식을 보고 이 책이 좋아졌고 Sutton이 좋아졌다.
-정말 적절하게 쓰였다고 생각되기 때문이다.
+$$ -->
