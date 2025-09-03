@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Belllman optimal equation"
+title: "Bellman optimal equation"
 categories: machine-learning
 tags: [reinforcement learing, Bellman optimal equation, partial order]
 use_math: true
@@ -53,7 +53,10 @@ $\left(\Pi,\ge\right)$는 분명히 totally ordered set은 아니다.
 따라서 $\left(\Pi,\ge\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
 하지만 이 경우에는 maximum이 보장된다.
 즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재가 보장된다.
-다시 말해, 모든 $\pi\in\Pi$에 대하여 $\pi\le\pi^\ast$인 $\pi^\ast\in\Pi$가 존재한다. (Claim 1)
+다시 말해, $\pi\le\pi^\ast$인 $\pi^\ast\in\Pi$가 존재한다. (Claim 1)
+
+이것은 Sutton의 책에 언급만 되어있고 설명이나 증명이 있지는 않다.
+그래서 간략하게 다음과 같이 증명해 해보려 한다.
 
 먼저, 함수 $v_\ast$를
 
@@ -61,25 +64,66 @@ $$v_\ast(s)=\max_{\pi\in\Pi}v_\pi(s)$$
 
 로 정의하자.
 저 정의가 조금 덜 엄밀할 것 같으면 ($\Pi$가 무한집합이라 최댓값이 존재하지 않을 수 있으니) $\max$를 $\sup$으로 바꿔도 될 듯하다.
-
 그러면 모든 정책 $\pi\in\Pi$에 대하여
 
-$$v_\ast(s)\le v_\pi(s)$$
+$$v_\pi (s)\le v_\ast(s)$$
 
 가 성립한다.
-그리고 이에 대응하는 함수 $q_\ast$를 (e3.13)와 비슷하게 다음과 같이 정의하고
+$v_\ast$에 대응하는 함수 $q_\ast$를 (e3.13)와 비슷하게 다음과 같이
 
 $$q_\ast(s,a)=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))$$
 
-정책 $\pi^\ast$를 다음과 같이 정의한다.
-주어진 $s\in\mathcal S$에 대하여
-$A=\{a'\in\mathcal A:q_\ast(s,a')=\max_a q_\ast(s,a)\}$는 $|A|\ge1$을 만족하므로
+로 정의하자.
+그러면 $q_\ast$도 최대가 된다.
+왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(r,s'|s,a)\ge0$, $\gamma\ge0$으로부터
 
-$$\pi^\ast(a|s)=
-\begin{cases}
-\frac1{|A|}&a\in A\\
-0&a\notin A
-\end{cases}
+$$
+\begin{align*}
+q_\pi(s,a)
+&=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\pi(s'))\\
+&=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))\\
+&=q_\ast(s,a)
+\end{align*}
 $$
 
-로 정의하면 $\pi^\ast$는 optimal policy가 된다.
+이기 때문이다.
+이제 이로부터 최적정책 $\pi^\ast$를 greedy하게 정의한다.
+$q$함수가 주어졌으니, 주어진 $s$에 대해서 $q$값이 가장 큰 action(들)을 다 더해서 1이 되도록 양의 확률을 주고 나머지 경우는 모두 0으로 주는 것이다.
+예를 들어, $\pi(a|s)=\\{a'\in A:q_\ast(s,a')=\max_{\pi\in\Pi}q_\pi(s,a)\\}$ 로 두고
+
+$$
+\begin{align*}
+\pi^\ast(a|s) =
+\begin{cases}
+\frac1{\left|A\right|}&a\in A\\
+0                   &a\notin A\\
+\end{cases}
+\end{align*}
+$$
+
+로 할 수도 있고, 아니면 $q_\ast(s,a_\ast)=\max_{\pi\in\Pi}q_\pi(s,a)$를  만족시키는 action $a_\ast$에 대하여
+
+$$
+\begin{align*}
+\pi^\ast(a|s) =
+\begin{cases}
+1   &a=a'\\
+0   &a\ne a'\\
+\end{cases}
+\end{align*}
+$$
+
+로 둘 수도 있는 것이다.
+<!-- 두번째 경우를 $\pi^\ast$로 사용하자. -->
+그러면
+
+$$
+\begin{align*}
+v_\pi(s)
+&=\sum_{a\in\mathcal A}\pi(a|s)q_\pi(s,a),\\
+&\le\sum_{a\in\mathcal A}\pi(a|s)q_\ast(s,a),\\
+&=v_\ast(s)
+\end{align*}
+$$
+
+이다.
