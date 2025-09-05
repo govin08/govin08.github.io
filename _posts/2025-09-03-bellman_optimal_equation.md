@@ -43,14 +43,14 @@ Sutton은 컴퓨터공학자라고 한다.
 
 $$\Pi=\left\{\pi(\cdot|\cdot):\mathcal S\times\mathcal A\to[0,1]\,\vert\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$
 
-$\Pi$에 partial order $\ge$를 다음과 같이 정의해 partially ordered set $\left(\Pi,\ge\right)$를 생각할 수 있다.
-두 policy $\pi, \pi'\in\Pi$에 대하여 $\pi\ge\pi'$인 것의 정의는 모든 $s\in\mathcal S$에 대하여
+$\Pi$에 partial order $\le$를 다음과 같이 정의해 partially ordered set $\left(\Pi,\le\right)$를 생각할 수 있다.
+두 policy $\pi, \pi'\in\Pi$에 대하여 $\pi\le\pi'$인 것의 정의는 모든 $s\in\mathcal S$에 대하여
 
-$$v_\pi(s)\ge v_{\pi'}(s)$$
+$$v_\pi(s)\le v_{\pi'}(s)$$
 
 인 것이다.
-$\left(\Pi,\ge\right)$는 분명히 totally ordered set은 아니다.
-따라서 $\left(\Pi,\ge\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
+$\left(\Pi,\le\right)$는 분명히 totally ordered set은 아니다.
+따라서 $\left(\Pi,\le\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
 하지만 이 경우에는 maximum이 보장된다.
 즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재가 보장된다.
 다시 말해, $\pi\le\pi^\ast$인 $\pi^\ast\in\Pi$가 존재한다. (Claim 1)
@@ -75,13 +75,14 @@ $$q_\ast(s,a)=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))$$
 
 로 정의하자.
 그러면 $q_\ast$도 최대가 된다.
-왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(r,s'|s,a)\ge0$, $\gamma\ge0$으로부터
+즉, 모든 $s$, $a$에 대하여 $v(s,a)\le q_\ast(s,a)$이다.
+왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(r,s'|s,a)\le0$, $\gamma\ge0$으로부터
 
 $$
 \begin{align*}
 q_\pi(s,a)
 &=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\pi(s'))\\
-&=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))\\
+&\le\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))\\
 &=q_\ast(s,a)
 \end{align*}
 $$
@@ -121,8 +122,9 @@ $$
 \begin{align*}
 v_\pi(s)
 &=\sum_{a\in\mathcal A}\pi(a|s)q_\pi(s,a),\\
-&\le\sum_{a\in\mathcal A}\pi(a|s)q_\ast(s,a),\\
-&=v_\ast(s)
+&\le\sum_{a\in\mathcal A}\pi^\ast(a|s)q_{\pi_\ast}(s,a),\\
+&=q_\pi(s,a')\\
+&=v_{\pi^\ast}(s)
 \end{align*}
 $$
 
