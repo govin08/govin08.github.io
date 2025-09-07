@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "Bellman optimal equation"
+title: "Policy Evaluation과 Contraction Principle"
 categories: machine-learning
 tags: [reinforcement learing, Bellman optimal equation, partial order]
 use_math: true
@@ -36,6 +36,19 @@ Sutton은 컴퓨터공학자라고 한다.
 정말 적절하게 쓰였다고 생각되기 때문이다.
 
 여기에 쓰는 것은 Sutton 책의 내용을 따라가되, 설명이 더 필요한 부분을 보충한 것이다.
+
+---
+
+써나가다가, optimal policy의 존재성을 Sutton이 두리뭉실하게 넘어가고 있길래 한참 고민을 했다.
+처음에는 직접 증명해보려고 했다.
+optimal policy는 아니어도 optimal state value function인 $v_\ast$과 optimal action value function인 $q_\ast$는 정의할 수 있으니, $q_ast$로 greedy하게 정책을 만든 것이 최적정책임을 보이려 했다.
+그런데 잘 되지 않았다.
+
+다른 자료들을 찾아보니 [ASHWIN RAO의 자료](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 해당 증명을 하고 있는 듯보이나, 증명의 중요한 부분이 명확하게 다가오지 않았다. (혹은 이해되지 않았다. 두루뭉실하게 넘어가는 듯 느껴졌다.) stackoverflow의 [몇몇](https://mathoverflow.net/q/282492) [질문](https://stats.stackexchange.com/q/207780/398741)들도 신통한 답변이 없는 듯 보였다, 혹은 내가 이해를 못한 걸수도 있겠다.
+그래도 가장 괜찮아보이는 [medium에서의 자료](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)가 가장 괜찮아보였다.
+여기서는 optimal policy의 존재성을 직접 증명하려 하지 않는 듯하다.
+오히려, (정작 내가 쓰고 싶었던 주제인) policy evaluation과 contraction principle을 통해 optimal policy로 수렴할 수 있음을, (그래서 optimal policy가 존재함을) 보이고 있다.
+그러니, Bellman optimal equation 절에서는 그냥 해당 식들만 나열하고, optimal policy를 증명하는 것은 그 다음 절에서 나아가면 괜찮겠다 싶다.
 
 # 4. Bellman optimal equations
 
