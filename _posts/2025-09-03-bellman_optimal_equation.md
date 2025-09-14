@@ -4,7 +4,7 @@ title: "Policy Evaluation과 Contraction Principle"
 categories: machine-learning
 tags: [reinforcement learing, Bellman optimal equation, partial order]
 use_math: true
-publish: false
+published: false
 author_profile: false
 toc: true
 ---

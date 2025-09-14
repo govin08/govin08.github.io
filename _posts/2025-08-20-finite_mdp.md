@@ -1,10 +1,10 @@
 ---
 layout: single
-title: "Finite MDP"
+title: "(Sutton, 3장) Finite MDP"
 categories: machine-learning
 tags: [reinforcement learing, finite markov decision process, markov property, Bellman equation]
 use_math: true
-publish: false
+published: true
 author_profile: false
 toc: true
 ---
@@ -44,7 +44,9 @@ baby rudin을 보니 contraction principle이 본문에 떡하니 있었고 (왜
 정확하게는 baby rudin에서는 metric space에서의 증명을 하고 있었고 그 증명은 간결했다.
 Munkres의 책에서는 꼭 metric space일 필요가 없는 상황에서 특정한 위상조건들이 주어졌을 때 contraction principle이 주어져있었고, 증명이 어려워보였기에 읽지 않았다.
 
-그러니, 아마 MDP에 대한 간략한 설명과 더불어 bellman equation (and bellman optimal equation) for value function $v$, policy evaluation, contraction principle, fixed point, Bellman operator 등의 내용이 이 포스트에 쓰일 것 같다.
+그러니, 아마 MDP에 대한 간략한 설명과 더불어 bellman equation (and bellman optimal equation) for value function $v$, policy evaluation, contraction principle, fixed point, Bellman operator 등을 블로그에 쓸 것 같다.
+
+**하지만 이 포스트에서는 (Sutton, 2018) 책의 3장, Finite MDP에 대한 내용만 담아보려 한다.**
 
 사실 이 블로그를 시작하게 된 건 머신러닝에 관한 여러 사항들을 정리하고 싶어서였다.
 그런데 머신러닝보다는 수학을 좋아하는지라 제대로 된 머신러닝 글이 거의 없었는데 이번에 쓰게 되지 않을까 싶다.
@@ -55,10 +57,13 @@ Munkres의 책에서는 꼭 metric space일 필요가 없는 상황에서 특정
 따라서 블로그에 이런 글을 쓰는 것은 내 나름대로의 반항에 해당한다.
 쉬거나 취미생활을 하는 시간이 거의 없는 일상에서 어떻게든 수학 글을 써내려가는 것은, 어떻게든 내 일의 가치를 부여하고 싶은 내 나름대로의 까뮈적인 반항이다.
 
-# 1. finite Markov Decision Process
+# 3. Finite Markov Decision Process
+
+## 3.1 finite MDP
 
 Sutton의 3장에는 Finite MDP에 대한 내용이 나온다.
 책을 읽어가면서 주요 식들은 책에서의 식번호와 같이 표기하려 한다.
+하지만 책의 절 번호와는 다르게 쓰일 것이다.
 
 수학에서 확률과정(random process, stochastic process)이란, 확률변수들의 나열이다.
 혹은 collection of random variables라고 할 수도 있다.
@@ -68,7 +73,6 @@ $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots\tag{3.1}$$
 
 로 정의되는데 이때, $S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_t\in\mathcal R$이고 state space $\mathcal S$, action space $\mathcal A$, reward space $\mathcal R\subset\mathbb R$이 모두 유한집합이다.
 이 확률변수들의 나열을 trajectory라고도 한다.
-(그러니까 finite MDP는 $\mathscr F\left(\mathcal S, \mathcal A, p\right)$와 같이 정의할 수 있고 각 trajectory는 이 finite MDP의 한 원소라고 말할 수 있을 것 같다.)
 
 Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
 즉,
@@ -89,6 +93,20 @@ $$
 $$p(s',r|s,a)=P\left\{S_t=s',R_t=r|S_{t-1}=s,A_{t-1}=a\right\}\tag{3.2}$$
 
 이 값은 transition dynamics라고 불린다.
+
+그러니까 finite MDP는 $\mathcal S$, $\mathcal A$, $\mathcal R$, $p$의 네 집합 혹은 값으로 characterize될 수 있다.
+David Silver의 자료에서는 discount factor $\gamma$까지 합쳐 다섯 개를 언급하고 있다.
+하지만 여기서 $\mathcal R$이 그렇게까지 중요하진 않다.
+그냥 $\mathbb R$으로 대체되어도 무관하기 때문이다.
+따라서 이 포스트에서는 finite MDP를 
+$\mathscr D\left(\mathcal S, \mathcal A, p, \gamma\right)$와 같이 정의하려 한다.
+각 trajectory
+
+$$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots$$
+
+들은 이 finite MDP의 한 원소라고 말할 수 있을 것 같다.
+
+
  <!-- (혹은 이 값보다는 덜 일반적인, 뒤에 나올 두 식 (3.4), (3.5)는) 여러 이름으로 불린다. -->
 <!-- transition dynamics,  model function of environment 등의 이름이 있다. -->
 실제로는, 위와 같이 일반적인 dynamics보다는 next state와 reward를 각각 따로 결정하는 다음의 두 식과 같이 주어지는 때가 더 많다.
@@ -122,6 +140,8 @@ $$s'=f(s,a)$$
 와 같이 쓸 수도 있는 것이다.
 그리고 정말 많은 강화학습 상황에서 이렇게 next state가 deterministic하게 주어지지, (3.4)에서처럼 stochastic하게 주어지지 않을 수도 있다.
 
+## 3.2 rewards and return
+
 강화학습의 목적은 reward들의 cumulative sum $G_t$가 최대가 되도록 하는 것이다.
 $G_t$를 return이라고 부른다.
 trajectory는 일반적으로 끝날 수도 있고 (episodic task) 끝나지 않을 수도 있는데, 따라서 $G_t$는
@@ -130,7 +150,7 @@ $$G_t=R_{t+1}+R_{t+2}+\cdots+R_T\tag{3.7}$$
 
 와 같이 유햔합으로 정의될 수도 있고
 
-$$G_t=R_{t+1}+R_{t+2}+\cdots$$
+$$G_t=R_{t+1}+R_{t+2}+\cdots\tag{3.7*}$$
 
 와 같이 급수로 정의될 수도 있다.
 하지만 일반적으로는 discount factor $\gamma$를 적용하여 ($0\le\gamma\le1$)
@@ -140,10 +160,14 @@ $$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
 로 정의하며, 이 정의는 참으로 적절하다.
 특히 $0\le\gamma\lt1$일 때가 절묘하다.
 첫째로, 당연히 최근의 reward을 더 중요하게 여기고 예전의 reward는 덜 중요하게 여긴다는 점이 있지만, 그것보다는 둘째로, $G_t$가 well-defined된다는 점이 있다.
-discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
+1보다 작은 discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
 어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
+셋째로는, trajectory가 끝날 때(3.7)와 끝나지 않을 때(3.7$\ast$)에 대하여 한꺼번에 쓸 수 있다는 장점이다.
+$R_{T+1}=R_{T+2}=\cdots=0$
+으로 정의하면 식 $(3.8)$으로 모든 상황을 표현해낼 수 있다.
+책에는 이런 말들이 3.4절에 표현되어 있다.
 
-# 2. policy, value functions
+## 3.3 policy, value functions
 
 transition dynamics 혹은 환경모델은 환경이 어떻게 구성되어있느냐를 나타낸다.
 $S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준다.
@@ -173,12 +197,12 @@ $$a=\mu(s)$$
 환경은 이미 주어졌다는 가정 하에, 정책 $\pi$가 명시되어야 하므로 아랫첨자로 달려있다.
 상태 $s\in\mathcal S$에 대하여 $v_\pi(s)$를 식으로 적으면
 
-$$v_\pi(s) = \mathbb E\left[G_t|S_t=s\right]\tag{3.12}$$
+$$v_\pi(s) = \mathbb E_\pi\left[G_t|S_t=s\right]\tag{3.12}$$
 
 이며, 이것은 현재 상태 $s$에서 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
 상태 $s\in\mathcal S$와 행동 $a\in\mathcal A$에 대하여 $q_\pi(s,a)$를 식으로 적으면
 
-$$q_\pi(s,a)=\mathbb E\left[G_t|S_t=s,A_t=a\right]\tag{3.13}$$
+$$q_\pi(s,a)=\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\tag{3.13}$$
 
 이며, 이것은 현재 상태 $s$에서 행동 $a$를 취하고 정책 $\pi$를 따라나갈 때의 return의 기댓값이다.
 
@@ -213,7 +237,7 @@ $$
 
 와 같이 풀릴 수 있을 것이다.
 
-# 3. Bellman equations
+## 3.4 Bellman equations
 
 <!-- 모든 상태 $s\in\mathcal S$에 대하여 식(3.14)가 성립한다.
 이것은 Bellman equation이라고 불린다. -->
@@ -287,3 +311,141 @@ q_\pi(s,a)
 &=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right]\tag{3.14***}
 \end{align*}
 $$ -->
+
+---
+
+
+## 3.5 optimal policies.
+
+(9월 3일에 다시 작성하기 시작) 쓰다보니 또 스크롤이 길어지고 있다.
+늘 그렇듯 원래 정했던 목표보다 더 근본적인 것부터 써가고 있다.
+
+꽤 자세히 적어나가면서 Sutton의 책을 열심히 보게된다는 점은 좋다.
+마치 공자의 『논어』에 대하여 위나라의 하안이 『논어집해』를 쓰며 주석을 달아가는 느낌이랄까.
+
+
+---
+
+Sutton은 컴퓨터공학자라고 한다.
+첫 회사에서 만난, Texas A&M 대학교에서 석박통합과정으로 공부하고 있다는 컴공출신 분이, 어떤 사람이 '수학을 잘한다'라는 표현을 썼었다.
+그 분에게는 아무 말도 하지 않았지만 '수학을 잘한다'는 것에 대한 말의 의미에 대해 한참동안 고민했다.
+미적분이나 선형대수, 해석학이나 집합론, 위상수학과 대수학, 측도론과 확률론 등의 기본 개념들에 대해 깊이 이해하고 그 원리를 명확하게 알려고 노력하는 것을 그 말한 분이 얼마나 해봤을까, 하고 생각했다.
+아마도 baby rudin 정도의 엄밀한 reasoning을 따라가본 적은 없을 것도 같은데.
+보통 컴퓨터공학을 전공한 분들이 말하는 '수학을 잘한다', '머리가 좋다'는 건 어떤 개념일까, 하는 의문은 이쪽 업계에 있으면서 자주 든다.
+새로 부임하셨던, 컴퓨터공학 출신의 교수님이 수학에 대해 포괄적으로 논하는 것도 들었지만, 글쎄, 내가 범접할 수 없는 천재라면 모를까 수학은 그렇게 쉽게 정복될 수 있는 대상이 아니라는 생각이다.
+직전 직장에서 같이 일했던 어떤 분도 '수학을 잘하면 인공지능으로 돈을 많이 벌 수 있다'고 쉽게 말한 적이 있는데, 그분은 미적분도 잘 이해하지 못하실 것 같은데 어떤 의미로 그런 말씀을 하신 것인지 의아해 했던 적도 있다.
+
+말이 길었는데, 나는 Sutton은 컴퓨터공학자임에도 불구하고 수학을 잘 아는 사람이라고 쓰려고 했다.
+그 근거는 어떤 정책이 더 나은 정책이며, 가장 좋은 정책인 최적정책을 정의하는 데에 집합론의 partial ordering을 쓰고 있기 때문이다.
+물론 이 개념은 학부 2학년 때 나오는 아주 기초적인 개념이고, 이해하는 데 몇 분 안 걸리는 개념일지도 모르겠다.
+하지만 나는 poset으로 optimal policy를 설명한 이 방식을 보고 이 책이 좋아졌고 Sutton이 좋아졌다.
+정말 적절하게 쓰였다고 생각되기 때문이다.
+
+---
+
+
+어떤 finite MDP $\mathscr D(\mathcal S,\mathcal A, p, \gamma)$에 대하여 policy들의 집합을 $\Pi$라고 표시하자.
+
+<!-- $$\Pi=\left\{\pi(\cdot|\cdot):\mathcal S\times\mathcal A\to[0,1]\,\vert\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$ -->
+
+$$\Pi=\left\{\pi\,:\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$
+
+$\Pi$에 partial order $\le$를 다음과 같이 정의해 partially ordered set $\left(\Pi,\le\right)$를 생각할 수 있다.
+두 policy $\pi, \pi'\in\Pi$에 대하여 $\pi\le\pi'$인 것의 정의는 모든 $s\in\mathcal S$에 대하여
+
+$$v_\pi(s)\le v_{\pi'}(s)$$
+
+인 것이다.
+$\left(\Pi,\le\right)$는 분명히 totally ordered set은 아니다.
+따라서 $\left(\Pi,\le\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
+하지만 이 경우에는 maximum이 보장된다.
+즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재한다.
+다시 말해, 모든 $\pi\in\Pi$에 대하여 $\pi\le\pi^\ast$인 $\pi^\ast$가 존재한다.
+
+이것은 Sutton의 책에 언급만 되어있고 설명이나 증명이 있지는 않다.
+그래서 간략하게 다음과 같이 증명해 해보려고도 했다.
+다음과 같이 해보았다.
+함수 $v_\ast$를
+
+$$v_\ast(s)=\sup_{\pi\in\Pi}v_\pi(s)$$
+
+로 정의하자.
+그러면 모든 정책 $\pi\in\Pi$에 대하여
+
+$$v_\pi (s)\le v_\ast(s)$$
+
+가 성립한다.
+$v_\ast$에 대응하는 함수 $q_\ast$를 (e3.13)와 비슷하게
+
+$$q_\ast(s,a)=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))$$
+
+로 정의하자.
+그러면 $q_\ast$도 최대가 된다.
+즉, 모든 $s$, $a$에 대하여 $v(s,a)\le q_\ast(s,a)$이다.
+왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(r,s'|s,a)\le0$, $\gamma\ge0$으로부터
+
+$$
+\begin{align*}
+q_\pi(s,a)
+&=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\pi(s'))\\
+&\le\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))\\
+&=q_\ast(s,a)
+\end{align*}
+$$
+
+이기 때문이다.
+이제 이로부터 최적정책 $\pi^\ast$를 greedy하게 정의한다.
+$q$함수가 주어졌으니, 주어진 $s$에 대해서 $q$값이 가장 큰 action(들)을 다 더해서 1이 되도록 양의 확률을 주고 나머지 경우는 모두 0으로 주는 것이다.
+예를 들어, $A_s=\\{a'\in A:q_\ast(s,a')=\max_{\pi\in\Pi}q_\pi(s,a)\\}$ 로 두고
+
+$$
+\begin{align*}
+\pi^\ast(a|s) =
+\begin{cases}
+\frac1{\left|A_s\right|}&a\in A_s\\
+0                   &a\notin A_s\\
+\end{cases}
+\end{align*}
+$$
+
+로 할 수도 있고, 아니면 $q_\ast(s,a_\ast)=\max_{\pi\in\Pi}q_\pi(s,a)$를 만족시키는 action $a_\ast$에 대하여
+
+$$
+\begin{align*}
+\pi^\ast(a|s) =
+\begin{cases}
+1   &a=a'\\
+0   &a\ne a'\\
+\end{cases}
+\end{align*}
+$$
+
+로 둘 수도 있는 것이다.
+<!-- 두번째 경우를 $\pi^\ast$로 사용하자. -->
+<!-- 그러면 모든 $\pi\in\Pi$에 대하여 -->
+
+그러면, $\pi^\ast$는 주어진 상황에서의 가장 greedy한 정책일 수 있다.
+하지만 정말로 이 정책이 optimal한지를 밝히는 것은 쉽지 않아보인다.
+<!-- 
+그러면, 특정한 면에서는 $\pi^\ast$가 일반적인 $\pi$보다 나은 점이 있기는 하지만, 그렇다고 해서 $v_\pi\le v_{\pi^\ast}$를 증명할 수는 없는 것으로 보인다. -->
+
+<!-- $$
+\begin{align*}
+v_\pi(s)
+&=\sum_{a\in\mathcal A}\pi(a|s)q_\pi(s,a),\\
+&=q_{\pi_\ast}(s,a)\\
+&\le\sum_{a\in\mathcal A}\pi^\ast(a|s)q_{\pi_\ast}(s,a),\\
+&=q_\pi(s,a')\\
+&=v_{\pi^\ast}(s)
+\end{align*}
+$$
+
+이다.
+따라서 Claim 1이 증명되었다. -->
+
+<!-- optimal policy의 존재성, 그것을 증명하는 건 꽤 만만치 않은일이다. -->
+
+실제로 [Aswin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
+다음과 같이 쓰고 있다.
+
+![lemma_f]({{site.url}}\images\2025-09-14-finite_mdp\aswin_rao.png){: .img-50-center}
