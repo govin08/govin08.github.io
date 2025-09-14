@@ -283,7 +283,7 @@ $$
 방금 것은 $v$에 대한 Bellman equation이다.
 $q$에 대해서도 Bellman equation이 있다.
 모든 $s\in\mathcal S$와 모든 $a\in\mathcal A$에 대하여 다음 식이 성립한다.
-책에는 이것이 Exercise 3.17로 되어있는 듯하고, 따로 식에 대한 라벨링이 되어 있지않은데 asterisk를 붙여 표시해보려 한다.
+책에는 이것이 Exercise 3.16로 되어있는 듯하고, 따로 식에 대한 라벨링이 되어 있지 않은데 e3.17로 표시해보려 한다.
 
 $$
 \begin{align*}
@@ -294,21 +294,30 @@ q_\pi(s,a)
 &=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
 &=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
 &=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14*}
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{e3.17}
 \end{align*}
 $$
 
 이것은 변수가 $\vert\mathcal S\vert\vert\mathcal A\vert$개이고 식의 개수도 $\vert\mathcal S\vert\vert\mathcal A\vert$개인 연립일차방정식이다.
 
-<!-- 그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
-예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다.
+그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
+예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다 (exercise 3.18, 19).
 
 $$
 \begin{align*}
 v_\pi(s)
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{3.14**}\\
+&=\mathbb E_\pi\left[G_t|S_t=s\right]\\
+&=\sum_a\pi(a|s)\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_a\pi(a|s)q_\pi(s,a)
+\tag{e3.18}\\
 q_\pi(s,a)
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right]\tag{3.14***}
+&=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
+&=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
+&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right)
+\tag{e3.19}
 \end{align*}
 $$ -->
 
