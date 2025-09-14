@@ -342,7 +342,7 @@ Sutton은 컴퓨터공학자라고 한다.
 
 말이 길었는데, 나는 Sutton은 컴퓨터공학자임에도 불구하고 수학을 잘 아는 사람이라고 쓰려고 했다.
 그 근거는 어떤 정책이 더 나은 정책이며, 가장 좋은 정책인 최적정책을 정의하는 데에 집합론의 partial ordering을 쓰고 있기 때문이다.
-물론 이 개념은 학부 2학년 때 나오는 아주 기초적인 개념이고, 이해하는 데 몇 분 안 걸리는 개념일지도 모르겠다.
+물론 이 개념은 학부 2학년 때 나오는 아주 기초적인 개념이고, 이해하는 데 몇 분 안 걸리는 개념일지도 모르겠고, 실제로 Sutton은 partial order라는 말을 명시적으로 쓰고 있지는 않다.
 하지만 나는 poset으로 optimal policy를 설명한 이 방식을 보고 이 책이 좋아졌고 Sutton이 좋아졌다.
 정말 적절하게 쓰였다고 생각되기 때문이다.
 
@@ -365,11 +365,16 @@ $\left(\Pi,\le\right)$는 분명히 totally ordered set은 아니다.
 따라서 $\left(\Pi,\le\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
 하지만 이 경우에는 maximum이 보장된다.
 즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재한다.
-다시 말해, 모든 $\pi\in\Pi$에 대하여 $\pi\le\pi^\ast$인 $\pi^\ast$가 존재한다.
+다시 말해,
+
+<div class="notice--info" markdown="1">
+모든 $\pi\in\Pi$에 대하여 $\pi\le\pi^\ast$인 $\pi^\ast$가 존재한다.
+</div>
 
 이것은 Sutton의 책에 언급만 되어있고 설명이나 증명이 있지는 않다.
 그래서 간략하게 다음과 같이 증명해 해보려고도 했다.
-다음과 같이 해보았다.
+
+### 3.5.1 직접 증명 시도
 함수 $v_\ast$를
 
 $$v_\ast(s)=\sup_{\pi\in\Pi}v_\pi(s)$$
@@ -401,7 +406,7 @@ $$
 이기 때문이다.
 이제 이로부터 최적정책 $\pi^\ast$를 greedy하게 정의한다.
 $q$함수가 주어졌으니, 주어진 $s$에 대해서 $q$값이 가장 큰 action(들)을 다 더해서 1이 되도록 양의 확률을 주고 나머지 경우는 모두 0으로 주는 것이다.
-예를 들어, $A_s=\\{a'\in A:q_\ast(s,a')=\max_{\pi\in\Pi}q_\pi(s,a)\\}$ 로 두고
+예를 들어, $A_s=\\{a'\in A:q_\ast(s,a')=\max_{a\in\mathcal A}q_\pi(s,a)\\}$ 로 두고
 
 $$
 \begin{align*}
@@ -413,7 +418,7 @@ $$
 \end{align*}
 $$
 
-로 할 수도 있고, 아니면 $q_\ast(s,a_\ast)=\max_{\pi\in\Pi}q_\pi(s,a)$를 만족시키는 action $a_\ast$에 대하여
+로 할 수도 있고, 아니면 $q_\ast(s,a_\ast)=\max_{a\in\mathcal A}q_\pi(s,a)$를 만족시키는 action $a_\ast$에 대하여
 
 $$
 \begin{align*}
@@ -431,6 +436,9 @@ $$
 
 그러면, $\pi^\ast$는 주어진 상황에서의 가장 greedy한 정책일 수 있다.
 하지만 정말로 이 정책이 optimal한지를 밝히는 것은 쉽지 않아보인다.
+증명이 잘 되지 않아, [두](https://ai.stackexchange.com/q/48963/97276) [곳](https://math.stackexchange.com/q/5096132/746048)에 질문을 올려놓았다.
+누군가 풀어준다면 좋겠다.
+
 <!-- 
 그러면, 특정한 면에서는 $\pi^\ast$가 일반적인 $\pi$보다 나은 점이 있기는 하지만, 그렇다고 해서 $v_\pi\le v_{\pi^\ast}$를 증명할 수는 없는 것으로 보인다. -->
 
@@ -450,16 +458,23 @@ $$
 
 <!-- optimal policy의 존재성, 그것을 증명하는 건 꽤 만만치 않은일이다. -->
 
-실제로 [Aswin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
+### 3.5.2 some articles
+
+이 주제에 대해 몇몇 읽을만한 글들이 있어서 읽어봤다.
+[Aswin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
 다음과 같이 쓰고 있다.
 
 ![lemma_f]({{site.url}}\images\2025-08-20-finite_mdp\aswin_rao.png){: .img-90-center}
 
 이 증명을 적절히 비슷하게 서술하면 어쨌든 optimal policy가 존재함을 증명하는 듯이 서술하고 넘어갈 수도 있다.
-하지만, 문제는 내 스스로가 잘와닿지 않는다는 점이다.
+하지만, 문제는 내 스스로가 잘 와닿지 않는다는 점이다.
 
 다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명한 자료가 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
-optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
-직접 증명해낼 수 있는지 의문이 들기도 하고, 또 이 방식이 Alireza Modirshanechi가 택한 방식이기 때문에 그렇다.
 
-## 3.7 Bellman optimal equatinos
+---
+
+직접 증명하려고 했던 것도 성공하지 못했고, 기존 자료를 이해하는 것도 실패했으니
+optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
+
+## 3.7 Bellman optimal equations
+
