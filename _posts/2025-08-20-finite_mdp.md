@@ -98,11 +98,11 @@ $$p(s',r|s,a)=P\left\{S_t=s',R_t=r|S_{t-1}=s,A_{t-1}=a\right\}\tag{3.2}$$
 David Silver의 자료에서는 discount factor $\gamma$까지 합쳐 다섯 개를 언급하고 있다.
 하지만 여기서 $\mathcal R$이 그렇게까지 중요하진 않다.
 그냥 $\mathbb R$으로 대체되어도 무관하기 때문이다.
-따라서 이 포스트에서는 finite MDP를 
+따라서 이 포스트에서는 finite MDP들의 집합을 
 $\mathscr D\left(\mathcal S, \mathcal A, p, \gamma\right)$와 같이 정의하려 한다.
 각 trajectory
 <!-- $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots$$ -->
-들은 이 finite MDP의 한 원소라고 말할 수 있을 것 같다.
+들은 $\mathscr D\left(\mathcal S, \mathcal A, p, \gamma\right)$의 한 원소라고 말할 수 있을 것 같다.
 
 
  <!-- (혹은 이 값보다는 덜 일반적인, 뒤에 나올 두 식 (3.4), (3.5)는) 여러 이름으로 불린다. -->
@@ -148,7 +148,7 @@ $$G_t=R_{t+1}+R_{t+2}+\cdots+R_T\tag{3.7}$$
 
 와 같이 유햔합으로 정의될 수도 있고
 
-$$G_t=R_{t+1}+R_{t+2}+\cdots\tag{3.7*}$$
+$$G_t=R_{t+1}+R_{t+2}+\cdots$$
 
 와 같이 급수로 정의될 수도 있다.
 하지만 일반적으로는 discount factor $\gamma$를 적용하여 ($0\le\gamma\le1$)
@@ -455,10 +455,10 @@ $$
 
 ![lemma_f]({{site.url}}\images\2025-08-20-finite_mdp\aswin_rao.png){: .img-90-center}
 
-이 증명을 따라서 적절히 증명하면 어쨌든 optimal policy의 존재성에 대해 말하고 넘어갈 수도 있을 거다.
+이 증명을 적절히 비슷하게 서술하면 어쨌든 optimal policy가 존재함을 증명하는 듯이 서술하고 넘어갈 수도 있다.
 하지만, 문제는 내 스스로가 잘와닿지 않는다는 점이다.
 
-다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명한 자료가 있는데 (Theorem 1) 이 정리를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
+다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명한 자료가 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
 optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
 직접 증명해낼 수 있는지 의문이 들기도 하고, 또 이 방식이 Alireza Modirshanechi가 택한 방식이기 때문에 그렇다.
 
