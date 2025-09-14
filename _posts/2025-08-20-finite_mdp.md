@@ -67,12 +67,12 @@ Sutton의 3장에는 Finite MDP에 대한 내용이 나온다.
 
 수학에서 확률과정(random process, stochastic process)이란, 확률변수들의 나열이다.
 혹은 collection of random variables라고 할 수도 있다.
-Finite MDP 또한 확률과정의 일종으로 Markov property를 만족시키는 다음과 같은 확률변수들의 나열
+Finite MDP 또한 확률과정의 일종으로 Markov property를 만족시키는 다음과 같은 확률변수들의 나열 
 
 $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots\tag{3.1}$$
 
 로 정의되는데 이때, $S_t\in\mathcal S$, $A_t\in\mathcal A$, $R_t\in\mathcal R$이고 state space $\mathcal S$, action space $\mathcal A$, reward space $\mathcal R\subset\mathbb R$이 모두 유한집합이다.
-이 확률변수들의 나열을 trajectory라고도 한다.
+이 확률변수들의 나열을 (조금 더 정확하게는 확률변수들의 값이 각각 지정된 상태를) trajectory라고도 한다.
 
 Markov property란, state $S_t$와 reward $R_t$가 바로 이전의 state $S_{t-1}$와 action $A_{t-1}$에만 의존함을 뜻한다.
 즉,
@@ -101,9 +101,7 @@ David Silver의 자료에서는 discount factor $\gamma$까지 합쳐 다섯 개
 따라서 이 포스트에서는 finite MDP를 
 $\mathscr D\left(\mathcal S, \mathcal A, p, \gamma\right)$와 같이 정의하려 한다.
 각 trajectory
-
-$$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots$$
-
+<!-- $$S_0,A_0,R_1,S_1,A_1,R_2,S_2,A_2,R_3,\cdots$$ -->
 들은 이 finite MDP의 한 원소라고 말할 수 있을 것 같다.
 
 
@@ -140,7 +138,7 @@ $$s'=f(s,a)$$
 와 같이 쓸 수도 있는 것이다.
 그리고 정말 많은 강화학습 상황에서 이렇게 next state가 deterministic하게 주어지지, (3.4)에서처럼 stochastic하게 주어지지 않을 수도 있다.
 
-## 3.2 rewards and return
+## 3.2 reward와 return
 
 강화학습의 목적은 reward들의 cumulative sum $G_t$가 최대가 되도록 하는 것이다.
 $G_t$를 return이라고 부른다.
@@ -162,12 +160,12 @@ $$G_t=\sum_{k=0}^\infty\gamma^kR_{t+k+1}\tag{3.8}$$
 첫째로, 당연히 최근의 reward을 더 중요하게 여기고 예전의 reward는 덜 중요하게 여긴다는 점이 있지만, 그것보다는 둘째로, $G_t$가 well-defined된다는 점이 있다.
 1보다 작은 discount factor를 적용하면, $G_t$가 마치 멱급수처럼 되어서, 항상 수렴하게 되는 것이다.
 어떤 수학적인 거리낌도 없이, 자신있게 $G_t$를 쓸 수 있게 되는 것이다.
-셋째로는, trajectory가 끝날 때(3.7)와 끝나지 않을 때(3.7$\ast$)에 대하여 한꺼번에 쓸 수 있다는 장점이다.
+셋째로는, trajectory가 끝날 때와 끝나지 않을 때에 대하여 한꺼번에 쓸 수 있다는 장점이다.
 $R_{T+1}=R_{T+2}=\cdots=0$
-으로 정의하면 식 $(3.8)$으로 모든 상황을 표현해낼 수 있다.
-책에는 이런 말들이 3.4절에 표현되어 있다.
+으로 정의하면 식 $(3.7)$이 되기 때문이다.
+책에는 이런 말들이 3.4절에 잘 설명되어 있다.
 
-## 3.3 policy, value functions
+## 3.3 policy와 value functions
 
 transition dynamics 혹은 환경모델은 환경이 어떻게 구성되어있느냐를 나타낸다.
 $S_t$, $A_t$가 주어졌을 때 $S_{t+1}$, $R_{t+1}$의 분포를 결정해준다.
@@ -319,12 +317,10 @@ q_\pi(s,a)
 &=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right)
 \tag{e3.19}
 \end{align*}
-$$ -->
-
----
+$$
 
 
-## 3.5 optimal policies.
+## 3.5 optimal policies
 
 (9월 3일에 다시 작성하기 시작) 쓰다보니 또 스크롤이 길어지고 있다.
 늘 그렇듯 원래 정했던 목표보다 더 근본적인 것부터 써가고 있다.
@@ -462,7 +458,8 @@ $$
 이 증명을 따라서 적절히 증명하면 어쨌든 optimal policy의 존재성에 대해 말하고 넘어갈 수도 있을 거다.
 하지만, 문제는 내 스스로가 잘와닿지 않는다는 점이다.
 
-다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) Theorem 1을 통해 멋지게 증명하는 것이있는데, 여기서는 optimal policy의 증명을 바로 해내는 것이아니라, 한걸음 더 나아갈 수 있는 가능성을 이야기하고 있다.
+다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명한 자료가 있는데 (Theorem 1) 이 정리를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
+optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
+직접 증명해낼 수 있는지 의문이 들기도 하고, 또 이 방식이 Alireza Modirshanechi가 택한 방식이기 때문에 그렇다.
 
-하지만 어차피, optimal policy의 존재성을 지금 증명할 필요는 없다.
-다음 포스트에서 iterative한 방식으로 해당 optimal policy를 얻어낼 수 있음을 증명하겠다.
+## 3.7 Bellman optimal equatinos
