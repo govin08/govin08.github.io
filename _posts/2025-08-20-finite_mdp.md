@@ -349,7 +349,7 @@ Sutton은 컴퓨터공학자라고 한다.
 ---
 
 
-어떤 finite MDP $\mathscr D(\mathcal S,\mathcal A, p, \gamma)$에 대하여 policy들의 집합을 $\Pi$라고 표시하자.
+어떤 $\mathscr D(\mathcal S,\mathcal A, p, \gamma)$에 대하여 policy들의 집합을 $\Pi$라고 표시하자.
 
 <!-- $$\Pi=\left\{\pi(\cdot|\cdot):\mathcal S\times\mathcal A\to[0,1]\,\vert\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$ -->
 
@@ -529,6 +529,7 @@ v_\ast(s)
 \end{align*}
 $$
 
+이다.
 좌변이 (3.18) 또는 (3.19)와 같다는 것이 state value function에 대한 Bellman optimal equation이다.
 두 식은, 정말로 정책에 dependent한 식이 아니다.
 (3.19)에 subscript로 $\pi$같은게 없다는 것이다.
