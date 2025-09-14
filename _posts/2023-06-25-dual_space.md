@@ -14,7 +14,7 @@ toc: true
 어제 아침에 더 괜찮아보이는 notation으로 다시 적어보았고, 그리고 오늘 (새벽 4시) 일찍 일어난 김에 포스팅을 작성해봅니다.
 
 dual space에 대해서는 당연히, 학부 2학년 때 배운 바가 있기는 하지만, 늘 그렇듯이 수업시간에 빠르게 지나간 정도였고, 깊이 고민해본 적은 없습니다.
-해당 자료에 등장하는 annihilator라는 개념에 대해서는 대학원 대수 수업때 잠깐 접었던 적이 있습니다.
+해당 자료에 등장하는 annihilator라는 개념에 대해서는 대학원 대수 수업때 잠깐 접했던 적이 있습니다.
 이 포스트의 마지막 결론이 될 것으로 보이는 $\text{dim}(V)=\text{dim}(U)+\text{dim}(U^0)$는, (Strang 책의) fundamental theorem of linear algebra 같은 걸 떠올리게 합니다.
 혹은, $U<V$일 때, $\text{dim}(V)=\text{dim}(U)+\text{dim}(U^\perp)$가 성립한다는 식과도 유사해보입니다. (같은 것일지도 모르겠습니다.)
 

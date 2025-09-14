@@ -391,7 +391,7 @@ $$q_\ast(s,a)=\sum_{s',r}p(s',r|s,a)(r+\gamma v_\ast(s'))$$
 
 로 정의하자.
 그러면 $q_\ast$도 최대가 된다.
-즉, 모든 $s$, $a$에 대하여 $v(s,a)\le q_\ast(s,a)$이다.
+즉, 모든 $s$, $a$에 대하여 $q(s,a)\le q_\ast(s,a)$이다.
 왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(s',r|s,a)\le0$, $\gamma\ge0$으로부터
 
 $$
