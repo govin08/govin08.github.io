@@ -457,4 +457,12 @@ $$
 실제로 [Aswin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
 다음과 같이 쓰고 있다.
 
-![lemma_f]({{site.url}}\images\2025-09-14-finite_mdp\aswin_rao.png){: .img-50-center}
+![lemma_f]({{site.url}}\images\2025-08-20-finite_mdp\aswin_rao.png){: .img-90-center}
+
+이 증명을 따라서 적절히 증명하면 어쨌든 optimal policy의 존재성에 대해 말하고 넘어갈 수도 있을 거다.
+하지만, 문제는 내 스스로가 잘와닿지 않는다는 점이다.
+
+다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) Theorem 1을 통해 멋지게 증명하는 것이있는데, 여기서는 optimal policy의 증명을 바로 해내는 것이아니라, 한걸음 더 나아갈 수 있는 가능성을 이야기하고 있다.
+
+하지만 어차피, optimal policy의 존재성을 지금 증명할 필요는 없다.
+다음 포스트에서 iterative한 방식으로 해당 optimal policy를 얻어낼 수 있음을 증명하겠다.
