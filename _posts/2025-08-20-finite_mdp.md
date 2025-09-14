@@ -226,10 +226,10 @@ $$
 \begin{align*}
 q_\pi(s,a)
 &=\mathbb E\left[G_t|S_t=s,A_t=a\right]\\
-&=\sum_{r,s'}p(r,s'|s,a)\mathbb E\left[R_{t+1}+\gamma R_{t+2}|S_t=s,A_t=a, R_{t+1}=r,S_{t+1}=s'\right]\\
-&=\sum_{r,s'}p(r,s'|s,a)\mathbb E\left[r+\gamma R_{t+2}|S_{t+1}=s'\right]\\
-&=\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\mathbb E\left[R_{t+2}|S_{t+1}=s'\right]\right)\\
-&=\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma v_\pi(s')\right)\tag{e3.13}
+&=\sum_{s',r}p(s',r|s,a)\mathbb E\left[R_{t+1}+\gamma R_{t+2}|S_t=s,A_t=a, R_{t+1}=r,S_{t+1}=s'\right]\\
+&=\sum_{s',r}p(s',r|s,a)\mathbb E\left[r+\gamma R_{t+2}|S_{t+1}=s'\right]\\
+&=\sum_{s',r}p(s',r|s,a)\left(r+\gamma\mathbb E\left[R_{t+2}|S_{t+1}=s'\right]\right)\\
+&=\sum_{s',r}p(s',r|s,a)\left(r+\gamma v_\pi(s')\right)\tag{e3.13}
 \end{align*}
 $$
 
@@ -260,10 +260,10 @@ v_\pi(s)
 &=\mathbb E_\pi\left[G_t|S_t=s\right]\\
 &=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s\right]\\
 &=\sum_a\pi(a|s)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
-&=\sum_a\pi(a|s)\sum_{r,s'}p(r,s'|s,a)\left(r+\gamma v_\pi(s')\right)\tag{3.14}
+&=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\
+&=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left(r+\gamma v_\pi(s')\right)\tag{3.14}
 \end{align*}
 $$
 
@@ -288,11 +288,11 @@ $$
 q_\pi(s,a)
 &=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
 &=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{e3.17}
+&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
+&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_{s',r} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_{s',r} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s', A_{t+1}=a'\right]\right)\\
+&=\sum_{s',r} p(s', r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{e3.17}
 \end{align*}
 $$
 
@@ -311,10 +311,10 @@ v_\pi(s)
 q_\pi(s,a)
 &=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
 &=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
-&=\sum_{r, s'} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right)
+&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
+&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
+&=\sum_{s',r} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
+&=\sum_{s',r} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right)
 \tag{e3.19}
 \end{align*}
 $$
@@ -387,18 +387,18 @@ $$v_\pi (s)\le v_\ast(s)$$
 가 성립한다.
 $v_\ast$에 대응하는 함수 $q_\ast$를 (e3.13)와 비슷하게
 
-$$q_\ast(s,a)=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))$$
+$$q_\ast(s,a)=\sum_{s',r}p(s',r|s,a)(r+\gamma v_\ast(s'))$$
 
 로 정의하자.
 그러면 $q_\ast$도 최대가 된다.
 즉, 모든 $s$, $a$에 대하여 $v(s,a)\le q_\ast(s,a)$이다.
-왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(r,s'|s,a)\le0$, $\gamma\ge0$으로부터
+왜냐하면 모든 $\pi\in\Pi$에 대하여, $p(s',r|s,a)\le0$, $\gamma\ge0$으로부터
 
 $$
 \begin{align*}
 q_\pi(s,a)
-&=\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\pi(s'))\\
-&\le\sum_{r,s'}p(r,s'|s,a)(r+\gamma v_\ast(s'))\\
+&=\sum_{s',r}p(s',r|s,a)(r+\gamma v_\pi(s'))\\
+&\le\sum_{s',r}p(s',r|s,a)(r+\gamma v_\ast(s'))\\
 &=q_\ast(s,a)
 \end{align*}
 $$
@@ -476,5 +476,73 @@ $$
 직접 증명하려고 했던 것도 성공하지 못했고, 기존 자료를 이해하는 것도 실패했으니
 optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
 
-## 3.7 Bellman optimal equations
+## 3.6 Bellman optimal equations
 
+(9/14)이 이론들을 처음 본 건 벌써 5년 전이다.
+그런데도 아직도 개념들이 헷갈리고 계산에 확신이 없는 걸 보면 당시에 제대로 공부하지 않았던 것이 확실하다.
+지금도 그냥 Bellman equation에 적당히 maximum을 달면 되는 게 아닌가 하는 안일한 생각을 가지고 있으면서, 얼른 Bellman operator와 contraction principle로 넘어가려 했던 것이다.
+하지만 Sutton의 책 내용을 잘 따라가는 것만으로도 솔직히 조금 벅차다.
+그렇다고 Sutton 책의 내용이 이해가 안간다는 건 아니다.
+그러니 욕심을 내지는 말고, 잘 따라가보자.
+
+---
+
+optimal policy $\pi^\ast$가 존재한다고 가정하자.
+$\pi^\ast$에 따른 state value function과 action value function은 비슷한 종류의 maximality를 가진다.
+즉, $v_\ast=v_{\pi^\ast}$, $q_\ast=q_{\pi^\ast}$라고 가정하면, 모든 $\pi\in\Pi$에 대하여
+
+$$
+\begin{align*}
+v_\pi(s)&\le v_\ast(s)&&\forall s\in\mathcal S\\
+q_\pi(s,a)&\le q_\ast(s,a)&&\forall s\in\mathcal S,\forall a\in\mathcal A
+\end{align*}
+$$
+
+이다.
+혹은, 조금 더 정확하게
+
+$$
+\begin{align}
+v_\ast(s)&=\max_\pi v_\pi(s)&&\forall s\in\mathcal S\tag{3.15}\\
+q_\ast(s,a)&=\max_\pi q_\pi(s,a)&&\forall s\in\mathcal S,\forall a\in\mathcal A\tag{3.16}
+\end{align}
+$$
+
+이라고 쓸 수도 있다.
+
+이때, 다음과 같은 Bellman optimal equation이 성립한다.
+어떤 정책에도 의존하지 않는 식이라고 Sutton은 강조한다.
+순수하게 $v_\ast(s)$들 사이의 관계식으로서 다음 식이 성립한다.
+모든 $s\in\mathcal S$에 대하여,
+
+$$
+\begin{align*}
+v_\ast(s)
+&=\max_a q_\ast(s,a)\\
+&=\max_a\mathbb E_\ast\left[G_t|S_t=s,A_t=a\right]\\
+&=\max_a\mathbb E_\ast\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
+&=\max_a\sum_{s',r}\mathbb E_\ast\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,S_{t+1}=s',R_{t+1}=r\right]p(s',r|s,a)\\
+&=\max_a\sum_{s',r}\mathbb E_\ast\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]p(s',r|s,a)\\
+&=\max_a\sum_{s',r}\left(r+\gamma \mathbb E_\ast\left[G_{t+1}|S_{t+1}=s'\right]\right)p(s',r|s,a)\\
+&=\max_a\sum_{s',r}\left(r+\gamma v_\ast(s')\right)p(s',r|s,a)\tag{3.18}\\
+&=\max_a\mathbb E\left[R_{t+1}+\gamma v_\ast\left(S_{t+1}\right)|S_t=s,A_t=a\right]\tag{3.19}
+\end{align*}
+$$
+
+좌변이 (3.18) 또는 (3.19)와 같다는 것이 state value function에 대한 Bellman optimal equation이다.
+두 식은, 정말로 정책에 dependent한 식이 아니다.
+(3.19)에 subscript로 $\pi$같은게 없다는 것이다.
+
+이것은 $|\mathcal S|$개의 변수 $v_\ast(s)$에 대한 $|\mathcal S|$개의 식으로 이루어진 연립방정식이다.
+$\max$를 포함하고 있어 일차연립방정식은 아니다, 즉 비선형 연립방정식이다.
+$q_\ast$ 버전의 Bellman optimal equation은 다음과 같다.
+
+$$
+\begin{align*}
+q_\ast(s,a)
+&=\mathbb E_\ast\left[G_t|S_t=s,A_t=a\right]\\
+&=\mathbb E\left[R_{t+1}+\gamma v_\ast(S_{t+1})|S_t=s,A_t=a\right]\\
+&=\mathbb E\left[R_{t+1}+\gamma\max_{a'}q_\ast\left(S_{t+1},a\right))|S_t=s,A_t=a\right]\\
+&=\sum_{s',r}p(s',r|s,a)\left[r+\gamma\max_{a'}q_\ast(s',a')\right]\tag{3.20}
+\end{align*}
+$$
