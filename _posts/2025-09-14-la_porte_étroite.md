@@ -6,14 +6,13 @@ tags: [André Gide]
 author_profile: false
 ---
 
-![0_book]({{site.url}}\images\2025-09-14-la_porte_étroite\0_book.png){: .img-20-center}
-
 몇 년째 참여하고 있는 어떤 독서모임은, 3개월간 모임에 참석하거나 주최하지 않으면 독후감을 써내야 한다.
 최근 이직과 회사 일로 매우매우 바빴기 때문에 주최는커녕 참석도 할 새가 없었다.
 그래서 어제 (9/13) 후다닥 「좁은 문」에 대한 독후감을 써서 제출했는데, 쓴 김에 블로그에도 올려보려 한다.
 적당히 그림은 AI로 만들어봐야겠다.
 
-![1_ideal_women_image.jpg]({{site.url}}\images\2025-09-14-la_porte_étroite\1_ideal_women_image.jpg){: .img-40-center}
+![0_book]({{site.url}}\images\2025-09-14-la_porte_étroite\0_book.png){: .img-20-center}
+
 
 # 1. 읽은 동기
 
@@ -28,6 +27,8 @@ author_profile: false
 여기에는 피천득씨가 생각하는, 아름다운 여성상에 대해 이야기되고 있는데요.
 그 수필에는 처음에는 성경의 '마리아', 단테의 '베아트리체', 헤나의 '파비올라'에 이어서, 「좁은 문」의 두 여자 주인공이 언급됩니다.
 이 수필을 세월을 두고 여러 번 읽으면서, 처음엔 알아보지 못하다가 어느 순간 '어? 알리사와 쥘리에트? 이거 「좁은 문」에 나왔던 여자 주인공들 아닌가?'하고 생각하게 되었어요.
+
+![1_ideal_women_image.jpg]({{site.url}}\images\2025-09-14-la_porte_étroite\1_ideal_women_image.jpg){: .img-40-center}
 
 그래서, 「좁은 문」을 읽어야겠다, 하는 생각을, 사실 피천득의 책을 읽을 때마다 했습니다.
 근데 막상 책을 펼쳐도 끝까지 읽는 데 성공한 적이 없었어요.

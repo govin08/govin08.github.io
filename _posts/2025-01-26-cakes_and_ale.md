@@ -6,9 +6,9 @@ tags: [maugham]
 author_profile: false
 ---
 
-![cakes_and_ale]({{site.url}}\images\2024-12-26-maugham\cakes_and_ale.jpg){: .img-40-center}
-
 # 0. 지정도서모임 주관
+
+![cakes_and_ale]({{site.url}}\images\2024-12-26-maugham\cakes_and_ale.jpg){: .img-40-center}
 
 평소에 책읽는 걸 좋아하고 또 독서모임에 참여하는 것도 좋아하지만, 직접 모임을 열어본 적은 거의 없었다.
 2020년쯤에 모임을 한 번 주최해봤던 경험이 유일했다.

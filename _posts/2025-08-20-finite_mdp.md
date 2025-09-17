@@ -531,10 +531,10 @@ $$
 
 이다.
 좌변이 (3.18) 또는 (3.19)와 같다는 것이 state value function에 대한 Bellman optimal equation이다.
-두 식은, 정말로 정책에 dependent한 식이 아니다.
+두 식은, 정말로 정책에 independent한 식이다.
 (3.19)에 subscript로 $\pi$같은게 없다는 것이다.
 
-이것은 $|\mathcal S|$개의 변수 $v_\ast(s)$에 대한 $|\mathcal S|$개의 식이다.
+(3.18)은 $|\mathcal S|$개의 변수 $v_\ast(s)$에 대한 $|\mathcal S|$개의 식이다.
 즉, 연립방정식인데 $\max$를 포함하고 있어 일차연립방정식은 아닌 비선형 연립방정식이다.
 $q_\ast$ 버전의 Bellman optimal equation은 다음과 같다.
 
