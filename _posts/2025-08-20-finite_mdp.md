@@ -461,15 +461,15 @@ $$
 ### 3.5.2 some articles
 
 이 주제에 대해 몇몇 읽을만한 글들이 있어서 읽어봤다.
-[Aswin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
+[Ashwin Rao](https://web.stanford.edu/class/cme241/lecture_slides/OptimalPolicyExistence.pdf)는 말로서 적절히 optimal policy의 존재성을 증명하고 있다.
 다음과 같이 쓰고 있다.
 
-![lemma_f]({{site.url}}\images\2025-08-20-finite_mdp\aswin_rao.png){: .img-90-center}
+![lemma_f]({{site.url}}\images\2025-08-20-finite_mdp\ashwin_rao.png){: .img-90-center}
 
 이 증명을 적절히 비슷하게 서술하면 어쨌든 optimal policy가 존재함을 증명하는 듯이 서술하고 넘어갈 수도 있다.
 하지만, 문제는 내 스스로가 잘 와닿지 않는다는 점이다.
 
-다른 곳에서는 ([Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)의 설명) 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명한 자료가 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
+[Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)는 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명하고 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
 
 ---
 
@@ -531,10 +531,10 @@ $$
 
 이다.
 좌변이 (3.18) 또는 (3.19)와 같다는 것이 state value function에 대한 Bellman optimal equation이다.
-두 식은, 정말로 정책에 dependent한 식이 아니다.
+두 식은, 정말로 정책에 independent한 식이다.
 (3.19)에 subscript로 $\pi$같은게 없다는 것이다.
 
-이것은 $|\mathcal S|$개의 변수 $v_\ast(s)$에 대한 $|\mathcal S|$개의 식이다.
+(3.18)은 $|\mathcal S|$개의 변수 $v_\ast(s)$에 대한 $|\mathcal S|$개의 식이다.
 즉, 연립방정식인데 $\max$를 포함하고 있어 일차연립방정식은 아닌 비선형 연립방정식이다.
 $q_\ast$ 버전의 Bellman optimal equation은 다음과 같다.
 
