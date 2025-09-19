@@ -1,8 +1,8 @@
 ---
 layout: single
-title: "(Sutton, 4장) Dynamic Programming"
+title: "(Sutton, 4.1절) Policy Evaluation"
 categories: machine-learning
-tags: [reinforcement learing, Bellman optimal equation, partial order]
+tags: [reinforcement learing, Bellman operator, contraction principle, operator norm]
 use_math: true
 published: true
 author_profile: false
@@ -144,10 +144,12 @@ $$
 
 $$
 v_\pi(s)=r_\pi(s)+\gamma\sum_{s'}v_\pi(s')P\left(S_{t+1}=s'|S_t=s\right)
+\tag{\ast}
 $$
 
 이 된다.
 이전 포스트에도 언급했고, 책의 4장에도 다시 강조되지만 Bellman equation의 본질은 연립방정식, 그것도 선형(affine)연립방정식이다.
+변수의 개수와 식의 개수가 $|\mathcal S|$로 같으므로 이 연립방정식 $(\ast)$의 해가 단 하나 존재한다고 가정하자.
 state space $\mathcal S$를 $\mathcal S=\\{s_1,\cdots,s_n\\}$으로 두고 위 식을 다시 쓰면 모든 $i$에 대하여 ($1\le i\le n)$
 
 $$
@@ -287,7 +289,101 @@ $$d(x^\ast,y^\ast)=d\left(\phi(x^\ast),\phi(y^\ast)\right)\le cd(x^\ast,y^\ast)$
 즉 고정점 $x^\ast$는 유일하다.
 $\square$
 
-## 4.5 proof (policy evaluation)
+## 4.5 $||P||\le1$
 
-contraction principle을 활용하면 policy evaluation에 대한 증명이 가능하다.
-먼저 Bellman operator $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 함수인 것을 아까 봤다.
+policy evaluation 증명의 완성을 위해서는 $P$의 operator norm $||P||$가 1보다 작거나 같다는 사실이 필요하다.
+즉 행렬 $P$에 대한 norm은 행렬 $P$를 operator $P:\mathbb R^n\to\mathbb R^n$으로 볼 때의 operator norm을 말한다.
+
+operator norm의 [여러가지 정의](https://en.wikipedia.org/wiki/Operator_norm#Equivalent_definitions) 중 
+
+$$||A||=\sup\{Av:||v||\le1\}$$
+
+을 사용하자.
+그리고 $||A^T||=||A||$라는 [잘 알려진 사실](https://math.stackexchange.com/a/3471127/746048)을 활용할 수 있다.
+또한, 4.3에서 정의한 행렬 $P$는 각 행의 합이 1이다.
+즉, 모든 $j$에 대하여 $\sum_ip_{ij}=1$이다.
+그러면
+
+$$
+\left|\left|p_{1j}v_1+\cdots+p_{nj}v_n\right|\right|_\infty
+\le p_{1j}||v||_\infty+\cdots+p_{nj}||v||_\infty
+=||v||_\infty
+$$
+
+이므로
+
+$$
+\left|\left|P^Tv\right|\right|_\infty
+=\max\{\left|\left|p_{1j}v_1+\cdots+p_{nj}v_n\right|\right|_\infty:j=1,\cdots,n\}
+\le||v||_\infty
+$$
+
+이고, 따라서 
+
+$$
+||P||
+=||P^T||
+=\sup\{||P^Tv||_\infty:||v||_\infty\le1\}
+\le1
+$$
+
+이다.
+
+
+<!-- $$
+\begin{align*}
+P^Tv
+&=\left(
+    ||p_{11}v_1+\cdots+p_{n1}v_n||_\infty,
+    \cdots,
+    ||p_{1n}v_1+\cdots+p_{nn}v_n||_\infty
+    \right)\\
+&=\left(
+    \left|\left|
+        p_{11}||v||_\infty+\cdots+p_{n1}||v||_\infty
+    \right|\right|_\infty,
+    \cdots,
+    \left|\left|
+        p_{1n}||v||_\infty+\cdots+p_{nn}||v||_\infty
+    \right|\right|_\infty
+    \right)\\
+\end{align*}
+$$
+
+이므로
+
+$$
+\begin{align*}
+\left|\left|P^Tv\right|\right|
+&=
+\end{align*}
+$$ -->
+
+## 4.6 proof (policy evaluation)
+
+이제 policy evaluation의 가능하다.
+<!-- 먼저 Bellman operator $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 contraction이다. -->
+두 벡터 $v,w\in\mathbb R^n$에 대하여
+
+$$
+\begin{align*}
+\left|\left|T^\pi(v) - T^\pi(w)\right|\right|_\infty
+&=\gamma\left|\left|P(v-w)\right|\right|_\infty\\
+&=\gamma||v-w||_\infty\\
+\end{align*}
+$$
+
+이다.
+만약 $0\lt\gamma\lt1$ 이면 $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 contraction이다.
+그러면 contraction principle에 의해
+
+$$\mathcal T^\pi(v^\ast)=v^\ast$$
+
+인 $v^\ast\in\mathbb R^n$이 유일하게 하나 존재한다.
+Bellman equation $(\ast)$도 유일한 해 $v_\pi$를 가지므로 이 두 벡터는 같다.
+즉, policy evaluation을 통해 얻게되는 가치함수는 $v_\pi$이다.
+다시 말해
+
+$\lim_{k\to\infty}v_k=v_\pi$
+
+가 성립한다.
