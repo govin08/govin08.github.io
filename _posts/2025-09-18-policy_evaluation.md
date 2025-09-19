@@ -25,6 +25,11 @@ Sutton의 3장은 꽤 책의 내용과 비슷하게 썼다.
 이 포스트에서 꼭 다루고자 하는 것은 Bellman operator와 contraction principle로 policy evaluation이 유효한 것임을 증명하는 것이다.
 이에 관해서는 이미 [Ishwin Rao](https://web.stanford.edu/class/cme241/lecture_slides/BellmanOperators.pdf)나 [Carl Fredricksson](https://cfml.se/bellman-operators-are-contractions/)이 잘 써놨는데 아마 조금씩 참고할 것 같다.
 
+정확한 증명을 위해 계속 파다보니 operator norm에 대해서도 이야기해야 했다.
+그런데, 가만히 보면 contraction principle이나 operator norm 모두 내 석사논문에서 다뤘던 주제들이다.
+사실 수학 전체로 보면 조금 기본적인 내용들을 내 부끄러운 석사논문에 넣었던 것인데 그때 공부했던 것이 직접적인 도움이 되었다.
+어떻게 보면 Bellman operator의 Lipschitz constant가 1보다 작다는 사실을 이용하고 있다.
+
 # 4. Dynamic Programming
 
 4장의 맨 처음에 나오는 것은 Bellman optimal equation이다.
