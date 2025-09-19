@@ -389,6 +389,6 @@ Bellman equation $(\ast)$도 유일한 해 $v_\pi$를 가지므로 이 두 벡�
 즉, policy evaluation을 통해 얻게되는 가치함수는 $v_\pi$이다.
 다시 말해
 
-$\lim_{k\to\infty}v_k=v_\pi$
+$$\lim_{k\to\infty}v_k=v_\pi$$
 
 가 성립한다.
