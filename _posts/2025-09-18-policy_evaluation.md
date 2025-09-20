@@ -66,6 +66,8 @@ $$
 그래, 의미상으로는 당연히 그럴 것 같은데 왜 그런 지는 그렇게까지 쉽게 설명되지 않는다.
 그러니, 세번째 줄로부터 시작하여 네번째 줄로 도출되는 계산을 해보려 한다.
 
+$\pi$와 $p$의 정의, Markov property, 기댓값의 정의 등에 의해 다음과 같이 계산된다.
+
 $$
 \begin{align*}
 &\mathbb E_\pi\left[R_{t+1}+\gamma v_\pi(S_{t+1})|S_t=s\right]\\
@@ -84,12 +86,22 @@ $$
 가치함수를 얻어내는 방식은 식 (4.4)을
 
 $$
-v_{k+1}(s)=\sum_a\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_k(s')\right]\tag{4.5}
+v_{k+1}(s)=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_k(s')\right]\tag{4.5}
 $$
 
 와 같이 변형해 가치함수들의 수열 $v_0, v_1, v_2, \cdots$을 만들어나가는 것이다.
-$v_0$가 임의의 함수(e.g. $v_0\equiv0$)이고 $v_\pi$가 존재한다는 조건 하에 수열 $\\{v_i\\}$가 $v_\pi$로 수렴하는 것이 알려져 있고 이것을 Sutton은 증명하지 않고 넘어갔다.
+$v_0$가 임의의 가치함수(e.g. $v_0\equiv0$)이고 $v_\pi$가 존재한다는 조건 하에 수열 $\\{v_i\\}$가 $v_\pi$로 수렴하는 것이 알려져 있고 이것을 Sutton은 증명하지 않고 넘어갔다.
 이 포스트에서 이를 증명해보려 한다.
+정확하게는 다음과 같다.
+
+> $0\lt\gamma\lt1$인 finite MDP $\mathscr D\left(\mathcal S, \mathcal A, p, \gamma\right)$의 한 정책을 $\pi$라고 하자.
+> 임의의 가치함수 $v_0:\mathcal S\to\mathbb R$에 대하여 가치함수의 수열 $\lbrace v_k\rbrace_{k=0}^\infty$를 식 (4.5)와 같이 정의하면 $k\to\infty$일 때 $v_k$는 $v_\pi$로 수렴한다.
+> 
+> $$\lim_{k\to\infty}v_k=v_\pi$$
+
+수열의 수렴을 이야기하려면 함수 $v_k$가 속해있는 공간을 정의해야 할텐데, 여기서는 함수공간 $\mathcal V=\\{v:\mathcal S\to\mathbb R\\}$에 대하여 normed space $\left(\mathcal V,\vert\vert\cdot\vert\vert_\infty\right)$을 생각하는 것이다.
+Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
+어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴을 포함한다.
 
 ## 4.3 Bellman operation
 
@@ -147,13 +159,13 @@ $$
 
 $$
 v_\pi(s)=r_\pi(s)+\gamma\sum_{s'}v_\pi(s')P\left(S_{t+1}=s'|S_t=s\right)
-\tag{\ast}
+\tag{$\ast$}
 $$
 
 이 된다.
 이전 포스트에도 언급했고, 책의 4장에도 다시 강조되지만 Bellman equation의 본질은 연립방정식, 그것도 선형(affine)연립방정식이다.
 변수의 개수와 식의 개수가 $|\mathcal S|$로 같으므로 이 연립방정식 $(\ast)$의 해가 단 하나 존재한다고 가정하자.
-state space $\mathcal S$를 $\mathcal S=\\{s_1,\cdots,s_n\\}$으로 두고 위 식을 다시 쓰면 모든 $i$에 대하여 ($1\le i\le n)$
+state space $\mathcal S$를 $\mathcal S=\\{s_1,\cdots,s_n\\}$으로 두고 위 식을 다시 쓰면 모든 $i,j$에 대하여 ($1\le i,j\le n)$
 
 $$
 v_\pi(s_j)=r_\pi(s_i)+\gamma\sum_{i=1}^nv_\pi(s_i)P\left(S_{t+1}=s_i|S_t=s_j\right)
@@ -166,9 +178,9 @@ $$
 $$
 P=
 \begin{bmatrix}
-P\left(S_{t+1}=s_1|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_1|S_t=s_n\right)\\
+P\left(S_{t+1}=s_1|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_1\right)\\
 \vdots&\ddots&\vdots\\
-P\left(S_{t+1}=s_n|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_n\right)
+P\left(S_{t+1}=s_1|S_t=s_n\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_n\right)
 \end{bmatrix}
 $$
 
@@ -212,7 +224,7 @@ $$v_{k+1}=\mathcal T^\pi(v_k)\tag{4.5*}$$
 baby rudin (3ed)의 9.22, 9.23에 다음과 같은 내용이 있다.
 먼저 9.22는 contraction에 대한 정의이다.
 
-> 거리공간 $(X,d)$에 대하여 함수 $\phi:X\to X$가 어떤 음이아닌 실수 $c\lt1$에 대해 모든 $x,y\in X$에 대하여
+> (9.22 정의) 거리공간 $(X,d)$에 대하여 함수 $\phi:X\to X$가 어떤 실수 $0\le c\lt1$에 대해 모든 $x,y\in X$에 대하여
 > 
 > $$d\left(\phi(x),\phi(y)\right)\le cd(x,y)$$
 > 
@@ -220,21 +232,21 @@ baby rudin (3ed)의 9.22, 9.23에 다음과 같은 내용이 있다.
 
 contraction principle은 9.23에 해당하는 다음의 정리이다.
 
-> 만약 $X$가 complete space이고 $\phi$가 $X$의 contraction이면 $\phi(x^\ast)=x^\ast$를 만족시키는 $x^\ast$가 존재하고 그러한 $x$는 유일하다.
+> (9.23 정리) 만약 $X$가 complete space이고 $\phi$가 $X$의 contraction이면 $\phi(x^\ast)=x^\ast$를 만족시키는 $x^\ast$가 존재하고 그러한 $x$는 유일하다.
 
 어떤 거리공간이 complete하다는 것은 코시수열이 수렴한다는 것을 말한다.
 이 공간에서 거리가 점점 줄어드는 함수가 있으면, 그 함수는 고정점(fixed point)이 반드시 존재한다는 아주 강력하고 재미있는 정리이다.
 이것은 [Banach fixed point theorem](https://en.wikipedia.org/wiki/Banach_fixed-point_theorem)이라는 이름도 가지고 있다.
 
 증명은 비교적 쉽다.
-그리고 그 fixed point를 찾아가는 과정이, 꼭 value evaluation과도 비슷하다.
+그리고 그 fixed point를 찾아가는 과정이, 꼭 policy evaluation과도 비슷하다.
 즉, 아무 점 $x_0\in X$를 잡더라도 $\phi$를 계속해서 취해나가면 일정한 점 $x^\ast$에 이른다는 것이다.
 
 임의의 점 $x_0\in X$에서 출발하여 수열 $\\{x_n\\}_{n=0}^\infty$를
 
 $$x_{n+1}=\phi(x_n)$$
 
-이라고 iterative하게 정의하자.
+로 반복적으로 정의하자.
 그러면
 
 $$
