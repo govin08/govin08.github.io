@@ -66,8 +66,6 @@ $$
 그래, 의미상으로는 당연히 그럴 것 같은데 왜 그런 지는 그렇게까지 쉽게 설명되지 않는다.
 그러니, 세번째 줄로부터 시작하여 네번째 줄로 도출되는 계산을 해보려 한다.
 
-다음과 같다.
-
 $$
 \begin{align*}
 &\mathbb E_\pi\left[R_{t+1}+\gamma v_\pi(S_{t+1})|S_t=s\right]\\
@@ -366,7 +364,7 @@ $$ -->
 
 ## 4.6 proof (policy evaluation)
 
-이제 policy evaluation의 가능하다.
+이제 policy evaluation의 증명이 가능하다.
 <!-- 먼저 Bellman operator $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 contraction이다. -->
 두 벡터 $v,w\in\mathbb R^n$에 대하여
 
