@@ -28,7 +28,7 @@ Sutton의 3장은 꽤 책의 내용과 비슷하게 썼다.
 정확한 증명을 위해 계속 파다보니 operator norm에 대해서도 이야기해야 했다.
 그런데, 가만히 보면 contraction principle이나 operator norm 모두 내 석사논문에서 다뤘던 주제들이다.
 사실 수학 전체로 보면 조금 기본적인 내용들을 내 부끄러운 석사논문에 넣었던 것인데 그때 공부했던 것이 직접적인 도움이 되었다.
-어떻게 보면 Bellman operator의 Lipschitz constant가 1보다 작다는 사실을 이용하고 있다.
+어떻게 보면 policy evaluation은 Bellman operator의 Lipschitz constant가 1보다 작다는 사실을 이용하고 있다.
 
 # 4. Dynamic Programming
 
@@ -100,8 +100,9 @@ $v_0$가 임의의 가치함수(e.g. $v_0\equiv0$)이고 $v_\pi$가 존재한다
 > $$\lim_{k\to\infty}v_k=v_\pi$$
 
 수열의 수렴을 이야기하려면 함수 $v_k$가 속해있는 공간을 정의해야 할텐데, 여기서는 함수공간 $\mathcal V=\\{v:\mathcal S\to\mathbb R\\}$에 대하여 normed space $\left(\mathcal V,\vert\vert\cdot\vert\vert_\infty\right)$을 생각하는 것이다.
-Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
-어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴을 포함한다.
+Sutton은 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를포함한다.
+<!-- Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
+어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를 포함한다. -->
 
 ## 4.3 Bellman operation
 
@@ -155,7 +156,7 @@ $$
 와 같다.
 두번째 줄은 기호의 정의와 통분, 세번째 줄은 marginalization, 네번째 줄은 조건부확률의 정의에 의해 계산되었다.
 마지막 식은 $\mathbb E\left[S_{t+1}|S_t=s\right]$로도 쓸 수 있지만 위의 계산결과까지만 사용할 것이다.
-즉 Bellman equation을 다시 쓰면
+계산한 $A$와 $B$를 가지고 Bellman equation을 다시 쓰면
 
 $$
 v_\pi(s)=r_\pi(s)+\gamma\sum_{s'}v_\pi(s')P\left(S_{t+1}=s'|S_t=s\right)
@@ -170,7 +171,7 @@ $$
 v_\pi(s_j)=r_\pi(s_j)+\gamma\sum_{i=1}^nv_\pi(s_i)P\left(S_{t+1}=s_i|S_t=s_j\right)
 $$
 
-이 성립하는 것이다.
+이 성립한다.
 선형(affine)방정식이니, 벡터와 행렬로 표현하면 가장 적절하다.
 행렬 $P\in\mathbb R^{n\times n}$를
 
@@ -203,12 +204,12 @@ $$
 
 으로 두면 Bellman equation은
 
-$$v_\pi=r_\pi+Pv_\pi$$
+$$v_\pi=r_\pi+\gamma Pv_\pi$$
 
 가 된다.
 이런 관점에서 Bellman operation $\mathcal T^\pi$를
 
-$$\mathcal T^\pi(v)=r_\pi+Pv_\pi$$
+$$\mathcal T^\pi(v)=r_\pi+\gamma Pv$$
 
 로 정의할 수 있고 Bellman equation도 간단히
 
@@ -217,7 +218,7 @@ $$v_\pi=\mathcal T^\pi(v_\pi)\tag{$\ast$}$$
 로 쓰일 수 있다.
 그리고 policy evaluation 식 (4.5)도
 
-$$v_{k+1}=\mathcal T^\pi(v_k)\tag{4.5*}$$
+$$v_{k+1}=\mathcal T^\pi(v_k)$$
 
 로 표현될 수 있다.
 
@@ -282,7 +283,7 @@ $$
 $$\frac{c^N}{1-c}d(x_0,x_1)\lt\epsilon$$
 
 을 만족시키는 자연수 $N$가 존재한다.
-따라서 $m\gt n\gt N$이면
+$m\gt n\gt N$이면
 
 $$
 d(x_n,x_m)
@@ -292,12 +293,16 @@ $$
 
 이므로 수열 $\\{x_n\\}$은 코시수열이다.
 그런데 $X$가 complete space이므로 이 수열은 어떤 점 $x^\ast$엔가에 수렴하게 된다.
-이때, $\phi$가 연속함수라는 것을 활용하면
+이때, contraction이 연속함수라는 건 당연하므로 $\phi$가 연속함수라는 것을 활용하면
 
-$$\phi(x^\ast)=\lim_{n\to\infty}\phi(x_n)=\lim_{n\to\infty}x_{n+1}=x^\ast.$$
+$$\phi(x^\ast)
+=\phi\left(\lim_{n\to\infty}x_n\right)
+=\lim_{n\to\infty}\phi(x_n)
+=\lim_{n\to\infty}x_{n+1}
+=x^\ast.$$
 
 이다.
-즉, 고정점 $x^\ast$이 존재한다.
+즉, $x^\ast$는 $\phi$의 고정점(fixed point)이다.
 
 또한 만약 고정점이 두 개 $x^\ast$, $y^\ast$ 존재한다면
 
@@ -315,7 +320,7 @@ $\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
 에서
 $\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
 로 가는 operator로 보았을 때의 operator norm을 말한다.
-이것은 matrix norm이라고도 한다.
+이것은 [matrix norm](https://en.wikipedia.org/wiki/Matrix_norm#Matrix_norms_induced_by_vector_norms)이라고도 한다.
 
 operator norm의 [여러가지 정의](https://en.wikipedia.org/wiki/Operator_norm#Equivalent_definitions) 중 
 
@@ -402,7 +407,7 @@ $$ -->
 $$
 \begin{align*}
 \left|\left|T^\pi(v) - T^\pi(w)\right|\right|_\infty
-&=\left|\left|(r_\pi+Pv_\pi) - (r_\pi+Pw_\pi)\right|\right|_\infty\\
+&=\left|\left|(r_\pi+\gamma Pv) - (r_\pi+\gamma Pw)\right|\right|_\infty\\
 &=\gamma\left|\left|P(v-w)\right|\right|_\infty\\
 &\le\gamma\lvert\lvert P\rvert\rvert\cdot\lvert\lvert v-w\rvert\rvert_\infty\\
 &\le\gamma||v-w||_\infty\\
@@ -410,7 +415,10 @@ $$
 $$
 
 이다.
-첫번째 줄은 bellman operator의 정의, 세번째 줄은 operator norm의 성질, 네번째 줄은 $\lvert\lvert P\rvert\rvert\le1$이 쓰였다.
+첫번째 줄은 bellman operator의 정의,
+두번째 줄은 $P$의 선형성과 norm의 성질,
+세번째 줄은 operator norm의 성질,
+네번째 줄은 $\lvert\lvert P\rvert\rvert\le1$이 쓰였다.
 이것을 다시 쓰면
 
 $$
@@ -422,18 +430,16 @@ $$
 이 된다.
 $0\lt\gamma\lt1$ 이므로 $\mathcal T^\pi$는
 $\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
-에서
-$\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
-으로 가는 contraction이다.
+에서의 contraction이다.
 그러면 contraction principle에 의해
 
 $$\mathcal T^\pi(v^\ast)=v^\ast$$
 
-인 $v^\ast\in\mathbb R^n$이 유일하게 하나 존재한다.
-즉 Bellman equation $(\ast)$이 유일한 해 $v_\ast$를 가진다.
-따라서 $v_\pi=v_\ast$이다.
+인 $v^\ast\in\mathbb R^n$이 유일하게 하나 존재하고 식 (4.5)로 정의된 수열 $\\{v_k\\}$에 대하여 $v_k\to v^\ast$이다.
+즉 Bellman equation $(\ast)$이 유일한 해 $v^\ast$를 가진다.
+따라서 $v^\ast=v_\pi$이다.
 그러면
 
-$$\lim_{k\to\infty}v_k=v_\pi$$
+$$\lim_{k\to\infty}v_k=v^\ast=v_\pi$$
 
 가 성립한다.
