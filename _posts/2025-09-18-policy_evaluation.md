@@ -159,16 +159,15 @@ $$
 
 $$
 v_\pi(s)=r_\pi(s)+\gamma\sum_{s'}v_\pi(s')P\left(S_{t+1}=s'|S_t=s\right)
-\tag{$\ast$}
 $$
 
 이 된다.
 이전 포스트에도 언급했고, 책의 4장에도 다시 강조되지만 Bellman equation의 본질은 연립방정식, 그것도 선형(affine)연립방정식이다.
-변수의 개수와 식의 개수가 $|\mathcal S|$로 같으므로 이 연립방정식 $(\ast)$의 해가 단 하나 존재한다고 가정하자.
+<!-- 변수의 개수와 식의 개수가 $|\mathcal S|$로 같으므로 이 연립방정식 $(\ast)$의 해가 단 하나 존재한다고 가정하자. -->
 state space $\mathcal S$를 $\mathcal S=\\{s_1,\cdots,s_n\\}$으로 두고 위 식을 다시 쓰면 모든 $i,j$에 대하여 ($1\le i,j\le n)$
 
 $$
-v_\pi(s_j)=r_\pi(s_i)+\gamma\sum_{i=1}^nv_\pi(s_i)P\left(S_{t+1}=s_i|S_t=s_j\right)
+v_\pi(s_j)=r_\pi(s_j)+\gamma\sum_{i=1}^nv_\pi(s_i)P\left(S_{t+1}=s_i|S_t=s_j\right)
 $$
 
 이 성립하는 것이다.
@@ -211,7 +210,11 @@ $$v_\pi=r_\pi+Pv_\pi$$
 
 $$\mathcal T^\pi(v)=r_\pi+Pv_\pi$$
 
-로 정의할 수 있고 Bellman equation도 간단히 $v_\pi=\mathcal T^\pi(v_\pi)$로 쓰일 수 있다.
+로 정의할 수 있고 Bellman equation도 간단히
+
+$$v_\pi=\mathcal T^\pi(v_\pi)\tag{$\ast$}$$
+
+로 쓰일 수 있다.
 그리고 policy evaluation 식 (4.5)도
 
 $$v_{k+1}=\mathcal T^\pi(v_k)\tag{4.5*}$$
@@ -304,32 +307,49 @@ $$d(x^\ast,y^\ast)=d\left(\phi(x^\ast),\phi(y^\ast)\right)\le cd(x^\ast,y^\ast)$
 즉 고정점 $x^\ast$는 유일하다.
 $\square$
 
-## 4.5 $||P||\le1$
+## 4.5 operator norm : $||P||\le1$
 
 policy evaluation 증명의 완성을 위해서는 $P$의 operator norm $||P||$가 1보다 작거나 같다는 사실이 필요하다.
-즉 행렬 $P$에 대한 norm은 행렬 $P$를 operator $P:\mathbb R^n\to\mathbb R^n$으로 볼 때의 operator norm을 말한다.
+여기서 말하는 operator norm이란 $P$를
+$\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
+에서
+$\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
+로 가는 operator로 보았을 때의 operator norm을 말한다.
+이것은 matrix norm이라고도 한다.
 
 operator norm의 [여러가지 정의](https://en.wikipedia.org/wiki/Operator_norm#Equivalent_definitions) 중 
 
 $$||A||=\sup\{Av:||v||\le1\}$$
 
 을 사용하자.
-그리고 $||A^T||=||A||$라는 [잘 알려진 사실](https://math.stackexchange.com/a/3471127/746048)을 활용할 수 있다.
-또한, 4.3에서 정의한 행렬 $P$는 각 행의 합이 1이다.
-즉, 모든 $j$에 대하여 $\sum_ip_{ij}=1$이다.
+<!-- 그리고 $||A^T||=||A||$라는 [잘 알려진 사실](https://math.stackexchange.com/a/3471127/746048)을 활용할 수 있다. -->
+4.3에서 정의한 행렬 $P$는 각 행의 합이 1이다.
+즉,
+
+$$
+P=[p_{ij}]_{n\times n}
+=
+\begin{bmatrix}
+P\left(S_{t+1}=s_1|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_1\right)\\
+\vdots&\ddots&\vdots\\
+P\left(S_{t+1}=s_1|S_t=s_n\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_n\right)
+\end{bmatrix}
+$$
+
+에서 $\sum_jp_{ij}=1$이다. ($i=1,\cdots,n$)
 그러면
 
 $$
-\left|\left|p_{1j}v_1+\cdots+p_{nj}v_n\right|\right|_\infty
-\le p_{1j}||v||_\infty+\cdots+p_{nj}||v||_\infty
+\left|\left|p_{i1}v_1+\cdots+p_{in}v_n\right|\right|_\infty
+\le p_{i1}||v||_\infty+\cdots+p_{in}||v||_\infty
 =||v||_\infty
 $$
 
 이므로
 
 $$
-\left|\left|P^Tv\right|\right|_\infty
-=\max\{\left|\left|p_{1j}v_1+\cdots+p_{nj}v_n\right|\right|_\infty:j=1,\cdots,n\}
+\left|\left|Pv\right|\right|_\infty
+=\max\{\left|\left|p_{i1}v_1+\cdots+p_{in}v_n\right|\right|_\infty:i=1,\cdots,n\}
 \le||v||_\infty
 $$
 
@@ -337,8 +357,7 @@ $$
 
 $$
 ||P||
-=||P^T||
-=\sup\{||P^Tv||_\infty:||v||_\infty\le1\}
+=\sup\{||Pv||_\infty:||v||_\infty\le1\}
 \le1
 $$
 
@@ -383,21 +402,37 @@ $$ -->
 $$
 \begin{align*}
 \left|\left|T^\pi(v) - T^\pi(w)\right|\right|_\infty
+&=\left|\left|(r_\pi+Pv_\pi) - (r_\pi+Pw_\pi)\right|\right|_\infty\\
 &=\gamma\left|\left|P(v-w)\right|\right|_\infty\\
-&=\gamma||v-w||_\infty\\
+&\le\gamma\lvert\lvert P\rvert\rvert\cdot\lvert\lvert v-w\rvert\rvert_\infty\\
+&\le\gamma||v-w||_\infty\\
 \end{align*}
 $$
 
 이다.
-만약 $0\lt\gamma\lt1$ 이면 $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 contraction이다.
+첫번째 줄은 bellman operator의 정의, 세번째 줄은 operator norm의 성질, 네번째 줄은 $\lvert\lvert P\rvert\rvert\le1$이 쓰였다.
+이것을 다시 쓰면
+
+$$
+d\left(T^\pi(v),T^\pi(w)\right)
+\le
+\gamma d(v,w)
+$$
+
+이 된다.
+$0\lt\gamma\lt1$ 이므로 $\mathcal T^\pi$는
+$\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
+에서
+$\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
+으로 가는 contraction이다.
 그러면 contraction principle에 의해
 
 $$\mathcal T^\pi(v^\ast)=v^\ast$$
 
 인 $v^\ast\in\mathbb R^n$이 유일하게 하나 존재한다.
-Bellman equation $(\ast)$도 유일한 해 $v_\pi$를 가지므로 이 두 벡터는 같다.
-즉, policy evaluation을 통해 얻게되는 가치함수는 $v_\pi$이다.
-다시 말해
+즉 Bellman equation $(\ast)$이 유일한 해 $v_\ast$를 가진다.
+따라서 $v_\pi=v_\ast$이다.
+그러면
 
 $$\lim_{k\to\infty}v_k=v_\pi$$
 
