@@ -472,7 +472,8 @@ $$
 이 증명을 적절히 비슷하게 서술하면 어쨌든 optimal policy가 존재함을 증명하는 듯이 서술하고 넘어갈 수도 있다.
 하지만, 문제는 내 스스로가 잘 와닿지 않는다는 점이다.
 
-[Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)는 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명하고 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
+[Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)는 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명하고 있는데 (Theorem 1) 결국 이건 Sutton 책에서의 policy improvement를 다시 쓴 것에 불과하다.
+그리고 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
 
 ---
 
@@ -511,7 +512,8 @@ q_\ast(s,a)&=\max_\pi q_\pi(s,a)&&\forall s\in\mathcal S,\forall a\in\mathcal A\
 \end{align}
 $$
 
-이라고 쓸 수도 있다.
+이다.
+<!-- 을 만족시키는 정책 $\pi^\ast$가 존재한다. -->
 
 이때, 다음과 같은 Bellman optimal equation이 성립한다.
 어떤 정책에도 의존하지 않는 식이라고 Sutton은 강조한다.
