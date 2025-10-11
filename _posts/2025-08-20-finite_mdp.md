@@ -94,7 +94,7 @@ $$p(s',r|s,a)=P\left\{S_t=s',R_t=r|S_{t-1}=s,A_{t-1}=a\right\}\tag{3.2}$$
 
 이 값은 transition dynamics라고 불린다.
 
-그러니까 finite MDP는 $\mathcal S$, $\mathcal A$, $\mathcal R$, $p$의 네 집합 혹은 값으로 characterize될 수 있다.
+그러니까 finite MDP는 $\mathcal S$, $\mathcal A$, $\mathcal R$, $p$의 네 집합 혹은 함수로 characterize될 수 있다.
 David Silver의 자료에서는 discount factor $\gamma$까지 합쳐 다섯 개를 언급하고 있다.
 하지만 여기서 $\mathcal R$이 그렇게까지 중요하진 않다.
 그냥 $\mathbb R$으로 대체되어도 무관하기 때문이다.
@@ -211,10 +211,10 @@ $v_\pi$를 $q_\pi$로 표현해보고 반대도 표현해보라는 문제로, �
 $$
 \begin{align*}
 v_\pi(s)
-&=\mathbb E\left[G_t|S_t=s\right]\\
+&=\mathbb E_\pi\left[G_t|S_t=s\right]\\
 &=\sum_s gP\left\{G_t=g|S_t=s\right\}\\
 &=\sum_s g\pi(a|s)P\left\{G_t=g|S_t=s, A_t=a\right\}\\
-&=\sum_a\pi(a|s)\mathbb E\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_a\pi(a|s)\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\\
 &=\sum_a\pi(a|s)q_\pi(s,a)\tag{e3.12}
 \end{align*}
 $$
@@ -225,10 +225,10 @@ Exercise 3.13은 간략하게
 $$
 \begin{align*}
 q_\pi(s,a)
-&=\mathbb E\left[G_t|S_t=s,A_t=a\right]\\
-&=\sum_{s',r}p(s',r|s,a)\mathbb E\left[R_{t+1}+\gamma R_{t+2}|S_t=s,A_t=a, R_{t+1}=r,S_{t+1}=s'\right]\\
-&=\sum_{s',r}p(s',r|s,a)\mathbb E\left[r+\gamma R_{t+2}|S_{t+1}=s'\right]\\
-&=\sum_{s',r}p(s',r|s,a)\left(r+\gamma\mathbb E\left[R_{t+2}|S_{t+1}=s'\right]\right)\\
+&=\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_{s',r}p(s',r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma R_{t+2}|S_t=s,A_t=a, R_{t+1}=r,S_{t+1}=s'\right]\\
+&=\sum_{s',r}p(s',r|s,a)\mathbb E_\pi\left[r+\gamma R_{t+2}|S_{t+1}=s'\right]\\
+&=\sum_{s',r}p(s',r|s,a)\left(r+\gamma\mathbb E_\pi\left[R_{t+2}|S_{t+1}=s'\right]\right)\\
 &=\sum_{s',r}p(s',r|s,a)\left(r+\gamma v_\pi(s')\right)\tag{e3.13}
 \end{align*}
 $$
@@ -300,19 +300,22 @@ $$
 
 그런데 증명을 하다보면 현재의 가치는 $v$로 두고 다음 상태의 가치는 $q$로 두고 싶어지고, 또 그 반대인 식도 만들어내고 싶어진다.
 예를 들어 위의 증명을 조금만 바꾸면 다음 두 식이 성립한다 (exercise 3.18, 19).
+식 (3.14)의 세번째줄로부터
 
 $$
 \begin{align*}
 v_\pi(s)
-&=\mathbb E_\pi\left[G_t|S_t=s\right]\\
-&=\sum_a\pi(a|s)\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\\
+&=\sum_a\pi(a|s)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
 &=\sum_a\pi(a|s)q_\pi(s,a)
-\tag{e3.18}\\
+\tag{e3.18}
+\end{align*}
+$$
+
+이고 식 (e3.17)의 다섯번째 줄로부터
+
+$$
+\begin{align*}
 q_\pi(s,a)
-&=\mathbb E_\pi\left[G_t|S_t=s, A_t=a\right]\\
-&=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s, A_t=a\right]\\
-&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a, R_{t+1}=r, S_{t+1}=s'\right]\\
-&=\sum_{s',r} p(s', r|s,a)\mathbb E_\pi\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]\\
 &=\sum_{s',r} p(s', r|s,a)\left(r+\gamma\mathbb E_\pi\left[G_{t+1}|S_{t+1}=s'\right]\right)\\
 &=\sum_{s',r} p(s', r|s,a)\left(r+\gamma v_\pi(s')\right)
 \tag{e3.19}
@@ -353,7 +356,7 @@ Sutton은 컴퓨터공학자라고 한다.
 
 <!-- $$\Pi=\left\{\pi(\cdot|\cdot):\mathcal S\times\mathcal A\to[0,1]\,\vert\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$ -->
 
-$$\Pi=\left\{\pi\,:\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$
+$$\Pi=\left\{\pi:\mathcal S\times\mathcal A\to[0,1]\,\vert\,\sum_{a\in\mathcal A}\pi(a|s)=1\right\}$$
 
 $\Pi$에 partial order $\le$를 다음과 같이 정의해 partially ordered set $\left(\Pi,\le\right)$를 생각할 수 있다.
 두 policy $\pi, \pi'\in\Pi$에 대하여 $\pi\le\pi'$인 것의 정의는 모든 $s\in\mathcal S$에 대하여
@@ -363,7 +366,7 @@ $$v_\pi(s)\le v_{\pi'}(s)$$
 인 것이다.
 $\left(\Pi,\le\right)$는 분명히 totally ordered set은 아니다.
 따라서 $\left(\Pi,\le\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
-하지만 이 경우에는 maximum이 보장된다.
+하지만 이 경우에는 maximum이 보장된다는 것을 Sutton은 말하고 있다.
 즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재한다.
 다시 말해,
 
@@ -469,12 +472,13 @@ $$
 이 증명을 적절히 비슷하게 서술하면 어쨌든 optimal policy가 존재함을 증명하는 듯이 서술하고 넘어갈 수도 있다.
 하지만, 문제는 내 스스로가 잘 와닿지 않는다는 점이다.
 
-[Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)는 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명하고 있는데 (Theorem 1) 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
+[Alireza Modirshanechi](https://medium.com/data-science/why-does-the-optimal-policy-exist-29f30fd51f8c)는 정책이 한 걸음 더 나아갈 수 있음을 아주 멋지게 설명하고 있는데 (Theorem 1) 결국 이건 Sutton 책에서의 policy improvement를 다시 쓴 것에 불과하다.
+그리고 이를 통해 optimal policy의 존재성을 증명하고 있지는 않다.
 
 ---
 
-직접 증명하려고 했던 것도 성공하지 못했고, 기존 자료를 이해하는 것도 실패했으니
-optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 얻어내려고 한다.
+직접 증명하려고 했던 것도 성공하지 못했고, 기존 자료를 이해하는 것도 실패했다.
+하지만 책의 내용을 따라가면 policy iteration으로부터 optimal policy의 존재성을 증명할 수 있을지도 모르겠다.
 
 ## 3.6 Bellman optimal equations
 
@@ -489,7 +493,7 @@ optimal policy의 존재성은 다음 포스트에서 iterative한 방식으로 
 
 optimal policy $\pi^\ast$가 존재한다고 가정하자.
 $\pi^\ast$에 따른 state value function과 action value function은 비슷한 종류의 maximality를 가진다.
-즉, $v_\ast=v_{\pi^\ast}$, $q_\ast=q_{\pi^\ast}$라고 가정하면, 모든 $\pi\in\Pi$에 대하여
+즉, $v_\ast=v_{\pi^\ast}$, $q_\ast=q_{\pi^\ast}$라고 표기하면, 모든 $\pi\in\Pi$에 대하여
 
 $$
 \begin{align*}
@@ -508,7 +512,8 @@ q_\ast(s,a)&=\max_\pi q_\pi(s,a)&&\forall s\in\mathcal S,\forall a\in\mathcal A\
 \end{align}
 $$
 
-이라고 쓸 수도 있다.
+이다.
+<!-- 을 만족시키는 정책 $\pi^\ast$가 존재한다. -->
 
 이때, 다음과 같은 Bellman optimal equation이 성립한다.
 어떤 정책에도 의존하지 않는 식이라고 Sutton은 강조한다.
@@ -547,3 +552,5 @@ q_\ast(s,a)
 &=\sum_{s',r}p(s',r|s,a)\left[r+\gamma\max_{a'}q_\ast(s',a')\right]\tag{3.20}
 \end{align*}
 $$
+
+이 식, 특히 세번째 줄은 Q-learning에 대한 이론적 근거가 된다.
