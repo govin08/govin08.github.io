@@ -4,7 +4,7 @@ title: "Lagrange multiplier method"
 categories: mathematics
 tags: [calculus]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 toc: true
 ---

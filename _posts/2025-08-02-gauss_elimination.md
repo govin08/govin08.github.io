@@ -4,7 +4,7 @@ title: "가우스 소거법"
 categories: mathematics
 tags: [linear algebra, matrix]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 toc: true
 ---

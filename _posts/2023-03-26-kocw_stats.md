@@ -4,7 +4,7 @@ title: "(강의정리) 확률 및 통계"
 categories: mathematics
 tags: [statistics]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 

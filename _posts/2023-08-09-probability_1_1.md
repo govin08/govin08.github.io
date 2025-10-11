@@ -4,7 +4,7 @@ title: "확률론 : 1.1. 경우의 수와 이항정리"
 categories: mathematics
 tags: [probability]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 

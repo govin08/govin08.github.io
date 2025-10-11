@@ -4,7 +4,7 @@ title: "직사각형 돌리기"
 categories: mathematics
 tags: [trivial mathemtics]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 toc: true
 ---

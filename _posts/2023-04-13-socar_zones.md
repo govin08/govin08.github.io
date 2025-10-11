@@ -4,7 +4,7 @@ title: "(SOCAR) 신규 쏘카존 제안 프로젝트"
 categories: machine-learning
 tags: [clustering, SARIMA, DCG]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 

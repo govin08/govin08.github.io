@@ -4,7 +4,7 @@ title: "확률론 : 1.2. 확률의 정의"
 categories: mathematics
 tags: [probability]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 

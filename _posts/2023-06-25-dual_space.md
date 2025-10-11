@@ -4,7 +4,7 @@ title: "dual space"
 categories: mathematics
 tags: [linear algebra]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 toc: true
 ---

@@ -4,7 +4,7 @@ title: "확률론 글쓰기"
 categories: mathematics
 tags: [statistics]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 toc: false
 ---

@@ -5,7 +5,7 @@ title: "행렬의 직교대각화"
 categories: mathematics
 tags: [linear algebra]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 

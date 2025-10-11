@@ -4,7 +4,7 @@ title: "확률론 : 1.3. 조건부확률과 독립 사건"
 categories: mathematics
 tags: [probability]
 use_math: true
-publish: false
+publish: true
 author_profile: false
 ---
 
