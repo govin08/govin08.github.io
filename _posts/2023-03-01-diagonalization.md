@@ -1,12 +1,13 @@
 ---
 layout: single
 title: "행렬의 직교대각화"
-#description: "행렬의 직교대각화(orthogonal/unitary diagonalization of matrices)에 대해 요약해본 글입니다."
 categories: mathematics
 tags: [linear algebra]
 use_math: true
 publish: true
 author_profile: false
+toc: true
+
 ---
 
 <!-- https://mmistakes.github.io/minimal-mistakes/docs/utility-classes/
