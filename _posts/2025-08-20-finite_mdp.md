@@ -37,7 +37,7 @@ DP의 핵심이 되는 policy iteration의 두 방법 policy evaluation과 polic
 
 Bellman operator에 관해서는 답변자가 쓴 대로 vector space를 쓸 필요는 없을 것 같다.
 contraction principle은 어디서 본 것 같았다.
-아마 Munkres의 Topology 책에서였던 것 같아 Topology 책을 뒤져보니 이때 나왔던 contraction과 fixed point는 $B^2$에서의 특수한 이야기였다.
+아마 Munkres의 Topology 책에서였던 것 같아 뒤져보니 이때 나왔던 contraction과 fixed point는 $B^2$에서의 특수한 이야기였다.
 대학원때 봤던 Rudin의 Real and Complex Analysis에서 Banach의 이름이 붙은 theorem이 있었던 것 같았는데 찾아보니 아니었다.
 baby rudin을 보니 contraction principle이 본문에 떡하니 있었고 (왜 나는 그걸 기억하지 못하는가.) 정확히 해당 증명에 필요한 정리가 있었다.
 사실 Munkres의 책에도 비슷한 정리가 있었지만 baby rudin에서의 설명이 더 쉬웠다.
@@ -146,7 +146,7 @@ trajectory는 일반적으로 끝날 수도 있고 (episodic task) 끝나지 않
 
 $$G_t=R_{t+1}+R_{t+2}+\cdots+R_T\tag{3.7}$$
 
-와 같이 유햔합으로 정의될 수도 있고
+와 같이 유한합으로 정의될 수도 있고
 
 $$G_t=R_{t+1}+R_{t+2}+\cdots$$
 
