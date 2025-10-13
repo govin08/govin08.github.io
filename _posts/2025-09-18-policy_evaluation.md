@@ -2,7 +2,7 @@
 layout: single
 title: "(Sutton, 4.1절) Policy Evaluation"
 categories: machine-learning
-tags: [reinforcement learing, Bellman operator, contraction principle, operator norm]
+tags: [reinforcement learing, dynamic programming, Bellman operator, contraction principle, operator norm]
 use_math: true
 published: true
 author_profile: false
