@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "(Sutton, 4.2절) Policy Improvement"
+title: "(Sutton, 4.2-6절) Policy Improvement 등"
 categories: data-science
 tags: [reinforcement learing, dynamic programming, policy improvement theorem, policy iteration]
 use_math: true
