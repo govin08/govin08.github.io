@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "(Sutton, 4.2절) Policy Improvement"
-categories: machine-learning
+categories: data-science
 tags: [reinforcement learing, dynamic programming, policy improvement theorem, policy iteration]
 use_math: true
 published: true
@@ -18,6 +18,17 @@ toc: true
 그리고 사실 글을 쓸 준비가 되어있다고 생각한다.
 [이전 글](https://govin08.github.io/machine-learning/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
 
+책의 내용대로 쭉 따라가서 GPI까지는 써볼까.
 
 ## 4.2 Policy Improvement
 
+policy evaluation을 통해 $v_\pi$ 또는 $q_\pi$를 추정한 것은 더 나은 정책을 찾기 위함이라고 봐도 과언이 아니다.
+특히 action function $q_\pi$를 알고 있다면 더 나은 정책을 
+
+<div class="notice--info">
+<b> 정책 개선 정리 (policy improvement theorem) </b> <br>
+사건 $A$가 일어났다는 것을 가정했을 때 사건 $B$가 일어날 확률을 조건부확률이라고 부르고, $P(B\mid A)$로 적습니다.
+$P(B\mid A)$의 값은
+$$P(B\mid A)=\frac{P(A\cap B)}{P(A)}$$
+으로 정의됩니다.
+</div>

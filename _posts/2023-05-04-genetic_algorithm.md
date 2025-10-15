@@ -1,7 +1,7 @@
 ---
 layout: single
-title: "genetic algorithm으로 시험 만점 맞기"
-categories: machine_learning
+title: "유전 알고리즘으로 시험 만점 맞기"
+categories: data-science
 tags: [genetic algorithm]
 use_math: true
 publish: false
@@ -9,7 +9,7 @@ author_profile: false
 toc: true
 ---
 
-이 포스트는 genetic algorithm에 대하여 나름대로 설명해본 것입니다.
+이 포스트는 유전 알고리즘(genetic algorithm)에 대하여 나름대로 설명해본 것입니다.
 이에 관해서는 조금 더 심층적으로 공부하고 싶은 마음이 있어서, genetic algorithm에 관한 [원래 논문](https://link.springer.com/chapter/10.1007/978-3-319-93025-1_4)과 [관련된 survey paper](https://link.springer.com/article/10.1007/s11042-020-10139-6)도 추후에 포스팅하면 좋겠다는 생각을 가지고 있습니다.
 
 처음 관련 내용을 정리했던 것은 2021년 4월이었습니다. 인공지능에 관한 대학원 수업을 들으면서 genentic algorithm에 관해 조사하여 중간과제로 제출해야 했었던 때가 있었는데, 그때 genetic algorithm의 기본에 관해 공부하여 TeX파일로 정리해봤습니다.
@@ -47,6 +47,9 @@ $$0.0000000000000000000000827\%$$
 입니다.
 그러니까, 너무 당연한 이야기이지만, 문항들을 모두 찍어서는 만점을 맞는 것이 거의 불가능합니다.
 하지만, 처음에는 모든 문항들을 찍더라도, 답안을 조금씩 수정할 수 있다면, 그리고 그때마다 채점하여 점수를 조회할 수 있다면 결국은 100점을 받을 수 있을 것입니다.
+
+
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\img.png){: .img-30-center}
 
 <!-- ![img](..\assets\images\2023-05-04-genetic_algorithm_1\img.png){: .img-40-center}
 
@@ -142,11 +145,11 @@ right_answer
 
 
 
-```python
+<!-- ```python
 print("즉, 1번의 답은", right_answer[0],"이고, 2번의 답은", right_answer[1],"입니다.")
 ```
 
-    즉, 1번의 답은 4 이고, 2번의 답은 1 입니다.
+    즉, 1번의 답은 4 이고, 2번의 답은 1 입니다. -->
     
 
 `n_cho`는 선지의 개수로 4입니다.
@@ -281,7 +284,7 @@ def select1(generation, k=n_candidate): # choose k number of individuals randoml
 ```
 
 
-```python
+<!-- ```python
 # k = 3
 # indices = randint(0,len(pop),k)
 # k_selected = []
@@ -291,7 +294,7 @@ def select1(generation, k=n_candidate): # choose k number of individuals randoml
 #     else:
 #         k_selected.append(0)
 # np.argmax(k_selected)
-```
+``` -->
 
 
 ```python
@@ -365,7 +368,7 @@ print(score(select2(generation_1)))
 
 $$p_1,p_2,\cdots,p_{50}$$
 
-를 만들어냅니다.
+을 만들어냅니다.
 
 
 ```python
@@ -662,7 +665,7 @@ print('generation_2의 적합도 점수 평균 :', np.mean(scores_2))
 이러한 hyperparameter들을 변경하여 더 괜찮은 성능을 낼 수 있도록 해보았습니다(3.2).
 
 먼저, 아래와 같이 문제를 세팅합니다.
-4지선다형 문항 20개에 대한 답안을 제출하는 일을 생각할 때, 40번의 세대를 거치면서 만점 답안을 제출할 수 있는 문제입니다.
+4지선다형 문항 20개에 대한 답안을 제출하는 일을 생각할 때, 40번의 세대를 거치면서 답안을 개선핸가나는 문제입니다.
 
 
 ```python
@@ -800,31 +803,33 @@ plt.xticks(np.arange(0, 41, 5))
 plt.yticks(np.arange(0, 21, 2))
 plt.show
 ```
-
-
-
-
-    <function matplotlib.pyplot.show(close=None, block=None)>
-
-
-
-
     
-![png](2023-05-04-genetic_algorithm_files/2023-05-04-genetic_algorithm_67_1.png)
-    
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\1_default_model_1.png){: .img-50-center}
+
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\1_default_model_2.png){: .img-50-center}
 
 
 ## 3.2 변경모델
 
 ### 3.2.1 자연선택
 
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\2_selection_strategies_1.png){: .img-50-center}
+
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\2_selection_strategies_2.png){: .img-50-center}
+
 ### 3.2.2 각 세대당 개체 수
+
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\3_n_ind.png){: .img-50-center}
 
 ### 3.2.3 교배비율
 
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\4_r_cro.png){: .img-50-center}
+
 ### 3.2.4 돌연변이 비율
 
-# 4. 결론
+![]({{site.url}}\images\2023-05-04-genetic_algorithm\5_r_mut.png){: .img-50-center}
+
+<!-- # 4. 결론
 
 
 ```python
@@ -1077,7 +1082,7 @@ plt.savefig('2_selection_strategies_2.png')
 
     
 ![png](2023-05-04-genetic_algorithm_files/2023-05-04-genetic_algorithm_79_0.png)
-    
+
 
 
 
@@ -1254,4 +1259,4 @@ print(str(N)+' out of 1000 achieve the full score.')
     
 
     KeyboardInterrupt: 
-
+ -->

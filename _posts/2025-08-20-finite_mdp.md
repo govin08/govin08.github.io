@@ -1,7 +1,7 @@
 ---
 layout: single
 title: "(Sutton, 3장) Finite MDP"
-categories: machine-learning
+categories: data-science
 tags: [reinforcement learing, finite markov decision process, markov property, Bellman equation]
 use_math: true
 published: true
