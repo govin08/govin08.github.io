@@ -367,11 +367,11 @@ $$v_\pi(s)\le v_{\pi'}(s)$$
 $\left(\Pi,\le\right)$는 분명히 totally ordered set은 아니다.
 따라서 $\left(\Pi,\le\right)$는 maximal의 존재는 보장되지만, maximum의 존재는 보장될 수 없다.
 하지만 이 경우에는 maximum이 보장된다는 것을 Sutton은 말하고 있다.
-즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi^\ast$)의 존재한다.
+즉, 정책들의 최댓값, 혹은 최적 정책(optimal policy, $\pi_\ast$)의 존재한다.
 다시 말해,
 
 <div class="notice--info" markdown="1">
-모든 $\pi\in\Pi$에 대하여 $\pi\le\pi^\ast$인 $\pi^\ast$가 존재한다.
+모든 $\pi\in\Pi$에 대하여 $\pi\le\pi_\ast$인 $\pi_\ast$가 존재한다.
 </div>
 
 이것은 Sutton의 책에 언급만 되어있고 설명이나 증명이 있지는 않다.
@@ -407,13 +407,13 @@ q_\pi(s,a)
 $$
 
 이기 때문이다.
-이제 이로부터 최적정책 $\pi^\ast$를 greedy하게 정의한다.
+이제 이로부터 최적정책 $\pi_\ast$를 greedy하게 정의한다.
 $q$함수가 주어졌으니, 주어진 $s$에 대해서 $q$값이 가장 큰 action(들)을 다 더해서 1이 되도록 양의 확률을 주고 나머지 경우는 모두 0으로 주는 것이다.
 예를 들어, $A_s=\\{a'\in A:q_\ast(s,a')=\max_{a\in\mathcal A}q_\pi(s,a)\\}$ 로 두고
 
 $$
 \begin{align*}
-\pi^\ast(a|s) =
+\pi_\ast(a|s) =
 \begin{cases}
 \frac1{\left|A_s\right|}&a\in A_s\\
 0                   &a\notin A_s\\
@@ -425,7 +425,7 @@ $$
 
 $$
 \begin{align*}
-\pi^\ast(a|s) =
+\pi_\ast(a|s) =
 \begin{cases}
 1   &a=a'\\
 0   &a\ne a'\\
@@ -434,25 +434,25 @@ $$
 $$
 
 로 둘 수도 있는 것이다.
-<!-- 두번째 경우를 $\pi^\ast$로 사용하자. -->
+<!-- 두번째 경우를 $\pi_\ast$로 사용하자. -->
 <!-- 그러면 모든 $\pi\in\Pi$에 대하여 -->
 
-그러면, $\pi^\ast$는 주어진 상황에서의 가장 greedy한 정책일 수 있다.
+그러면, $\pi_\ast$는 주어진 상황에서의 가장 greedy한 정책일 수 있다.
 하지만 정말로 이 정책이 optimal한지를 밝히는 것은 쉽지 않아보인다.
 증명이 잘 되지 않아, [두](https://ai.stackexchange.com/q/48963/97276) [곳](https://math.stackexchange.com/q/5096132/746048)에 질문을 올려놓았다.
 누군가 풀어준다면 좋겠다.
 
 <!-- 
-그러면, 특정한 면에서는 $\pi^\ast$가 일반적인 $\pi$보다 나은 점이 있기는 하지만, 그렇다고 해서 $v_\pi\le v_{\pi^\ast}$를 증명할 수는 없는 것으로 보인다. -->
+그러면, 특정한 면에서는 $\pi_\ast$가 일반적인 $\pi$보다 나은 점이 있기는 하지만, 그렇다고 해서 $v_\pi\le v_{\pi_\ast}$를 증명할 수는 없는 것으로 보인다. -->
 
 <!-- $$
 \begin{align*}
 v_\pi(s)
 &=\sum_{a\in\mathcal A}\pi(a|s)q_\pi(s,a),\\
 &=q_{\pi_\ast}(s,a)\\
-&\le\sum_{a\in\mathcal A}\pi^\ast(a|s)q_{\pi_\ast}(s,a),\\
+&\le\sum_{a\in\mathcal A}\pi_\ast(a|s)q_{\pi_\ast}(s,a),\\
 &=q_\pi(s,a')\\
-&=v_{\pi^\ast}(s)
+&=v_{\pi_\ast}(s)
 \end{align*}
 $$
 
@@ -491,9 +491,9 @@ $$
 
 ---
 
-optimal policy $\pi^\ast$가 존재한다고 가정하자.
-$\pi^\ast$에 따른 state value function과 action value function은 비슷한 종류의 maximality를 가진다.
-즉, $v_\ast=v_{\pi^\ast}$, $q_\ast=q_{\pi^\ast}$라고 표기하면, 모든 $\pi\in\Pi$에 대하여
+optimal policy $\pi_\ast$가 존재한다고 가정하자.
+$\pi_\ast$에 따른 state value function과 action value function은 비슷한 종류의 maximality를 가진다.
+즉, $v_\ast=v_{\pi_\ast}$, $q_\ast=q_{\pi_\ast}$라고 표기하면, 모든 $\pi\in\Pi$에 대하여
 
 $$
 \begin{align*}
@@ -513,7 +513,7 @@ q_\ast(s,a)&=\max_\pi q_\pi(s,a)&&\forall s\in\mathcal S,\forall a\in\mathcal A\
 $$
 
 이다.
-<!-- 을 만족시키는 정책 $\pi^\ast$가 존재한다. -->
+<!-- 을 만족시키는 정책 $\pi_\ast$가 존재한다. -->
 
 이때, 다음과 같은 Bellman optimal equation이 성립한다.
 어떤 정책에도 의존하지 않는 식이라고 Sutton은 강조한다.
@@ -524,11 +524,11 @@ $$
 \begin{align*}
 v_\ast(s)
 &=\max_a q_\ast(s,a)\\
-&=\max_a\mathbb E_\ast\left[G_t|S_t=s,A_t=a\right]\\
-&=\max_a\mathbb E_\ast\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
-&=\max_a\sum_{s',r}\mathbb E_\ast\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,S_{t+1}=s',R_{t+1}=r\right]p(s',r|s,a)\\
-&=\max_a\sum_{s',r}\mathbb E_\ast\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]p(s',r|s,a)\\
-&=\max_a\sum_{s',r}\left(r+\gamma \mathbb E_\ast\left[G_{t+1}|S_{t+1}=s'\right]\right)p(s',r|s,a)\\
+&=\max_a\mathbb E_{\pi_\ast}\left[G_t|S_t=s,A_t=a\right]\\
+&=\max_a\mathbb E_{\pi_\ast}\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
+&=\max_a\sum_{s',r}\mathbb E_{\pi_\ast}\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a,S_{t+1}=s',R_{t+1}=r\right]p(s',r|s,a)\\
+&=\max_a\sum_{s',r}\mathbb E_{\pi_\ast}\left[r+\gamma G_{t+1}|S_{t+1}=s'\right]p(s',r|s,a)\\
+&=\max_a\sum_{s',r}\left(r+\gamma \mathbb E_{\pi_\ast}\left[G_{t+1}|S_{t+1}=s'\right]\right)p(s',r|s,a)\\
 &=\max_a\sum_{s',r}\left(r+\gamma v_\ast(s')\right)p(s',r|s,a)\tag{3.18}\\
 &=\max_a\mathbb E\left[R_{t+1}+\gamma v_\ast\left(S_{t+1}\right)|S_t=s,A_t=a\right]\tag{3.19}
 \end{align*}
@@ -546,7 +546,7 @@ $q_\ast$ 버전의 Bellman optimal equation은 다음과 같다.
 $$
 \begin{align*}
 q_\ast(s,a)
-&=\mathbb E_\ast\left[G_t|S_t=s,A_t=a\right]\\
+&=\mathbb E_{\pi_\ast}\left[G_t|S_t=s,A_t=a\right]\\
 &=\mathbb E\left[R_{t+1}+\gamma v_\ast(S_{t+1})|S_t=s,A_t=a\right]\\
 &=\mathbb E\left[R_{t+1}+\gamma\max_{a'}q_\ast\left(S_{t+1},a\right))|S_t=s,A_t=a\right]\\
 &=\sum_{s',r}p(s',r|s,a)\left[r+\gamma\max_{a'}q_\ast(s',a')\right]\tag{3.20}
