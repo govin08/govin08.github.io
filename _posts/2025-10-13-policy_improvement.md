@@ -138,3 +138,19 @@ $$
 
 그러면 위 식은 Bellman optimal equation (3.18)과 같다.
 특별한 경우가 아닌 이상 연립방정식 Bellman optimal equation의 해가 유일할 것이므로, 이 정책 $\pi'$은 optimal policy라고 말할 수 있다.
+
+## 4. 3 Policy Iteration
+
+어떤 $\pi$에 대하여 policy evaluation과 policy improvement를 반복할 수 있다.
+
+![policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\policy_iteration.png){: .img-90-center}
+
+정책을 평가하고 개선하는 것을 반복하는 것인데 이것을 policy iteration이라고 한다.
+정책개선시 deterministic한 policy를 택한다고 가정하면, finite MDP의 deterministic policy의 개수는 유일하고, optimal policy 또한 deterministic하다고 가정할 수 있으므로 policy iteration는 언젠가 끝난다.
+즉, 어느 순간 최적정책 $\pi_\ast$에 도달하며 그떄의 정책은 $v_{\pi_{k+1}}=v_{\pi_k}$를 만족할 것이다.
+
+정책평가시 가치함수의 초깃값을 설정해야 했다.
+그 초깃값이 어떻건 항상 $v_\pi$로 수렴한다는 것은 이전 포스트에서 증명했었다.
+하지만 이 경우에는 초깃값을 직전 가치함수로 두면 수렴 속도에 있어서 유리하다는 것이 언급되고 있다.
+즉, $\pi_k\stackrel{E}{\longrightarrow}v_{\pi_k}$의 정책평가를 진행할 때 가치함수의 초깃값을 $v_{k-1}$로 놓으면 수렴이 빨라진다는 것이다.
+이것을 warm start라고도 부른다.
