@@ -16,7 +16,7 @@ toc: true
 그러니 DP는 빠르게 공부하여 치워버리자.
 
 그리고 사실 글을 쓸 준비가 되어있다고 생각한다.
-[이전 글](https://govin08.github.io/machine-learning/policy_evaluation/)을 쓰고 나서 간간이 24.2절을 보았고 어느 정도 이해는 했던 터였다.
+[이전 글](https://govin08.github.io/machine-learning/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
 책의 내용대로 쭉 따라가서 GPI까지는 써볼까.
 
 하지만 글쓰는 것이 쉽지는 않을 것 같다.
@@ -100,7 +100,7 @@ $$
 
 $$
 \begin{align*}
-\pi_\ast(a|s) =
+\pi'(a|s) =
 \begin{cases}
 \frac1{\left|A_s\right|}&a\in A_s\\
 0                   &a\notin A_s\\
@@ -139,15 +139,15 @@ $$
 그러면 위 식은 Bellman optimal equation (3.18)과 같다.
 특별한 경우가 아닌 이상 연립방정식 Bellman optimal equation의 해가 유일할 것이므로, 이 정책 $\pi'$은 optimal policy라고 말할 수 있다.
 
-## 4. 3 Policy Iteration
+## 4.3 Policy Iteration
 
 어떤 $\pi$에 대하여 policy evaluation과 policy improvement를 반복할 수 있다.
 
-![policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\policy_iteration.png){: .img-90-center}
+![policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\policy_iteration.png){: .img-80-center}
 
-정책을 평가하고 개선하는 것을 반복하는 것인데 이것을 policy iteration이라고 한다.
+정책 평가와 정책 개선을 반복하는 것인데 이것을 policy iteration이라고 한다.
 정책개선시 deterministic한 policy를 택한다고 가정하면, finite MDP의 deterministic policy의 개수는 유일하고, optimal policy 또한 deterministic하다고 가정할 수 있으므로 policy iteration는 언젠가 끝난다.
-즉, 어느 순간 최적정책 $\pi_\ast$에 도달하며 그떄의 정책은 $v_{\pi_{k+1}}=v_{\pi_k}$를 만족할 것이다.
+즉, 어느 순간 ($k$번째에) 최적정책 $\pi_\ast$에 도달하며 그떄의 정책은 $v_{\pi_k}=v_{\pi_{k-1}}$를 만족할 것이다.
 
 정책평가시 가치함수의 초깃값을 설정해야 했다.
 그 초깃값이 어떻건 항상 $v_\pi$로 수렴한다는 것은 이전 포스트에서 증명했었다.
