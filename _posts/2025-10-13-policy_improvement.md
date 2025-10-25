@@ -147,10 +147,56 @@ $$
 
 정책 평가와 정책 개선을 반복하는 것인데 이것을 policy iteration이라고 한다.
 정책개선시 deterministic한 policy를 택한다고 가정하면, finite MDP의 deterministic policy의 개수는 유일하고, optimal policy 또한 deterministic하다고 가정할 수 있으므로 policy iteration는 언젠가 끝난다.
-즉, 어느 순간 ($k$번째에) 최적정책 $\pi_\ast$에 도달하며 그떄의 정책은 $v_{\pi_k}=v_{\pi_{k-1}}$를 만족할 것이다.
+즉, 어느 순간 ($k$번째에) 최적정책 $\pi_\ast$에 도달하며 그때의 정책은 $v_{\pi_k}=v_{\pi_{k-1}}$를 만족할 것이다.
 
 정책평가시 가치함수의 초깃값을 설정해야 했다.
 그 초깃값이 어떻건 항상 $v_\pi$로 수렴한다는 것은 이전 포스트에서 증명했었다.
 하지만 이 경우에는 초깃값을 직전 가치함수로 두면 수렴 속도에 있어서 유리하다는 것이 언급되고 있다.
 즉, $\pi_i\stackrel{E}{\longrightarrow}v_{\pi_i}$의 정책평가를 진행할 때 가치함수의 초깃값을 $v_{i-1}$로 놓으면 수렴이 빨라진다는 것이다.
 이것을 warm start라고도 부른다.
+
+아래는 Sutton 책에 실린 pseudocode이다.
+warm start 버전인 것을 확인할 수 있다.
+
+![pseudocode : policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\pseudocode-policy_iteration.png){: .img-80-center}
+
+## 4.4 Value Iteration
+
+policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
+정책개선 한 번당 정책평가가 수렴할 때까지 기다리기에는 조금 지루할 수 있다.
+그러니, 정책개선 한 번당 정책평가의 과정(sweep)을 한 번씩 수행하면 이 때에도 최적정책에 수렴하는 것이 알려져 있다.
+이 과정을 value iteration이라고 한다.
+
+이에 대한 Sutton의 식 (4.10)을 이해해보자.
+가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
+
+$$v_{\pi_0}\longrightarrow\pi_1:q_{\pi_0}(s,\pi_1(s))=\max_a q_{\pi_0}(s,a)$$
+
+이다.
+이제 정책평가의 한 iteration을 취하면
+
+$$\pi_1\longrightarrow v_{\pi_1}:v_{\pi_1}(s) = \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s\right]$$
+
+이고, 따라서
+
+$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
+
+이다.
+여기서 다시 greedy policy를 취하면
+
+$$
+\begin{align*}
+v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
+&=\max_a q_{\pi_1}(s,a)\\
+&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
+\end{align*}
+$$
+
+
+<!-- sweep을 한 번 거치면 -->
+<!-- 4.3절에서처럼 $\pi_0$부터 시작하자. -->
+<!-- 식 (4.5)에 의해 -->
+
+<!-- $$v_{\pi_0}=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_\right]$$ -->
+
+<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대하여 sweep을 한 번 거치면 -->
