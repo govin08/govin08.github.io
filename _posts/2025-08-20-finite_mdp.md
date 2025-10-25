@@ -548,7 +548,7 @@ $$
 q_\ast(s,a)
 &=\mathbb E_{\pi_\ast}\left[G_t|S_t=s,A_t=a\right]\\
 &=\mathbb E\left[R_{t+1}+\gamma v_\ast(S_{t+1})|S_t=s,A_t=a\right]\\
-&=\mathbb E\left[R_{t+1}+\gamma\max_{a'}q_\ast\left(S_{t+1},a\right))|S_t=s,A_t=a\right]\\
+&=\mathbb E\left[R_{t+1}+\gamma\max_{a'}q_\ast\left(S_{t+1},a'\right)|S_t=s,A_t=a\right]\\
 &=\sum_{s',r}p(s',r|s,a)\left[r+\gamma\max_{a'}q_\ast(s',a')\right]\tag{3.20}
 \end{align*}
 $$
