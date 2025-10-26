@@ -16,7 +16,7 @@ toc: true
 그러니 DP는 빠르게 공부하여 치워버리자.
 
 그리고 사실 글을 쓸 준비가 되어있다고 생각한다.
-[이전 글](https://govin08.github.io/machine-learning/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
+[이전 글](https://govin08.github.io/data-science/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
 책의 내용대로 쭉 따라가서 GPI까지는 써볼까.
 
 하지만 글쓰는 것이 쉽지는 않을 것 같다.
