@@ -164,11 +164,54 @@ warm start 버전인 것을 확인할 수 있다.
 
 policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
 정책개선 한 번당 정책평가가 수렴할 때까지 기다리기에는 조금 지루할 수 있다.
-그러니, 정책개선 한 번당 정책평가의 과정(sweep)을 한 번씩 수행하면 이 때에도 최적정책에 수렴하는 것이 알려져 있다.
-이 과정을 value iteration이라고 한다.
+그러니, 정책개선 한 번당 정책평가의 과정(sweep)을 한 번씩 수행하면 이 때에도 최적정책에 수렴하는 것이 알려져 있으며 이 과정을 value iteration이라고 한다고 Sutton은 쓰고 있다.
 
-이에 대한 Sutton의 식 (4.10)을 이해해보자.
-가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
+이에 대한 Sutton의 식
+
+$$
+\begin{align*}
+v_{k+1}(s)
+&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
+&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_k(s')\right]\tag{4.10}
+\end{align*}
+$$
+
+을 이해해보자.
+가치함수 $v_k:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_{k+1}$은 식 (4.9)에 의해 ($v_{\pi_k}\longrightarrow\pi_{k+1}$)
+
+$$
+q_{\pi_{k+1}}(s,a) = \max_aq_{\pi_k}(s,a)
+$$
+
+$$q_{\pi_k}(s,\pi_{k+1}(s))=\max_a q_{\pi_k}(s,a)$$
+
+이다.
+이제 정책평가의 한 iteration을 취하면 ($\pi_{k+1}\longrightarrow v_{\pi_{k+1}}$)
+
+$$
+\begin{align*}
+v_{\pi_{k+1}}(s)
+&=\mathbb E\left[R_{t+1}+\gamma v_{\pi_k}(S_{t+1})\vert S_t=s\right]\\
+&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_{\pi_k}(s')\right]
+\end{align*}
+$$
+
+이고, 따라서
+
+$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
+
+이다.
+여기서 다시 greedy policy를 취하면
+
+$$
+\begin{align*}
+v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
+&=\max_a q_{\pi_1}(s,a)\\
+&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
+\end{align*}
+$$
+
+<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
 
 $$v_{\pi_0}\longrightarrow\pi_1:q_{\pi_0}(s,\pi_1(s))=\max_a q_{\pi_0}(s,a)$$
 
@@ -191,7 +234,7 @@ v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
 &=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
 \end{align*}
 $$
-
+ -->
 
 <!-- sweep을 한 번 거치면 -->
 <!-- 4.3절에서처럼 $\pi_0$부터 시작하자. -->
