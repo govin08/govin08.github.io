@@ -78,6 +78,34 @@ $$
 \end{align*}
 $$
 
+더 나아가기 전에 Q함수에 대한 비슷한 다음 식도 증명해보자.
+이것은 나중에 SARSA와 Q-learning을 위해 필요하다.
+다음과 같은 식이다.
+
+$$
+\begin{align*}
+q_\pi(s,a)
+&=\mathbb E_\pi\left[G_t|S_t=s,A_t=a\right]\\
+&=\mathbb E_\pi\left[R_{t+1}+\gamma G_{t+1}|S_t=s,A_t=a\right]\\
+&=\mathbb E_\pi\left[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s, A_t=a\right]\tag{$4.3*$}\\
+&=\sum_{s',r}p(s',r|s,a)
+\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\tag{$4.4*$}
+\end{align*}
+$$
+
+이번에도 첫번째 식과 두번째 식, 그리고 네번째 식이 같다는 것은 이전 포스트에서 증명했다.
+세번째 식을 전개했을 때 네번째 식이 된다는 것을 증명하기만 하면 되는데 다음과 같다.
+
+$$
+\begin{align*}
+&\mathbb E_\pi\left[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s, A_t=a\right]\\
+=&\sum_{s',r}p(s',r|s,a)\mathbb E_\pi\left[R_{t+1}+\gamma q_\pi(S_{t+1},A_{t+1})|S_t=s, A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\
+=&\sum_{s',r}p(s',r|s,a)\left(r+\gamma\mathbb E_\pi\left[q_\pi(S_{t+1},A_{t+1})|S_t=s, A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\right)\\
+=&\sum_{s',r}p(s',r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')\mathbb E_\pi\left[q_\pi(S_{t+1},A_{t+1})|S_t=s, A_t=a,R_{t+1}=r,S_{t+1}=s',A_{t+1}=a'\right]\right)\\
+=&\sum_{s',r}p(s',r|s,a)\left(r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right)\\
+\end{align*}
+$$
+
 ## 4.2 policy evaluation
 
 책의 4.1절에서 다루는 것은, 주어진 정책 $\pi$에 대하여 이에 대한 가치함수 $v_\pi$를 얻어내는 것이다.
