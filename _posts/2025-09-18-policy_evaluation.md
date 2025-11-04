@@ -501,8 +501,17 @@ Q함수에 대해서도 마찬가지로 비슷한 버전의 policy evaluation이
 
 ### 4.1.7 Code Implementation
 
-다음과 같은 Grid World를 생각하자
+다음과 같은 Grid World를 생각하자.
 
-![grid world]({{site.url}}\images\2025-09-18-policy_evaluation\grid_world.png){: .img-80-center}
+![grid world]({{site.url}}\images\2025-09-18-policy_evaluation\grid_world.png){: .img-40-center}
 
+agent는 시작점 $(1,1)$에서 시작하여 $(4,2)$ 또는 $(4,3)$에 도달하면 episode가 끝난다.
+$(2,2)$와 grid 바깥은 벽이라서 이쪽으로는 이동할 수 없다.
+보상은 이동시마다 $-0.1$이 주어지고 두 terminal state $(4,2)$, $(4,3)$에서는 각각 $\pm1$의 보상을 받게 된다.
 
+이 환경에 대하여 equiprobable policy를 생각하자.
+그러니까, 상하좌우로 갈 수 있는 확률이 모두 $\frac14$로 일정한 정책을 생각하자.
+그리고 이 정책 $\pi$에 대한 가치함수 $v_\pi$를 계산해보자.
+
+사실 가치함수는 벨만방정식을 풀어내어도 답을 얻어낼 수 있다.
+벨만방정식은 일차연립방정식이라고 했었으므로 gauss elimination같은걸 사용해도 된다.
