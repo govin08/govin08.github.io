@@ -165,8 +165,33 @@ warm start 버전인 것을 확인할 수 있다.
 policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
 정책개선 한 번당 정책평가가 수렴할 때까지 기다리기에는 조금 지루할 수 있다.
 그러니, 정책개선 한 번당 정책평가의 과정(sweep)을 한 번씩 수행하면 이 때에도 최적정책에 수렴하는 것이 알려져 있으며 이 과정을 value iteration이라고 한다고 Sutton은 쓰고 있다.
+하지만 이건 비유적인 표현이라고 봐야 할 것 같다.
+실제로 sweep과 PI를 반복적으로 적용하면 아래 식이 나오지는 않는다.
 
-이에 대한 Sutton의 식
+value iteration이란 가치함수를 다음과 같은 점화식으로 업데이트해나가는 방식을 말한다.
+
+$$
+\begin{align*}
+v_{k+1}(s)
+&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
+&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+v_k(s')\right]\tag{4.10}
+\end{align*}
+$$
+
+위의 식과 아래 식이 같다는 것은 다음 식에서 명백하다.
+<!-- 기본적으로 (4.3)과 (4.4)이 같다는 이전 포스트의 증명과 거의 같다. -->
+
+$$
+\begin{align*}
+&\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
+=&\sum_{s',r}p(s',r\vert s,a)\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s,A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\
+=&\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_k(s')\right]
+\end{align*}
+$$
+
+value iteration은 policy iteration과는 많이 다르게 정책평가와 정책개선을 동시에 수행하는 셈이고 그런 점에서 나중에 나오는 Q-learning과 비슷하다.
+
+<!-- 이에 대한 Sutton의 식
 
 $$
 \begin{align*}
@@ -209,7 +234,7 @@ v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
 &=\max_a q_{\pi_1}(s,a)\\
 &=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
 \end{align*}
-$$
+$$ -->
 
 <!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
 
@@ -243,3 +268,4 @@ $$
 <!-- $$v_{\pi_0}=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_\right]$$ -->
 
 <!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대하여 sweep을 한 번 거치면 -->
+

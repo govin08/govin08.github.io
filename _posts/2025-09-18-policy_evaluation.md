@@ -47,7 +47,12 @@ q_\ast(s,a)
 \end{align*}
 $$
 
-## 4.1 Bellman equation revisited
+## 4.1 Policy Evaluation (Prediction)
+
+4장 1절에서는 policy evaluation에 대해 다룬다.
+그리고 이것이 이 포스트의 주제이다.
+
+### 4.1.1 Bellman equation revisited
 
 $v_\pi$에 대한 Bellman equation은 이전 포스트에서 썼지만 다시 적어보자.
 
@@ -106,7 +111,7 @@ $$
 \end{align*}
 $$
 
-## 4.2 policy evaluation
+### 4.1.2 policy evaluation
 
 책의 4.1절에서 다루는 것은, 주어진 정책 $\pi$에 대하여 이에 대한 가치함수 $v_\pi$를 얻어내는 것이다.
 즉 정책을 평가하는(policy evaluation, prediction problem) 것으로서 DP를 포함한 모든 강화학습에서의 중요한 두 과정 중 하나이다.
@@ -132,7 +137,7 @@ Sutton은 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적
 <!-- Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를 포함한다. -->
 
-## 4.3 Bellman operation
+### 4.1.3 Bellman operation
 
 먼저 할 것은 식 (4.4) 버전의 Bellman equation을 Bellman operation으로 표현하는 것이다.
 기본적으로 Carl Fredricksson의 자료를 따라갔다.
@@ -250,7 +255,7 @@ $$v_{k+1}=\mathcal T^\pi(v_k)$$
 
 로 표현될 수 있다.
 
-## 4.4 the contraction principle
+### 4.1.4 the contraction principle
 
 이제 순수하게 수학적인 정리가 나올 차례이다.
 baby rudin (3ed)의 9.22, 9.23에 다음과 같은 내용이 있다.
@@ -340,7 +345,7 @@ $$d(x^\ast,y^\ast)=d\left(\phi(x^\ast),\phi(y^\ast)\right)\le cd(x^\ast,y^\ast)$
 즉 고정점 $x^\ast$는 유일하다.
 $\square$
 
-## 4.5 operator norm : $||P||\le1$
+### 4.1.5 operator norm : $||P||\le1$
 
 policy evaluation 증명의 완성을 위해서는 $P$의 operator norm $||P||$가 1보다 작거나 같다는 사실이 필요하다.
 여기서 말하는 operator norm이란 $P$를
@@ -426,7 +431,7 @@ $$
 \end{align*}
 $$ -->
 
-## 4.6 proof (policy evaluation)
+### 4.1.6 proof (policy evaluation)
 
 이제 policy evaluation의 증명이 가능하다.
 <!-- 먼저 Bellman operator $\mathcal T^\pi$는 $\mathbb R^n$에서 $\mathbb R^n$으로 가는 contraction이다. -->
@@ -471,3 +476,33 @@ $$\mathcal T^\pi(v^\ast)=v^\ast$$
 $$\lim_{k\to\infty}v_k=v^\ast=v_\pi$$
 
 가 성립한다.
+$\square$
+
+이로써 policy evaluation을 통해 $\pi$에 대한 가치함수 $v_i$를 반복적인 방식으로 수렴해나갈 수 있음을 증명했다.
+많은 내용들은 증명없이 읽어나가야 하는 찜찜함이 있지만 그래도 이 부분은 증명할 수 있어서 뿌듯하다.
+
+책에 적혀진 내용들을 조금 더 써볼까.
+
+Sutton은 PE를 구현하는 방법으로 두 가지 방법(two-array, in-place)을 제시한다.
+two-array 방법에서는 말그대로 두 개의 array를 사용하는데 하나는 각 $s$에 대한 old values $v_k(s)$를 기록하는 array로 다른 하나는 각 new values $v_{k+1}(s)$를 기록하는 array이다.
+old array를 사용하여 new array를 만든 이후에는 new array를 old array로 생각하고 이전에 old array였던 것을 $v_{k+1}(s)$를 기록하는 new array로 두어 계속한다.
+in-place 방법에서는 하나의 array만을 사용한다.
+$s^i$에 대한 $v_k(s^i)$를 먼저 덮어씌우고(in-place) 그다음에 $v_k(s^{i+1})$을 업데이트하는데, 이것을 sweep이라고도 한다.
+모든 $i$에 대하여 다 업데이트하고 나면 다음 $k+1$번째 가치함수에 대하여 똑같이 진행하면 될 것이다.
+
+two-array 방식은 식 (4.5)와 다름없고 따라서 위에서 증명한 것은 two-array 방법에 대한 증명인 셈이다.
+Sutton 책에 제시된 pseudocode는 in-place 방식이다.
+
+![pseudocode : policy evaluation]({{site.url}}\images\2025-09-18-policy_evaluation\pseudocode-policy_evaluation.png){: .img-80-center}
+
+이렇듯 PE 하나에도 많은 버전이 있다.
+심지어, 나는 V함수에 대한 PE를 증명한 셈이지만, 그것보다는 Q함수에 대한 PE가 더 중요할 수 있다.
+Q함수에 대해서도 마찬가지로 비슷한 버전의 policy evaluation이 가능하고 심지어 뒤에 나올 policy iteration도 가능할 것이다.
+
+### 4.1.7 Code Implementation
+
+다음과 같은 Grid World를 생각하자
+
+![grid world]({{site.url}}\images\2025-09-18-policy_evaluation\grid_world.png){: .img-80-center}
+
+
