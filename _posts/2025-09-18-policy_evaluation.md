@@ -501,6 +501,8 @@ Q함수에 대해서도 마찬가지로 비슷한 버전의 policy evaluation이
 
 ### 4.1.7 Code Implementation
 
+여기서 소개하는 코드 전문의 링크는 [여기](https://github.com/govin08/ecm_rl_share/blob/master/1031_dp_pi_gridworld/policy_evaluation.ipynb)에 있다.
+
 다음과 같은 Grid World를 생각하자.
 
 ![grid world]({{site.url}}\images\2025-09-18-policy_evaluation\grid_world.png){: .img-40-center}
@@ -515,3 +517,177 @@ $(2,2)$와 grid 바깥은 벽이라서 이쪽으로는 이동할 수 없다.
 
 사실 가치함수는 벨만방정식을 풀어내어도 답을 얻어낼 수 있다.
 벨만방정식은 일차연립방정식이라고 했었으므로 gauss elimination같은걸 사용해도 된다.
+
+위에 썼던 걸 다시 보자.
+식 ($\ast$)와 바로 위 식으로부터 
+
+$$v_\pi=r_\pi+\gamma Pv_\pi$$
+
+이고 따라서 벨만방정식은 다음과 같은 선형연립방정식이 된다.
+
+$$(I-\gamma P)v_\pi=r_\pi$$
+
+행렬 $I-\gamma P$와 벡터 $r_\pi$를 가지고 `np.linalg.solve` 메소드를 사용하면 $v_\pi$함수인 `v_array`를 얻을 수 있다.
+
+로 쓰일 수 있다.
+아래는 그 코드이다.
+env 모듈에 대해서는 따로 언급하지 않겠다.
+
+```
+from env import GridWorld
+import numpy as np
+
+def policy_evaluation_linear_system(env):
+    """
+    선형 연립방정식으로 Policy Evaluation 풀기
+    (I - γP)v = r
+    """
+    states = [s for s in env.get_states() if not env.is_terminal(s)]
+    n_states = len(states)
+    state_to_idx = {s: i for i, s in enumerate(states)}
+    
+    # P 행렬과 r 벡터 구성
+    P = np.zeros((n_states, n_states))
+    r = np.zeros(n_states)
+    
+    for i, state in enumerate(states):
+        # Equiprobable policy: π(a|s) = 0.25
+        for action in env.actions:
+            next_state = env.get_next_state(state, action)
+            reward = env.get_reward(state, action)
+            
+            prob = 0.25  # equiprobable
+            
+            # r 벡터: 즉시 보상의 기댓값
+            r[i] += prob * reward
+            
+            # P 행렬: 전이 확률
+            if not env.is_terminal(next_state):
+                j = state_to_idx[next_state]
+                P[i, j] += prob
+    
+    # 선형 시스템 풀기: (I - γP)v = r
+    I = np.eye(n_states)
+    A = I - env.gamma * P
+    v_array = np.linalg.solve(A, r)
+    
+    # Dictionary로 변환
+    V = {}
+    for i, state in enumerate(states):
+        V[state] = v_array[i]
+    
+    # Terminal states
+    for terminal in env.terminals:
+        V[terminal] = 0.0
+    
+    return V
+
+
+# 실행 및 비교
+env = GridWorld()
+
+V_linear = policy_evaluation_linear_system(env)
+
+print("\n=== Linear System Method (Grid View) ===\n")
+for r in range(env.rows - 1, -1, -1):
+    row_str = ""
+    for c in range(env.cols):
+        state = (r, c)
+        if state == env.wall:
+            row_str += " [WALL]  "
+        elif state in env.terminals:
+            row_str += "  0.000  "
+        else:
+            row_str += f"{V_linear[state]:7.3f} "
+    print(row_str)
+
+```
+
+그러면 그 결과가 아래와 같다.
+
+```
+=== Linear System Method (Grid View) ===
+
+ -0.761  -0.551  -0.142   0.000  
+ -0.865  [WALL]   -0.715   0.000  
+ -0.909  -0.913  -0.877  -0.950 
+```
+
+terminal state에서의 V값이 0인 것을 확인할 수 있다.
+$(4,1)$에서의 V값이 무척 작은데 그것 또한 당연하다.
+이 가치함수에 의하면 시작점에서부터 출발하여 점점 value가 높아지는 쪽으로, 그러니까 위로 두 칸 갔다가 오른쪽으로 세 칸 가는 방식의 경로를 택할 것임을 추측해볼 수 있다.
+
+하지만, 이 포스트의 주제는 벨만방정식이 아니었지.
+policy evaluation을 통해서도 똑같은 결과가 나오는지 확인하자.
+다음에 사용된 코드는 위에 언급한 pseudocode와 정확히 같다.
+
+```
+def policy_evaluation(env, theta=0.0001, max_iterations=1000):
+    """
+    Equiprobable policy (π(a|s) = 0.25)에 대한 Policy Evaluation
+    """
+    # Value function 초기화
+    V = {}
+    for state in env.get_states():
+        V[state] = 0.0
+    
+    # Iterative Policy Evaluation
+    for iteration in range(max_iterations):
+        delta = 0
+        
+        # 모든 상태에 대해 업데이트
+        for state in env.get_states():
+            if env.is_terminal(state):
+                continue  # 터미널 상태는 V=0 유지
+            
+            v = V[state]
+            
+            # Bellman equation for equiprobable policy
+            new_v = 0
+            for action in env.actions:
+                next_state = env.get_next_state(state, action)
+                reward = env.get_reward(state, action)
+                
+                # π(a|s) = 0.25 (equiprobable)
+                prob = 0.25
+                new_v += prob * (reward + env.gamma * V[next_state])
+            
+            V[state] = new_v
+            delta = max(delta, abs(v - new_v))
+        
+        # 수렴 체크
+        if delta < theta:
+            print(f"수렴 완료! (iteration: {iteration + 1})")
+            break
+    
+    return V
+
+env = GridWorld()
+V = policy_evaluation(env)
+
+# Grid 형태로 시각화
+print("\n=== Value Function (Grid View) ===\n")
+for r in range(env.rows - 1, -1, -1):  # 2, 1, 0 순서 (상하반전)
+    row_str = ""
+    for c in range(env.cols):
+        state = (r, c)
+        if state == env.wall:
+            row_str += " [WALL]  "
+        elif state in env.terminals:
+            row_str += "  0.000  "
+        else:
+            row_str += f"{V[state]:7.3f} "
+    print(row_str)
+```
+
+그 결과는 이전 결과와 같다 ;
+
+```
+수렴 완료! (iteration: 41)
+
+=== Value Function (Grid View) ===
+
+ -0.761  -0.551  -0.142   0.000  
+ -0.865  [WALL]   -0.715   0.000  
+ -0.909  -0.912  -0.877  -0.950
+```
