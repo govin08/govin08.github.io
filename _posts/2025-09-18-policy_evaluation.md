@@ -23,7 +23,7 @@ Sutton의 3장은 꽤 책의 내용과 비슷하게 썼다.
 식번호는 책의 것을 그대로 따랐으나, 절은 다르게 썼다.
 
 이 포스트에서 꼭 다루고자 하는 것은 Bellman operator와 contraction principle로 policy evaluation이 유효한 것임을 증명하는 것이다.
-이에 관해서는 이미 [Ishwin Rao](https://web.stanford.edu/class/cme241/lecture_slides/BellmanOperators.pdf)나 [Carl Fredricksson](https://cfml.se/bellman-operators-are-contractions/)이 잘 써놨는데 아마 조금씩 참고할 것 같다.
+이에 관해서는 이미 [Ishwin Rao](https://web.stanford.edu/class/cme241/lecture_slides/BellmanOperators.pdf)나 [Carl Fredricksson](https://cfml.se/Bellman-operators-are-contractions/)이 잘 써놨는데 아마 조금씩 참고할 것 같다.
 
 정확한 증명을 위해 계속 파다보니 operator norm에 대해서도 이야기해야 했다.
 그런데, 가만히 보면 contraction principle이나 operator norm 모두 내 석사논문에서 다뤘던 주제들이다.
@@ -137,9 +137,9 @@ Sutton은 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적
 <!-- Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를 포함한다. -->
 
-### 4.1.3 Bellman operation
+### 4.1.3 Bellman operator
 
-먼저 할 것은 식 (4.4) 버전의 Bellman equation을 Bellman operation으로 표현하는 것이다.
+먼저 할 것은 식 (4.4) 버전의 Bellman equation을 Bellman operator으로 표현하는 것이다.
 기본적으로 Carl Fredricksson의 자료를 따라갔다.
 
 많은 계산들, 특히 marginalization이 포함되어 있으므로 천천히 계산하기 위해 일단 두 값 $A$, $B$로 분리하면 식 (4.4)에서
@@ -198,10 +198,10 @@ $$
 이 된다.
 이전 포스트에도 언급했고, 책의 4장에도 다시 강조되지만 Bellman equation의 본질은 연립방정식, 그것도 선형(affine)연립방정식이다.
 <!-- 변수의 개수와 식의 개수가 $|\mathcal S|$로 같으므로 이 연립방정식 $(\ast)$의 해가 단 하나 존재한다고 가정하자. -->
-state space $\mathcal S$를 $\mathcal S=\\{s_1,\cdots,s_n\\}$으로 두고 위 식을 다시 쓰면 모든 $i,j$에 대하여 ($1\le i,j\le n)$
+state space $\mathcal S$를 $\mathcal S=\\{s^1,\cdots,s^n\\}$으로 두고 위 식을 다시 쓰면 모든 $i,j$에 대하여 ($1\le i,j\le n)$
 
 $$
-v_\pi(s_j)=r_\pi(s_j)+\gamma\sum_{i=1}^nv_\pi(s_i)P\left(S_{t+1}=s_i|S_t=s_j\right)
+v_\pi(s^j)=r_\pi(s^j)+\gamma\sum_{i=1}^nv_\pi(s^i)P\left(S_{t+1}=s^i|S_t=s^j\right)
 $$
 
 이 성립한다.
@@ -211,9 +211,9 @@ $$
 $$
 P=
 \begin{bmatrix}
-P\left(S_{t+1}=s_1|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_1\right)\\
+P\left(S_{t+1}=s^1|S_t=s^1\right)&\cdots&P\left(S_{t+1}=s^n|S_t=s^1\right)\\
 \vdots&\ddots&\vdots\\
-P\left(S_{t+1}=s_1|S_t=s_n\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_n\right)
+P\left(S_{t+1}=s^1|S_t=s^n\right)&\cdots&P\left(S_{t+1}=s^n|S_t=s^n\right)
 \end{bmatrix}
 $$
 
@@ -222,16 +222,16 @@ $$
 $$
 v_\pi=
 \begin{bmatrix}
-v_\pi(s_1)\\
+v_\pi(s^1)\\
 \vdots\\
-v_\pi(s_n)
+v_\pi(s^n)
 \end{bmatrix}
 ,\quad
 r_\pi=
 \begin{bmatrix}
-r_\pi(s_1)\\
+r_\pi(s^1)\\
 \vdots\\
-r_\pi(s_n)
+r_\pi(s^n)
 \end{bmatrix}
 $$
 
@@ -240,18 +240,34 @@ $$
 $$v_\pi=r_\pi+\gamma Pv_\pi$$
 
 가 된다.
-이런 관점에서 Bellman operation $\mathcal T^\pi$를
+(즉, $v_\pi$는 가치함수로서의 함수이기도 하지만, 벡터이기도 하다.
+문맥에 따라 두 의미가 혼동되지 않는다.)
+이런 관점에서 Bellman operator $\mathcal T^\pi$를 다음과 같이 정의할 수 있다.
 
-$$\mathcal T^\pi(v)=r_\pi+\gamma Pv$$
+> 가치함수 $v:\mathcal S\to\mathbb R$에 대하여 $\mathcal T^\pi v$를
+>
+> $$\mathcal T^\pi v=r_\pi+\gamma Pv$$
+>
+> 로 정의한다. 다시 말해, 모든 $s\in\mathcal S$에 대하여
+>
+> $$
+\begin{align*}
+\left(\mathcal T^\pi v\right)(s)
+&=r_\pi(s)+\gamma(Pv)(s)\\
+&=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v(s')\right]
+\end{align*}
+$$
+> 
+> 이다.
 
-로 정의할 수 있고 Bellman equation도 간단히
+그러면 Bellman equation도 간단히
 
-$$v_\pi=\mathcal T^\pi(v_\pi)\tag{$\ast$}$$
+$$v_\pi=\mathcal T^\pi v_\pi\tag{$\ast$}$$
 
 로 쓰일 수 있다.
 그리고 policy evaluation 식 (4.5)도
 
-$$v_{k+1}=\mathcal T^\pi(v_k)$$
+$$v_{k+1}=\mathcal T^\pi v_k$$
 
 로 표현될 수 있다.
 
@@ -368,9 +384,9 @@ $$
 P=[p_{ij}]_{n\times n}
 =
 \begin{bmatrix}
-P\left(S_{t+1}=s_1|S_t=s_1\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_1\right)\\
+P\left(S_{t+1}=s^1|S_t=s^1\right)&\cdots&P\left(S_{t+1}=s^n|S_t=s^1\right)\\
 \vdots&\ddots&\vdots\\
-P\left(S_{t+1}=s_1|S_t=s_n\right)&\cdots&P\left(S_{t+1}=s_n|S_t=s_n\right)
+P\left(S_{t+1}=s^1|S_t=s^n\right)&\cdots&P\left(S_{t+1}=s^n|S_t=s^n\right)
 \end{bmatrix}
 $$
 
@@ -439,7 +455,7 @@ $$ -->
 
 $$
 \begin{align*}
-\left|\left|T^\pi(v) - T^\pi(w)\right|\right|_\infty
+\left|\left|T^\pi v - T^\pi w\right|\right|_\infty
 &=\left|\left|(r_\pi+\gamma Pv) - (r_\pi+\gamma Pw)\right|\right|_\infty\\
 &=\gamma\left|\left|P(v-w)\right|\right|_\infty\\
 &\le\gamma\lvert\lvert P\rvert\rvert\cdot\lvert\lvert v-w\rvert\rvert_\infty\\
@@ -448,14 +464,14 @@ $$
 $$
 
 이다.
-첫번째 줄은 bellman operator의 정의,
+첫번째 줄은 Bellman operator의 정의,
 두번째 줄은 $P$의 선형성과 norm의 성질,
 세번째 줄은 operator norm의 성질,
 네번째 줄은 $\lvert\lvert P\rvert\rvert\le1$이 쓰였다.
 이것을 다시 쓰면
 
 $$
-d\left(T^\pi(v),T^\pi(w)\right)
+d\left(\mathcal T^\pi v,\mathcal T^\pi w\right)
 \le
 \gamma d(v,w)
 $$
@@ -466,7 +482,7 @@ $\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
 에서의 contraction이다.
 그러면 contraction principle에 의해
 
-$$\mathcal T^\pi(v^\ast)=v^\ast$$
+$$\mathcal T^\pi v^\ast=v^\ast$$
 
 인 $v^\ast\in\mathbb R^n$이 유일하게 하나 존재하고 식 (4.5)로 정의된 수열 $\\{v_k\\}$에 대하여 $v_k\to v^\ast$이다.
 즉 Bellman equation $(\ast)$이 유일한 해 $v^\ast$를 가진다.
