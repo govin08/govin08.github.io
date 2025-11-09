@@ -191,6 +191,108 @@ $$
 
 value iteration은 policy iteration과는 많이 다르게 정책평가와 정책개선을 동시에 수행하는 셈이고 그런 점에서 나중에 나오는 Q-learning과 비슷하다.
 
+value iteration을 통해 optimal value function $v_\ast$를 얻을 수 있다는 것을 증명하기 위해서 operator $\bar{\mathcal T}$를 다음과 같이 정의하자.
+[Dawei Li, Zikun Ye의 자료](http://127.0.0.1:4000/data-science/policy_improvement/#44-value-iteration)를 참고하였다.
+
+$$
+\begin{align*}
+\bar{\mathcal T}v(s)
+&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v_\pi(s')\right]\\
+&=\max_a\mathbb E\left[R_{t+1}+v(S_{t+1})\vert S_t=a, A_t=a\right]\\
+\end{align*}
+$$
+
+먼저 언급할 것은 $\bar{\mathcal T}$의 정의에 따르면 $v$에 대한 Bellman optimal equation이
+
+$$v_\ast(s)=(\mathcal Tv_\ast)(s)$$
+
+로 쓰여질 수 있다는 사실이다.
+또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 $v=(\mathcal Tv)(s)$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
+
+증명에 앞서 절댓값과 최댓값에 관한 간단한 다음 식 $(\ast)$을 참고하자.
+
+$$
+\begin{aligned}
+\left|\max_af(a)-\max_ag(a)\right|
+&=\max_af(a)-\max_ag(a)\\
+&=f(a_\ast)-\max_ag(a)\\
+&\le f(a_\ast)-g(a_\ast)\\
+&\le\max_a\left|f(a)-g(a)\right|\\
+\end{aligned}
+\tag{$\ast$}
+$$
+
+이때, 일반성을 잃지 않고 $\max_a f(a)\ge \max_ag(a)$로 두었고 $a_\ast=\text{arg}\max_af(a)$로 두었다.
+
+먼저, $\bar{\mathcal T}$가 contraction mapping이라는 것을 증명한다.
+임의의 $v$, $w$에 대하여 식 (4.10)에 의해 정의된 점화식인
+
+$$
+\begin{align*}
+\left|(\bar{\mathcal T^\pi v})(s)-(\bar{\mathcal T^\pi w})(s)\right|
+&=\left|
+    \max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
+    -\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
+\right|\\
+&\stackrel{(\ast)}{\le}
+\max_a\left|
+    \sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
+    -\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
+\right|\\
+&=\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
+&=\gamma\sum_{s',r}p(s',r\vert s,a_\ast)\left|v(s')-w(s')\right|\\
+&=\gamma\mathbb E\left[
+    \left|v(S_{t+1})-w(S_{t+1}))\right|\;\vert S_t=s, A_t=a_\ast
+    \right]\\
+&\le\gamma\max_{s'}|v(s')-w(s')|\\
+&=\gamma\left\Vert v-w\right\Vert_{\infty}
+\end{align*}
+$$
+
+이다.
+첫번째 줄은 기호의 정의, 두번째 줄은 $(\ast)$, 세번째 줄은 단순 계산이다.
+네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째 줄은 기호의 정의에 의해 당연하다.
+여섯번째 줄은 $A_t=a$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
+
+이제 좌변에 $\Vert\cdot\Vert_\infty$를 취하면
+
+$$
+\left\Vert\bar{\mathcal T^\pi v}-\bar{\mathcal T^\pi w}\right\Vert
+\le\gamma\Vert v-w\Vert_\infty
+$$
+
+이다.
+따라서 $\mathcal T^\pi$는 contraction mapping이다.
+그러면 contraction principle에 의해, 임의의 $v_0:\mathcal S\to\mathbb R$에 대하여 점화식 (4.10) 혹은
+
+$$
+v_{k+1}=\bar{\mathcal T}v_k
+$$
+
+에 의해 정의된 수열 $\{v_k\}_{k=0}^\infty$는 수렴한다.
+조금 더 정확하게는, 어떤 $K$에 대하여 $v_{K+1}=v_K$가 되는데 그러면
+$v_K=\bar{\mathcal T}v_K$이 되어 $v_K$가 $\bar{\mathcal T}$의 fixed point가 되어 버린다.
+그런데 $\bar{\mathcal T}$의 유일한 고정점은 $v_\ast$이므로 $v_K=v_\ast$이다.
+
+$$
+\lim_{k\to\infty} v_k=v_\ast
+$$
+
+이다.
+여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다.
+
+<!-- 식 $(4.10)$에 의해 정의된 점화식
+
+$$
+\begin{aligned}
+v_{k+1}(s)
+&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
+&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+v_k(s')\right]\\
+&=(\bar{\mathcal T}v_k)(s)
+\end{aligned}
+\tag{4.10}
+$$ -->
+
 <!-- 이에 대한 Sutton의 식
 
 $$
