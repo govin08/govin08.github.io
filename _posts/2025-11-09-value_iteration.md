@@ -284,3 +284,8 @@ Final Policy
  U    W    U    T 
  U    R    U    L 
 ```
+
+## 4.6 Generalized Policy Iteration
+
+4.5절은 그다지 많이 언급할 내용이 없고, 굳이 따지자면 이전 포스트에서 이미 asyncronous policy evaluation에 대해 말했으므로 넘어가도 되겠다.
+하지만 4.6절의 GPI는 중요하므로 쓰고 넘어가려 한다.
