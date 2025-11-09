@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "(Sutton, 4.2-6절) Policy Improvement 등"
+title: "(Sutton, 4.2, 4.3절) Policy Iteration"
 categories: data-science
 tags: [reinforcement learing, dynamic programming, policy improvement theorem, policy iteration]
 use_math: true
@@ -10,14 +10,18 @@ toc: true
 ---
 
 더 시간이 지나기 전에 dynamic programming 포스팅을 끝내고 싶은 마음이 생겼다.
+
+- [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP3 : policy iteration](https://govin08.github.io/data-science/value_iteration/)
+
 다른 주제들도 공부하여 포스팅을 남기고 싶은데 DP를 끝내지 않고 다른 것을 쓰기는 싫기 때문이다.
 그러니까 일종의 의무감에서 이 글을 쓰고 있다.
 당장 이전부터 PCA와 PLS에 대해 공부하고 싶었고 얼마 전에는 game theory나 control theory에 손을 댈까도 생각했었는데, 오늘은 MPC와 LQR을 배워야 할 필요가 생긴 것이다.
 그러니 DP는 빠르게 공부하여 치워버리자.
 
 그리고 사실 글을 쓸 준비가 되어있다고 생각한다.
-[이전 글](https://govin08.github.io/data-science/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
-책의 내용대로 쭉 따라가서 GPI까지는 써볼까.
+이전 글을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
+책의 내용대로 쭉 따라가볼까.
 
 하지만 글쓰는 것이 쉽지는 않을 것 같다.
 사실상 Sutton의 책에 쓰인 것보다 더 간결하고 잘 쓸 수는 없을테니, 글을 쓰고 나서도 나조차도 내 블로그 글을 보기보다는 Sutton의 책을 볼 것 같다.
@@ -143,7 +147,7 @@ $$
 
 어떤 $\pi$에 대하여 policy evaluation과 policy improvement를 반복할 수 있다.
 
-![policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\policy_iteration.png){: .img-80-center}
+![policy iteration]({{site.url}}\images\2025-09-18-dynamic_programming\policy_iteration.png){: .img-80-center}
 
 정책 평가와 정책 개선을 반복하는 것인데 이것을 policy iteration이라고 한다.
 정책개선시 deterministic한 policy를 택한다고 가정하면, finite MDP의 deterministic policy의 개수는 유일하고, optimal policy 또한 deterministic하다고 가정할 수 있으므로 policy iteration는 언젠가 끝난다.
@@ -158,8 +162,268 @@ $$
 아래는 Sutton 책에 실린 pseudocode이다.
 warm start 버전인 것을 확인할 수 있다.
 
-![pseudocode : policy iteration]({{site.url}}\images\2025-10-13-policy_improvement\pseudocode-policy_iteration.png){: .img-80-center}
+![pseudocode : policy iteration]({{site.url}}\images\2025-09-18-dynamic_programming\pseudocode-policy_iteration.png){: .img-80-center}
 
+### 4.3.1 코드 구현
+
+이전 포스트에서 다음과 같은 grid world에서 equiprobable policy에 대한 가치함수를 계산해봤었다.
+
+![grid world]({{site.url}}\images\2025-09-18-dynamic_programming\grid_world.png){: .img-40-center}
+
+이번에는 policy iteration을 통해 최적 정책을 찾아보려 한다.
+4.5장에는 policy evaluation의 빈도에 따라 syncronous PI와 syncronous PI를 구분하고 있는데 이것을 `in_place` 인자로 두었다. (asyncronous PI : `in_place=True`)
+또, 정책평가는 정책 평가의 과정 (한 번의 업데이트, sweep)이 여러 번 반복되는데 모든 sweep 이후에 policy improvement로 넘어갈지 아니면 한 번의 sweep마다 policy improvement로 넘어갈지 결정하는 인자로 `max_sweep`을 도입했다. (모든 sweep 이후에 PI로 넘어감 : `max_sweep=True`)
+
+```
+from env import GridWorld
+env = GridWorld()
+V_init = {s: 0.0 for s in env.get_states()}  # Value function
+policy_init = {s: 'R' for s in env.get_states()}  # Initial policy
+
+def policy_evaluation(policy, V, in_place, max_sweep, threshold=0.001):
+    """
+    Policy Evaluation
+    
+    Args:
+        in_place (bool) : True = asyncronous update, False : syncronous update
+        max_sweep (bool) : True = sweeps until convergence, False : one sweep
+        threshold (float) : convergence threshold
+    """
+    while True:
+        
+        if not in_place:
+            V_old = V.copy()
+
+        delta = 0
+        for state in env.get_states():
+            if env.is_terminal(state):
+                continue
+            
+            action = policy[state]
+            next_state = env.get_next_state(state, action)
+            reward = env.get_reward(state, action)
+
+            if in_place:
+                # Asynchronous: 즉시 업데이트 (현재 V 사용)
+                v_old = V[state]
+                V[state] = reward + env.gamma * V[next_state]
+            else:
+                # Synchronous: old V 사용해서 new V 계산
+                v_old = V_old[state]
+                V[state] = reward + env.gamma * V_old[next_state]
+
+            delta = max(delta, abs(v_old - V[state]))
+                
+        # 종료 조건
+        if max_sweep:
+            if delta < threshold:
+                break
+        else:
+            break
+    return V
+
+def policy_improvement(policy, V):
+    """Policy Improvement"""
+    is_convergent = True
+    
+    for state in env.get_states():
+        if env.is_terminal(state):
+            continue
+        
+        old_action = policy[state]
+        
+        # 모든 행동에 대해 Q값 계산
+        action_values = {}
+        for action in env.actions:
+            next_state = env.get_next_state(state, action)
+            reward = env.get_reward(state, action)
+            action_values[action] = reward + env.gamma * V[next_state]
+        
+        # 최선의 행동 선택
+        policy[state] = max(action_values, key=action_values.get)
+        
+        if old_action != policy[state]:
+            is_convergent = False
+    
+    return policy, is_convergent
+
+
+def print_results(policy, V):
+    """결과 출력"""
+    print("\nValue Function:")
+    for r in range(env.rows - 1, -1, -1):  # 2, 1, 0 순서 (상하반전)
+        row_values = []
+        for c in range(env.cols):
+            if (r, c) == env.wall:
+                row_values.append("  WALL ")
+            else:
+                row_values.append(f"{V[(r,c)]:6.2f}")
+        print("  ".join(row_values))
+    
+    print("Policy:")
+    for r in range(env.rows - 1, -1, -1):  # 2, 1, 0 순서 (상하반전)
+        row_policy = []
+        for c in range(env.cols):
+            if (r, c) == env.wall:
+                row_policy.append(" W ")
+            elif env.is_terminal((r, c)):
+                row_policy.append(" T ")
+            else:
+                row_policy.append(f" {policy[(r,c)]} ")
+        print("  ".join(row_policy))
+
+
+def policy_iteration(policy, V, in_place, max_sweep):
+    """Policy Iteration"""
+    iteration = 0
+
+    print(f"\n{'='*60}")
+    print(f"🎯 POLICY ITERATION  │  {"Asyncronous" if in_place else "Syncronous"} + {"Full sweep" if max_sweep else "single sweep"}")
+    print(f"{'='*60}\n")
+    
+    while True:
+        iteration += 1
+        
+        # Iteration은 간소화
+        print(f"\n[Iteration {iteration}]")
+        
+        V = policy_evaluation(policy, V, in_place=in_place, max_sweep=max_sweep)
+        policy, is_convergent = policy_improvement(policy, V)
+        
+        print_results(policy, V)
+        
+        if is_convergent:
+            print(f"\n✅ Policy converged after {iteration} iterations!")
+            break
+
+```
+
+### 4.3.2 구현 결과
+
+옵션이 두 개이니 총 네 번의 실험을 해볼 수 있다.
+그때마다의 결과를 표로 정리하면 다음과 같다.
+
+|                   | `in_place=True` | `in_place=False` |
+|:-----------------:|:---------------:|:----------------:|
+| `max_sweep=True`  |1번만에 수렴       |4번만에 수렴|
+| `max_sweep=False` |1번만에 수렴       |1번만에 수렴|
+
+즉, 4.3의 본문에서 설명한 기본적인 policy iteration 방식은 `in_place=False`, `max_sweep=True`인데 이 경우에는 4번의 iteration을 거쳐서 정책이 수렴했다.
+반면, `in_place=True`로 두어 asyncronous 방식을 취하거나 아니면 sweep마다 policy improvement를 시행한 경우에는 한 번만에 정책이 수렴했다.
+
+아래는 세부 결과이다.
+```
+# syncronous, full sweep
+policy_iteration(policy_init, V_init, in_place=True, max_sweep=True)
+============================================================
+🎯 POLICY ITERATION  │  Asyncronous + Full sweep
+============================================================
+
+
+[Iteration 1]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+ -0.99    WALL    -1.00    0.00
+ -0.99   -0.99   -0.99   -0.99
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    U    D    D 
+
+[Iteration 2]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31   -0.99   -0.99   -0.99
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    L    U    D 
+
+[Iteration 3]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.18    0.62   -0.99
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+
+[Iteration 4]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+
+✅ Policy converged after 4 iterations!
+# asyncronous, full sweep
+policy_iteration(policy_init, V_init, in_place=False, max_sweep=True)
+============================================================
+🎯 POLICY ITERATION  │  Syncronous + Full sweep
+============================================================
+
+
+[Iteration 1]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+
+✅ Policy converged after 1 iterations!
+# syncronous, single sweep
+policy_iteration(policy_init, V_init, in_place=True, max_sweep=False)
+============================================================
+🎯 POLICY ITERATION  │  Asyncronous + single sweep
+============================================================
+
+
+[Iteration 1]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+
+✅ Policy converged after 1 iterations!
+# asyncronous, single sweep
+policy_iteration(policy_init, V_init, in_place=False, max_sweep=False)
+============================================================
+🎯 POLICY ITERATION  │  Syncronous + single sweep
+============================================================
+
+
+[Iteration 1]
+
+Value Function:
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
+Policy:
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+
+✅ Policy converged after 1 iterations!
+```
+<!-- 
 ## 4.4 Value Iteration
 
 policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
@@ -276,95 +540,4 @@ $$
 $$
 
 이다.
-여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다.
-
-<!-- 식 $(4.10)$에 의해 정의된 점화식
-
-$$
-\begin{aligned}
-v_{k+1}(s)
-&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
-&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+v_k(s')\right]\\
-&=(\bar{\mathcal T}v_k)(s)
-\end{aligned}
-\tag{4.10}
-$$ -->
-
-<!-- 이에 대한 Sutton의 식
-
-$$
-\begin{align*}
-v_{k+1}(s)
-&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_k(s')\right]\tag{4.10}
-\end{align*}
-$$
-
-을 이해해보자.
-가치함수 $v_k:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_{k+1}$은 식 (4.9)에 의해 ($v_{\pi_k}\longrightarrow\pi_{k+1}$)
-
-$$
-q_{\pi_{k+1}}(s,a) = \max_aq_{\pi_k}(s,a)
-$$
-
-$$q_{\pi_k}(s,\pi_{k+1}(s))=\max_a q_{\pi_k}(s,a)$$
-
-이다.
-이제 정책평가의 한 iteration을 취하면 ($\pi_{k+1}\longrightarrow v_{\pi_{k+1}}$)
-
-$$
-\begin{align*}
-v_{\pi_{k+1}}(s)
-&=\mathbb E\left[R_{t+1}+\gamma v_{\pi_k}(S_{t+1})\vert S_t=s\right]\\
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_{\pi_k}(s')\right]
-\end{align*}
-$$
-
-이고, 따라서
-
-$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
-
-이다.
-여기서 다시 greedy policy를 취하면
-
-$$
-\begin{align*}
-v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
-&=\max_a q_{\pi_1}(s,a)\\
-&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
-\end{align*}
-$$ -->
-
-<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
-
-$$v_{\pi_0}\longrightarrow\pi_1:q_{\pi_0}(s,\pi_1(s))=\max_a q_{\pi_0}(s,a)$$
-
-이다.
-이제 정책평가의 한 iteration을 취하면
-
-$$\pi_1\longrightarrow v_{\pi_1}:v_{\pi_1}(s) = \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s\right]$$
-
-이고, 따라서
-
-$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
-
-이다.
-여기서 다시 greedy policy를 취하면
-
-$$
-\begin{align*}
-v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
-&=\max_a q_{\pi_1}(s,a)\\
-&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
-\end{align*}
-$$
- -->
-
-<!-- sweep을 한 번 거치면 -->
-<!-- 4.3절에서처럼 $\pi_0$부터 시작하자. -->
-<!-- 식 (4.5)에 의해 -->
-
-<!-- $$v_{\pi_0}=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_\right]$$ -->
-
-<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대하여 sweep을 한 번 거치면 -->
-
+여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다. -->
