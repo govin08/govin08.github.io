@@ -8,8 +8,11 @@ published: true
 author_profile: false
 toc: true
 ---
+이전 포스트에 이어 Sutton의 책을 읽어가보자.
 
-[이전 포스트](https://govin08.github.io/data-science/finite_mdp/)에 이어 Sutton의 책을 읽어가보자.
+- [DP2 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP3 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
+
 늘 그렇듯 책에 생략된 내용에 대해서는 자료를 찾거나 직접 계산 또는 증명해서 채워나갈 것이다.
 dynamic programming은, 이 책에서는 가장 기본적인 강화학습 알고리즘으로 소개된다.
 환경모델이 완전히 주어진 상태에서 쓸 수 있는 가장 기본적인 알고리즘이라고 할만하다.

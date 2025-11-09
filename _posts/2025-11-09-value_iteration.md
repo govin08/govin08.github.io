@@ -10,6 +10,9 @@ toc: true
 ---
 
 policy iteration에 대한 글을 계속 이어나가다보니 양이 또 많아졌다.
+- [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP2 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
+
 심지어 코드도 추가했더니 글을 나누는 게 맞다는 판단이 생겼다.
 
 ## 4.4 Value Iteration
@@ -133,6 +136,11 @@ $$
 
 이다.
 여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다.
+
+Sutton 책의 pseudocode는 다음과 같다.
+
+![policy iteration]({{site.url}}\images\2025-09-18-dynamic_programming\value_iteration.png){: .img-80-center}
+
 
 <!-- 식 $(4.10)$에 의해 정의된 점화식
 

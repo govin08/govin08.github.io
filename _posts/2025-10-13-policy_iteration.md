@@ -10,13 +10,17 @@ toc: true
 ---
 
 더 시간이 지나기 전에 dynamic programming 포스팅을 끝내고 싶은 마음이 생겼다.
+
+- [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP3 : policy iteration](https://govin08.github.io/data-science/value_iteration/)
+
 다른 주제들도 공부하여 포스팅을 남기고 싶은데 DP를 끝내지 않고 다른 것을 쓰기는 싫기 때문이다.
 그러니까 일종의 의무감에서 이 글을 쓰고 있다.
 당장 이전부터 PCA와 PLS에 대해 공부하고 싶었고 얼마 전에는 game theory나 control theory에 손을 댈까도 생각했었는데, 오늘은 MPC와 LQR을 배워야 할 필요가 생긴 것이다.
 그러니 DP는 빠르게 공부하여 치워버리자.
 
 그리고 사실 글을 쓸 준비가 되어있다고 생각한다.
-[이전 글](https://govin08.github.io/data-science/policy_evaluation/)을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
+이전 글을 쓰고 나서 간간이 4.2절을 보았고 어느 정도 이해는 했던 터였다.
 책의 내용대로 쭉 따라가볼까.
 
 하지만 글쓰는 것이 쉽지는 않을 것 같다.
