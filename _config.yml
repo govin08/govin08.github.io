@@ -165,15 +165,12 @@ kramdown:
   entity_output: as_char
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
-  syntax_highlighter: rouge                    # ← 추가!
-  syntax_highlighter_opts:                     # ← 추가!
-    default_lang: python                       # 기본 언어 설정
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    default_lang: python
     css_class: 'highlight'
     block:
-      line_numbers: false                      # true하면 줄번호 표시
-      line_numbers_start: 1
-    span:
-      line_numbers: false
+      line_numbers: True
 
 
 # Sass/SCSS
