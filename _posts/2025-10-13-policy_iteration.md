@@ -423,8 +423,8 @@ Policy:
 
 ✅ Policy converged after 1 iterations!
 ```
-<!-- 
-## 4.4 Value Iteration
+
+<!-- ## 4.4 Value Iteration
 
 policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
 정책개선 한 번당 정책평가가 수렴할 때까지 기다리기에는 조금 지루할 수 있다.
@@ -442,10 +442,10 @@ v_{k+1}(s)
 \end{align*}
 $$
 
-위의 식과 아래 식이 같다는 것은 다음 식에서 명백하다.
+위의 식과 아래 식이 같다는 것은 다음 식에서 명백하다. -->
 <!-- 기본적으로 (4.3)과 (4.4)이 같다는 이전 포스트의 증명과 거의 같다. -->
 
-$$
+<!-- $$
 \begin{align*}
 &\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
 =&\sum_{s',r}p(s',r\vert s,a)\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s,A_t=a,R_{t+1}=r,S_{t+1}=s'\right]\\

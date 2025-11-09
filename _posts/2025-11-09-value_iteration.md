@@ -53,7 +53,7 @@ value iteration을 통해 optimal value function $v_\ast$를 얻을 수 있다�
 $$
 \begin{align*}
 \bar{\mathcal T}v(s)
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v_\pi(s')\right]\\
+&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]\\
 &=\max_a\mathbb E\left[R_{t+1}+v(S_{t+1})\vert S_t=a, A_t=a\right]\\
 \end{align*}
 $$
@@ -85,7 +85,7 @@ $$
 
 $$
 \begin{align*}
-\left|(\bar{\mathcal T^\pi v})(s)-(\bar{\mathcal T^\pi w})(s)\right|
+\left|(\bar{\mathcal T} v)(s)-(\bar{\mathcal T} w)(s)\right|
 &=\left|
     \max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
     -\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
@@ -113,12 +113,12 @@ $$
 이제 좌변에 $\Vert\cdot\Vert_\infty$를 취하면
 
 $$
-\left\Vert\bar{\mathcal T^\pi v}-\bar{\mathcal T^\pi w}\right\Vert_\infty
+\left\Vert\bar{\mathcal T} v-\bar{\mathcal T} w\right\Vert_\infty
 \le\gamma\Vert v-w\Vert_\infty
 $$
 
 이다.
-따라서 $\mathcal T^\pi$는 contraction mapping이다.
+따라서 $\bar{\mathcal T}$는 contraction mapping이다.
 그러면 contraction principle에 의해, 임의의 $v_0:\mathcal S\to\mathbb R$에 대하여 점화식 (4.10) 혹은
 
 $$
