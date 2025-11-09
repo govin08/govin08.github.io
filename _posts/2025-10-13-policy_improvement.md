@@ -207,7 +207,7 @@ $$
 $$v_\ast(s)=(\mathcal Tv_\ast)(s)$$
 
 로 쓰여질 수 있다는 사실이다.
-또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 $v=(\mathcal Tv)(s)$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
+또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 $v=(\bar{\mathcal T}v)(s)$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
 
 증명에 앞서 절댓값과 최댓값에 관한 간단한 다음 식 $(\ast)$을 참고하자.
 
@@ -252,12 +252,12 @@ $$
 이다.
 첫번째 줄은 기호의 정의, 두번째 줄은 $(\ast)$, 세번째 줄은 단순 계산이다.
 네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째 줄은 기호의 정의에 의해 당연하다.
-여섯번째 줄은 $A_t=a$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
+여섯번째 줄은 $A_t=a_\ast$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
 
 이제 좌변에 $\Vert\cdot\Vert_\infty$를 취하면
 
 $$
-\left\Vert\bar{\mathcal T^\pi v}-\bar{\mathcal T^\pi w}\right\Vert
+\left\Vert\bar{\mathcal T^\pi v}-\bar{\mathcal T^\pi w}\right\Vert_\infty
 \le\gamma\Vert v-w\Vert_\infty
 $$
 
@@ -269,9 +269,10 @@ $$
 v_{k+1}=\bar{\mathcal T}v_k
 $$
 
-에 의해 정의된 수열 $\{v_k\}_{k=0}^\infty$는 수렴한다.
+에 의해 정의된 수열 $\\{v_k\\}_{k=0}^\infty$는 수렴한다.
+
 조금 더 정확하게는, 어떤 $K$에 대하여 $v_{K+1}=v_K$가 되는데 그러면
-$v_K=\bar{\mathcal T}v_K$이 되어 $v_K$가 $\bar{\mathcal T}$의 fixed point가 되어 버린다.
+$v_K=\bar{\mathcal T}v_K$이 되어 $v_K$가 $\bar{\mathcal T}$의 fixed point가 된다.
 그런데 $\bar{\mathcal T}$의 유일한 고정점은 $v_\ast$이므로 $v_K=v_\ast$이다.
 
 $$
