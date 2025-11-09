@@ -139,96 +139,146 @@ $$
 
 Sutton 책의 pseudocode는 다음과 같다.
 
-![policy iteration]({{site.url}}\images\2025-09-18-dynamic_programming\value_iteration.png){: .img-80-center}
+![policy iteration]({{site.url}}\images\2025-09-18-dynamic_programming\pseudocode-value_iteration.png){: .img-80-center}
 
 
-<!-- 식 $(4.10)$에 의해 정의된 점화식
+### 4.4.1 코드 구현
 
-$$
-\begin{aligned}
-v_{k+1}(s)
-&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
-&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+v_k(s')\right]\\
-&=(\bar{\mathcal T}v_k)(s)
-\end{aligned}
-\tag{4.10}
-$$ -->
+다음과 같이 코드를 짜봤다.
+이전 코드는 claude의 도움을 적극적으로 받았는데, 이번에는 내가 직접 초안을 짜봤다.
+하지만 display하는 부분에 있어서는 다시 claude의 도움을 받았다.
 
-<!-- 이에 대한 Sutton의 식
+```
+from env import GridWorld
+env = GridWorld()
+V_init = {s: 0.0 for s in env.get_states()}
 
-$$
-\begin{align*}
-v_{k+1}(s)
-&=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_k(s')\right]\tag{4.10}
-\end{align*}
-$$
+def value_iteration(V, theta=0.001):
+    """Value Iteration"""
+    print(f"\n{'='*60}")
+    print(f"Value Iteration")
+    print(f"{'='*60}\n")
+    
+    iteration = 0
+    while True:
+        iteration += 1
+        delta = 0
+        
+        for state in env.get_states():
+            if env.is_terminal(state):
+                continue
+            v_old = V[state]
+            action2values = {}
+            for action in env.actions:
+                next_state = env.get_next_state(state, action)
+                reward = env.get_reward(state, action)
+                action2values[action] = reward + env.gamma * V[next_state]
+            V[state] = max(action2values.values())
+            delta = max(delta, abs(v_old - V[state]))
+        
+        # Iteration별 출력
+        print(f"[Iteration {iteration}]  delta = {delta:.6f}")
+        print_V(V)
+        print()
+        
+        if delta < theta:
+            break
+    
+    # Policy 추출
+    policy = {}
+    for state in env.get_states():
+        if env.is_terminal(state):
+            continue
+        action2values = {}
+        for action in env.actions:
+            next_state = env.get_next_state(state, action)
+            reward = env.get_reward(state, action)
+            action2values[action] = reward + env.gamma * V[next_state]
+        policy[state] = max(action2values, key=action2values.get)
+    
+    # 최종 결과
+    print(f"{'='*60}")
+    print("Final Policy")
+    print(f"{'='*60}")
+    print_policy(policy)
+    
+    return policy, V
 
-을 이해해보자.
-가치함수 $v_k:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_{k+1}$은 식 (4.9)에 의해 ($v_{\pi_k}\longrightarrow\pi_{k+1}$)
 
-$$
-q_{\pi_{k+1}}(s,a) = \max_aq_{\pi_k}(s,a)
-$$
+def print_V(V):
+    """Value Function만 출력"""
+    for r in range(env.rows - 1, -1, -1):
+        row = []
+        for c in range(env.cols):
+            if (r, c) == env.wall:
+                row.append("  WALL ")
+            else:
+                row.append(f"{V[(r,c)]:6.2f}")
+        print("  ".join(row))
 
-$$q_{\pi_k}(s,\pi_{k+1}(s))=\max_a q_{\pi_k}(s,a)$$
 
-이다.
-이제 정책평가의 한 iteration을 취하면 ($\pi_{k+1}\longrightarrow v_{\pi_{k+1}}$)
+def print_policy(policy):
+    """Policy만 출력"""
+    for r in range(env.rows - 1, -1, -1):
+        row = []
+        for c in range(env.cols):
+            if (r, c) == env.wall:
+                row.append(" W ")
+            elif env.is_terminal((r, c)):
+                row.append(" T ")
+            else:
+                row.append(f" {policy[(r,c)]} ")
+        print("  ".join(row))
 
-$$
-\begin{align*}
-v_{\pi_{k+1}}(s)
-&=\mathbb E\left[R_{t+1}+\gamma v_{\pi_k}(S_{t+1})\vert S_t=s\right]\\
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v_{\pi_k}(s')\right]
-\end{align*}
-$$
 
-이고, 따라서
+# 실행
+policy, V = value_iteration(V_init.copy())
 
-$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
+```
 
-이다.
-여기서 다시 greedy policy를 취하면
+### 4.4.2 구현 결과
 
-$$
-\begin{align*}
-v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
-&=\max_a q_{\pi_1}(s,a)\\
-&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
-\end{align*}
-$$ -->
+결과를 보니 6번의 iteration 끝에 optimal policy에 도달한 것이 보인다.
 
-<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대한 greedy policy $\pi_1$은 식 (4.9)에 의해, 모든 $s$에 대해
+```
+============================================================
+Value Iteration
+============================================================
 
-$$v_{\pi_0}\longrightarrow\pi_1:q_{\pi_0}(s,\pi_1(s))=\max_a q_{\pi_0}(s,a)$$
+[Iteration 1]  delta = 1.000000
+ -0.10   -0.10    1.00    0.00
+ -0.10    WALL    -0.10    0.00
+ -0.10   -0.10   -0.10   -0.10
 
-이다.
-이제 정책평가의 한 iteration을 취하면
+[Iteration 2]  delta = 0.900000
+ -0.19    0.80    1.00    0.00
+ -0.19    WALL     0.80    0.00
+ -0.19   -0.19   -0.19   -0.19
 
-$$\pi_1\longrightarrow v_{\pi_1}:v_{\pi_1}(s) = \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s\right]$$
+[Iteration 3]  delta = 0.810000
+  0.62    0.80    1.00    0.00
+ -0.27    WALL     0.80    0.00
+ -0.27   -0.27    0.62    0.46
 
-이고, 따라서
+[Iteration 4]  delta = 0.729000
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+ -0.34    0.46    0.62    0.46
 
-$$q_{\pi_1}(s,a)=\mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1})\vert S_t=s, A_t=a\right]$$
+[Iteration 5]  delta = 0.656100
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
 
-이다.
-여기서 다시 greedy policy를 취하면
+[Iteration 6]  delta = 0.000000
+  0.62    0.80    1.00    0.00
+  0.46    WALL     0.80    0.00
+  0.31    0.46    0.62    0.46
 
-$$
-\begin{align*}
-v_{\pi_1}\longrightarrow\pi_2:q_{\pi_1}(s,\pi_2(s))
-&=\max_a q_{\pi_1}(s,a)\\
-&=\max_a \mathbb E\left[R_{t+1}+\gamma v_{\pi_0}(S_{t+1}\vert S_t=s)\right]
-\end{align*}
-$$
- -->
-
-<!-- sweep을 한 번 거치면 -->
-<!-- 4.3절에서처럼 $\pi_0$부터 시작하자. -->
-<!-- 식 (4.5)에 의해 -->
-
-<!-- $$v_{\pi_0}=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_\right]$$ -->
-
-<!-- 가치함수의 초깃값 $v_0:\mathcal S\to\mathbb R$에 대하여 sweep을 한 번 거치면 -->
-
+============================================================
+Final Policy
+============================================================
+ R    R    R    T 
+ U    W    U    T 
+ U    R    U    L 
+```
