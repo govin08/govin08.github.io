@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "(Sutton, 4.4, 4.6절) Value Iteration 등"
+title: "(Sutton, 4.4, 4.6절) Value Iteration, GPI"
 categories: data-science
 tags: [reinforcement learing, dynamic programming, value iteration theorem, generalized policy iteration]
 use_math: true
@@ -10,6 +10,7 @@ toc: true
 ---
 
 policy iteration에 대한 글을 계속 이어나가다보니 양이 또 많아졌다.
+
 - [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
 - [DP2 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
 
@@ -136,6 +137,7 @@ $$
 
 이다.
 여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다.
+이로써 value iteration의 증명이 완성되었다. $\square$
 
 Sutton 책의 pseudocode는 다음과 같다.
 
