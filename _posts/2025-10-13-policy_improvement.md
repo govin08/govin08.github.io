@@ -202,14 +202,14 @@ $$
 \end{align*}
 $$
 
-먼저 언급할 것은 $\bar{\mathcal T}$의 정의에 따르면 $v$에 대한 Bellman optimal equation이
+먼저 언급할 것은 $\bar{\mathcal T}$의 정의에 따르면 $v$에 대한 Bellman optimal equation (3.18)이
 
 $$v_\ast(s)=(\mathcal Tv_\ast)(s)$$
 
 로 쓰여질 수 있다는 사실이다.
-또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 $v=(\bar{\mathcal T}v)(s)$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
+또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 $v=\bar{\mathcal T}v$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
 
-증명에 앞서 절댓값과 최댓값에 관한 간단한 다음 식 $(\ast)$을 참고하자.
+증명에 앞서 절댓값과 최댓값에 관한 간단한 다음 식 $(\ast)$을 언급할 필요가 있다.
 
 $$
 \begin{aligned}
@@ -224,12 +224,12 @@ $$
 
 이때, 일반성을 잃지 않고 $\max_a f(a)\ge \max_ag(a)$로 두었고 $a_\ast=\text{arg}\max_af(a)$로 두었다.
 
-먼저, $\bar{\mathcal T}$가 contraction mapping이라는 것을 증명한다.
+이제 $\bar{\mathcal T}$가 contraction mapping이라는 것을 증명한다.
 임의의 $v$, $w$에 대하여 식 (4.10)에 의해 정의된 점화식인
 
 $$
 \begin{align*}
-\left|(\bar{\mathcal T^\pi v})(s)-(\bar{\mathcal T^\pi w})(s)\right|
+\left|(\bar{\mathcal T} v)(s)-(\bar{\mathcal T} w)(s)\right|
 &=\left|
     \max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
     -\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
@@ -239,11 +239,8 @@ $$
     \sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
     -\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
 \right|\\
-&=\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
+&\le\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
 &=\gamma\sum_{s',r}p(s',r\vert s,a_\ast)\left|v(s')-w(s')\right|\\
-&=\gamma\mathbb E\left[
-    \left|v(S_{t+1})-w(S_{t+1}))\right|\;\vert S_t=s, A_t=a_\ast
-    \right]\\
 &\le\gamma\max_{s'}|v(s')-w(s')|\\
 &=\gamma\left\Vert v-w\right\Vert_{\infty}
 \end{align*}
@@ -251,18 +248,17 @@ $$
 
 이다.
 첫번째 줄은 기호의 정의, 두번째 줄은 $(\ast)$, 세번째 줄은 단순 계산이다.
-네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째 줄은 기호의 정의에 의해 당연하다.
-여섯번째 줄은 $A_t=a_\ast$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
+네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째와 여섯번째 줄은 기호의 정의로부터 당연하다.
 
 이제 좌변에 $\Vert\cdot\Vert_\infty$를 취하면
 
 $$
-\left\Vert\bar{\mathcal T^\pi v}-\bar{\mathcal T^\pi w}\right\Vert_\infty
+\left\Vert\bar{\mathcal T v}-\bar{\mathcal T w}\right\Vert_\infty
 \le\gamma\Vert v-w\Vert_\infty
 $$
 
 이다.
-따라서 $\mathcal T^\pi$는 contraction mapping이다.
+따라서 $\mathcal T$는 contraction mapping이다.
 그러면 contraction principle에 의해, 임의의 $v_0:\mathcal S\to\mathbb R$에 대하여 점화식 (4.10) 혹은
 
 $$
