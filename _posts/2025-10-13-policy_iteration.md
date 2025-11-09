@@ -423,7 +423,7 @@ Policy:
 
 ✅ Policy converged after 1 iterations!
 ```
-
+<!-- 
 ## 4.4 Value Iteration
 
 policy iteration은 정책평가와 정책개선의 반복이었지만, 정책개선도 그 자체로 반복 알고리즘이었다.
@@ -544,4 +544,4 @@ $$
 $$
 
 이다.
-여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다.
+여기서 극한은 $\Vert\cdot\Vert_\infty$의 관점에서의 극한이다. -->
