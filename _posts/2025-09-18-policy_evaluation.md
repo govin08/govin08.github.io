@@ -509,19 +509,19 @@ $s^i$에 대한 $v_k(s^i)$를 먼저 덮어씌우고(in-place) 그다음에 $v_k
 two-array 방식은 식 (4.5)와 다름없고 따라서 위에서 증명한 것은 two-array 방법에 대한 증명인 셈이다.
 Sutton 책에 제시된 pseudocode는 in-place 방식이다.
 
-![pseudocode : policy evaluation]({{site.url}}\images\2025-09-18-policy_evaluation\pseudocode-policy_evaluation.png){: .img-80-center}
+![pseudocode : policy evaluation]({{site.url}}\images\2025-09-18-dynamic_programming\pseudocode-policy_evaluation.png){: .img-80-center}
 
 이렇듯 PE 하나에도 많은 버전이 있다.
 심지어, 나는 V함수에 대한 PE를 증명한 셈이지만, 그것보다는 Q함수에 대한 PE가 더 중요할 수 있다.
 Q함수에 대해서도 마찬가지로 비슷한 버전의 policy evaluation이 가능하고 심지어 뒤에 나올 policy iteration도 가능할 것이다.
 
-### 4.1.7 Code Implementation
+### 4.1.7 코드 구현
 
 여기서 소개하는 코드 전문의 링크는 [여기](https://github.com/govin08/ecm_rl_share/blob/master/1031_dp_pi_gridworld/policy_evaluation.ipynb)에 있다.
 
 다음과 같은 Grid World를 생각하자.
 
-![grid world]({{site.url}}\images\2025-09-18-policy_evaluation\grid_world.png){: .img-40-center}
+![grid world]({{site.url}}\images\2025-09-18-dynamic_programming\grid_world.png){: .img-40-center}
 
 agent는 시작점 $(1,1)$에서 시작하여 $(4,2)$ 또는 $(4,3)$에 도달하면 episode가 끝난다.
 $(2,2)$와 grid 바깥은 벽이라서 이쪽으로는 이동할 수 없다.
@@ -544,18 +544,16 @@ $$v_\pi=r_\pi+\gamma Pv_\pi$$
 $$(I-\gamma P)v_\pi=r_\pi$$
 
 행렬 $I-\gamma P$와 벡터 $r_\pi$를 가지고 `np.linalg.solve` 메소드를 사용하면 $v_\pi$함수인 `v_array`를 얻을 수 있다.
-
-로 쓰일 수 있다.
 아래는 그 코드이다.
-env 모듈에 대해서는 따로 언급하지 않겠다.
+env 모듈은 [이 코드](https://github.com/govin08/ecm_rl_share/blob/master/1031_dp_pi_gridworld/env.py)에서처럼 정의했다.
 
 ```
 from env import GridWorld
 import numpy as np
 
-def policy_evaluation_linear_system(env):
+def solve_linear_system(env):
     """
-    선형 연립방정식으로 Policy Evaluation 풀기
+    선형 연립방정식을 풀어서 가치함수 구하기
     (I - γP)v = r
     """
     states = [s for s in env.get_states() if not env.is_terminal(s)]
@@ -599,10 +597,10 @@ def policy_evaluation_linear_system(env):
     return V
 
 
-# 실행 및 비교
+# 실행
 env = GridWorld()
 
-V_linear = policy_evaluation_linear_system(env)
+V_linear = solve_linear_system(env)
 
 print("\n=== Linear System Method (Grid View) ===\n")
 for r in range(env.rows - 1, -1, -1):
@@ -616,7 +614,6 @@ for r in range(env.rows - 1, -1, -1):
         else:
             row_str += f"{V_linear[state]:7.3f} "
     print(row_str)
-
 ```
 
 그러면 그 결과가 아래와 같다.
