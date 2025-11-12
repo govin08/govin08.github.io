@@ -290,3 +290,34 @@ Final Policy
 
 4.5절은 그다지 많이 언급할 내용이 없고, 굳이 따지자면 이전 포스트에서 이미 asyncronous policy evaluation에 대해 말했으므로 넘어가도 되겠다.
 하지만 4.6절의 GPI는 중요하므로 쓰고 넘어가려 한다.
+
+policy iteration(정책반복)은 policy evaluation(정책평가)와 policy improvement(정책개선)을 반복적으로 적용해 optimal policy $\pi_\ast$와 optimal value function $v_\ast$에 수렴해나가는 것을 말한다.
+그런데 강화학습의 대부분의 알고리즘이 이러한 두 과정의 반복으로 되어있음을 Sutton은 말하고 있다.
+이 장에서 설명된 것만 해도 PE에서 state를 업데이트하는 방식에 따라 syncronous / asyncronous 버전의 두 가지 방식이 있고, sweep의 빈도에 따라 one-sweep / $k$-sweep / full sweep의 여러 방식으로 나뉠 수 있어서 policy iteration도 여러 방식이 있다고 말할 수 있지만 모두 PE와 PI를 반복해나간다는 점에서는 동일한 것이다.
+이러한 일반적인 policy iteration 방식을 GPI라고 부른다.
+
+아래 두 그림은 generalized policy iteration을 아주 잘 설명하는 Sutton 책의 그림이다.
+
+![GPI]({{site.url}}\images\2025-09-18-dynamic_programming\gpi.png){: .img-80-center}
+
+두 과정이 서로를 보완하며 답을 찾아나간다는 점에서 GAN(generative adversarial network)을 떠올리게 한다.
+또한, Sutton 책에는 없는 내용이지만 현대의 강화학습 주류인 actor-critic 방식도 GPI의 관점에서 해석될 수 있다.
+critic은 policy evaluation을 수행하는 도구이며, critic update를 한 번 하고 나면 정책을 개선하게 되는데 그 개선하는 대상이 actor이기 때문이다.
+
+GAN과 actor-critic은 수렴조건을 찾기가 어려운 것으로 알려져 있다.
+하지만 DP는, 꽤 간단한 세팅에서 수렴 조건이 보장된다는 것이 수학적으로 증명된 알고리즘이라는 점에서 정말로 강화학습 모든 알고리즘들의 기본이라고 할 만하다.
+
+---
+
+지금까지 세 포스트를 통해 각각
+- policy evaluation
+- policy improvement와 policy iteration
+- value iteration과 GPI
+
+를 다뤄봤다.
+세 포스트에는 모두 증명이 포함되어 있는데 그중 두번째 포스트의 증명은 좀 간단한 증명이었다.
+그래도, DP의 주요한 알고리즘들인 policy iteration과 value itertation에 대하여 완전한 증명을 해내어 뿌듯하다.
+다만 모든 종류의 policy evaluation에 대하여 증명한 것은 아니고 syncronous full-sweep PE에 대해서만 증명했다.
+
+이번 기회에 (관련 회사 자료를 만들면서) Sutton의 책을 13장까지 주요 내용들만 쭉 읽게 되었는데 어느 정도 이해가 되면서 읽고 있어서 뿌듯하다.
+하지만, 4장의 다음 장에 나오는 Monte Carlo와 Temporal Difference에 대해서는 증명을 동반한 포스트를 쓸 수 있을 지 모르겠어서 더 포스트를 쓸 지는 모르겠다.
