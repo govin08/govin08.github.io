@@ -9,11 +9,12 @@ author_profile: false
 toc: true
 ---
 
-policy iteration에 대한 글을 계속 이어나가다보니 양이 또 많아졌다.
+DP(dynamic programming)의 마지막 글이다.
 
 - [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
 - [DP2 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
 
+policy iteration에 대한 글을 계속 이어나가다보니 양이 또 많아졌다.
 심지어 코드도 추가했더니 글을 나누는 게 맞다는 판단이 생겼다.
 
 ## 4.4 Value Iteration
@@ -30,7 +31,7 @@ $$
 \begin{align*}
 v_{k+1}(s)
 &=\max_a\mathbb E\left[R_{t+1}+\gamma v_k(S_{t+1})\vert S_t=s, A_t=a\right]\\
-&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+v_k(s')\right]\tag{4.10}
+&=\max_a\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_k(s')\right]\tag{4.10}
 \end{align*}
 $$
 
@@ -54,14 +55,14 @@ value iteration을 통해 optimal value function $v_\ast$를 얻을 수 있다�
 $$
 \begin{align*}
 \bar{\mathcal T}v(s)
-&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]\\
-&=\max_a\mathbb E\left[R_{t+1}+v(S_{t+1})\vert S_t=a, A_t=a\right]\\
+&=\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v(s')\right]\\
+&=\max_a\mathbb E\left[R_{t+1}+\gamma v(S_{t+1})\vert S_t=a, A_t=a\right]\\
 \end{align*}
 $$
 
 먼저 언급할 것은 $\bar{\mathcal T}$의 정의에 따르면 $v$에 대한 Bellman optimal equation이
 
-$$v_\ast(s)=(\mathcal Tv_\ast)(s)\quad s\in\mathcal S$$
+$$v_\ast(s)=(\bar{\mathcal T}v_\ast)(s)\quad s\in\mathcal S$$
 
 로 쓰여질 수 있다는 사실이다.
 또한, Bellman optimal equation이 식의 개수와 변수의 개수가 같은 (비선형) 연립방정식이므로 특수한 상황이 아닌 이상은 해가 하나이고, 따라서 모든 $s\in\mathcal S$에 대하여 $v=(\bar{\mathcal T}v)(s)$를 만족시키는 어떤 $v$가 있다면 그 $v$는 optimal value function이라는 것도 알 수 있다.
@@ -88,13 +89,13 @@ $$
 \begin{align*}
 \left|(\bar{\mathcal T} v)(s)-(\bar{\mathcal T} w)(s)\right|
 &=\left|
-    \max_a\sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
-    -\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
+    \max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v(s')\right]
+    -\max_a\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma w(s')\right]
 \right|\\
 &\stackrel{(\ast)}{\le}
 \max_a\left|
-    \sum_{s',r}p(s',r\vert s,a)\left[r+v(s')\right]
-    -\sum_{s',r}p(s',r\vert s,a)\left[r+w(s')\right]
+    \sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v(s')\right]
+    -\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma w(s')\right]
 \right|\\
 &=\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
 &=\gamma\sum_{s',r}p(s',r\vert s,a_\ast)\left|v(s')-w(s')\right|\\
@@ -111,7 +112,7 @@ $$
 네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째 줄은 기호의 정의에 의해 당연하다.
 여섯번째 줄은 $A_t=a_\ast$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
 
-이제 좌변에 $\Vert\cdot\Vert_\infty$를 취하면
+이제 좌변에 $\max_s$를 취하면
 
 $$
 \left\Vert\bar{\mathcal T} v-\bar{\mathcal T} w\right\Vert_\infty
@@ -305,7 +306,8 @@ policy iteration(정책반복)은 policy evaluation(정책평가)와 policy impr
 critic은 policy evaluation을 수행하는 도구이며, critic update를 한 번 하고 나면 정책을 개선하게 되는데 그 개선하는 대상이 actor이기 때문이다.
 
 GAN과 actor-critic은 수렴조건을 찾기가 어려운 것으로 알려져 있다.
-하지만 DP는, 꽤 간단한 세팅에서 수렴 조건이 보장된다는 것이 수학적으로 증명된 알고리즘이라는 점에서 정말로 강화학습 모든 알고리즘들의 기본이라고 할 만하다.
+하지만 DP는, 꽤 간단한 세팅에서 수렴 조건이 보장된다는 것이 수학적으로 증명된 알고리즘이다.
+그런 점에서 정말로 강화학습 모든 알고리즘들의 기본이라고 할 만하다.
 
 ---
 
@@ -320,4 +322,4 @@ GAN과 actor-critic은 수렴조건을 찾기가 어려운 것으로 알려져 �
 다만 모든 종류의 policy evaluation에 대하여 증명한 것은 아니고 syncronous full-sweep PE에 대해서만 증명했다.
 
 이번 기회에 (관련 회사 자료를 만들면서) Sutton의 책을 13장까지 주요 내용들만 쭉 읽게 되었는데 어느 정도 이해가 되면서 읽고 있어서 뿌듯하다.
-하지만, 4장의 다음 장에 나오는 Monte Carlo와 Temporal Difference에 대해서는 증명을 동반한 포스트를 쓸 수 있을 지 모르겠어서 더 포스트를 쓸 지는 모르겠다.
+하지만, 4장의 다음 장에 나오는 Monte Carlo와 Temporal Difference에 대해서는 증명을 할 수 있을 지 모르겠어서 더 포스트를 쓸 지는 모르겠다.
