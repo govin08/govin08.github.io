@@ -50,7 +50,7 @@ value iteration은 policy iteration과는 많이 다르게 정책평가와 정�
 
 value iteration을 통해 optimal value function $v_\ast$를 얻을 수 있다는 것을 증명하기 위해서 operator $\bar{\mathcal T}$를 다음과 같이 정의하자.
 [Dawei Li, Zikun Ye의 자료](http://127.0.0.1:4000/data-science/policy_improvement/#44-value-iteration)를 참고하였다.
-모든 $s\in\mathcal S$에 대하여
+모든 $v:\mathcal S\to\mathbb R$에 대하여 $\mathcal Tv:\mathcal S\to\mathbb R$을
 
 $$
 \begin{align*}
@@ -60,6 +60,7 @@ $$
 \end{align*}
 $$
 
+로 정의하자($s\in\mathcal S$).
 먼저 언급할 것은 $\bar{\mathcal T}$의 정의에 따르면 $v$에 대한 Bellman optimal equation이
 
 $$v_\ast(s)=(\bar{\mathcal T}v_\ast)(s)\quad s\in\mathcal S$$
