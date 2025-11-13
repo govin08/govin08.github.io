@@ -11,8 +11,8 @@ toc: true
 
 DP(dynamic programming)의 마지막 글이다.
 
-- [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
-- [DP2 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
+- [DP1 : (Sutton, 4.1절) Policy Evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP2 : (Sutton, 4.2, 4.3절) Policy Iteration](https://govin08.github.io/data-science/policy_iteration/)
 
 policy iteration에 대한 글을 계속 이어나가다보니 양이 또 많아졌다.
 심지어 코드도 추가했더니 글을 나누는 게 맞다는 판단이 생겼다.

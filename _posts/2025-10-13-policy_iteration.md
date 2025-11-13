@@ -11,8 +11,8 @@ toc: true
 
 더 시간이 지나기 전에 dynamic programming 포스팅을 끝내고 싶은 마음이 생겼다.
 
-- [DP1 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
-- [DP3 : policy iteration](https://govin08.github.io/data-science/value_iteration/)
+- [DP1 : (Sutton, 4.1절) Policy Evaluation](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP3 : (Sutton, 4.4, 4.6절) Value Iteration, GPI](https://govin08.github.io/data-science/value_iteration/)
 
 다른 주제들도 공부하여 포스팅을 남기고 싶은데 DP를 끝내지 않고 다른 것을 쓰기는 싫기 때문이다.
 그러니까 일종의 의무감에서 이 글을 쓰고 있다.

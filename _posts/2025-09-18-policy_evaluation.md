@@ -10,8 +10,8 @@ toc: true
 ---
 이전 포스트에 이어 Sutton의 책을 읽어가보자.
 
-- [DP2 : policy evaluation](https://govin08.github.io/data-science/policy_evaluation/)
-- [DP3 : policy iteration](https://govin08.github.io/data-science/policy_iteration/)
+- [DP2 : (Sutton, 4.2, 4.3절) Policy Iteration](https://govin08.github.io/data-science/policy_evaluation/)
+- [DP3 : (Sutton, 4.4, 4.6절) Value Iteration, GPI](https://govin08.github.io/data-science/policy_iteration/)
 
 늘 그렇듯 책에 생략된 내용에 대해서는 자료를 찾거나 직접 계산 또는 증명해서 채워나갈 것이다.
 dynamic programming은, 이 책에서는 가장 기본적인 강화학습 알고리즘으로 소개된다.
@@ -136,7 +136,7 @@ $v_0$가 임의의 가치함수(e.g. $v_0\equiv0$)이고 $v_\pi$가 존재한다
 > $$\lim_{k\to\infty}v_k=v_\pi$$
 
 수열의 수렴을 이야기하려면 함수 $v_k$가 속해있는 공간을 정의해야 할텐데, 여기서는 함수공간 $\mathcal V=\\{v:\mathcal S\to\mathbb R\\}$에 대하여 normed space $\left(\mathcal V,\vert\vert\cdot\vert\vert_\infty\right)$을 생각하는 것이다.
-Sutton은 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를포함한다.
+Sutton은 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를 포함한다.
 <!-- Sutton이 책에서 언급하는 '수렴'의 의미는 조금 다르다.
 어느 순간엔가 $v_K=v_{K+1}=\cdots$이 되어 수렴한다고 적고 있는데, 위에 쓴 수렴은 Sutton이 말한 수렴의 의미를 포함한다. -->
 
