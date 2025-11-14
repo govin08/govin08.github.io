@@ -45,7 +45,8 @@ Sutton의 4.2절은 기존의 정책 $\pi$에 비해 $Q$의 관점에서 더 나
 <b> policy improvement theorem (정책 개선 정리) </b> <br>
 deterministic policy $\pi$, $\pi'$에 대하여 모든 $s\in\mathcal S$
 $$q_\pi(s,\pi'(s))\ge v_\pi(s)\tag{4.7}$$
-라면 모든 $s\in\mathcal S$에 대하여
+라면 $\pi'\ge\pi$이다.
+즉, 모든 $s\in\mathcal S$에 대하여
 $$v_{\pi'}(s)\ge v_\pi(s)\tag{4.8}$$
 가 성립한다.
 </div>
@@ -65,14 +66,15 @@ v_\pi(s)
 \le&\mathbb E_{\pi'}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\gamma^3 v_\pi(S_{t+3})\vert S_t=s\right]\\
 &\vdots\\
 \le&\mathbb E_{\pi'}\left[R_{t+1}+\gamma R_{t+2}+\gamma^2 R_{t+3}+\gamma^3 R_{t+4}+\cdots\vert S_t=s\right]\\
-=v_{\pi'}(s)
+=&v_{\pi'}(s)
 \end{align*}
 $$
 
-첫째줄은 (4.7)을, 둘째줄은 이전 포스트의 (4.3)의 증명과 비슷하게 얻어낼 수 있으며, 셋째줄도 기호의 정의에 의해 당연하다.
+첫째줄은 (4.7)을, 둘째줄은 이전 포스트의 (4.3)의 증명과 비슷하게 얻어낼 수 있으며, 셋째줄은 기호의 정의에 의해 당연하다.
 넷째줄은 (4.7)을 다시 사용한 것이고 다섯째줄은 둘째줄과 비슷하다.
 다섯째줄에 새로 생긴 expectation은 어떤 subscript도 없이 $\mathbb E$로 쓰일 수 있겠지만 $\mathbb E_{\pi'}$라고 쓰여도 무방하다.
-그리고 $\mathbb E_{\pi'}$으로 적혔기 때문에 다음 여섯번째 식이, Markov property와 더불어 성립하게 된다.
+그리고 $\mathbb E_{\pi'}$으로 적혔기 때문에 다음 여섯번째 식이 성립하게 된다.
+<!-- 그리고 $\mathbb E_{\pi'}$으로 적혔기 때문에 다음 여섯번째 식이, Markov property와 더불어 성립하게 된다. -->
 이제, 셋째줄에서 여섯째줄로 변하는 과정을 한 번 더 반복한다고 하면 일곱번째 식이 되고, 이것을 무한히 반복한다고 생각하면 여덟번째 식이 된다.
 그리고 급수의 정의를 생각하면 아홉번째 식이 이와 같고, 그것은 곧 열번째 식의 $v_{\pi'}(s)$의 정의와 정확히 일치한다.
 이렇게 하여 policy improvement theorem이 증명되었다. $\square$
@@ -151,7 +153,7 @@ $$
 
 정책 평가와 정책 개선을 반복하는 것인데 이것을 policy iteration이라고 한다.
 정책개선시 deterministic한 policy를 택한다고 가정하면, finite MDP의 deterministic policy의 개수는 유일하고, optimal policy 또한 deterministic하다고 가정할 수 있으므로 policy iteration는 언젠가 끝난다.
-즉, 어느 순간 ($k$번째에) 최적정책 $\pi_\ast$에 도달하며 그때의 정책은 $v_{\pi_k}=v_{\pi_{k-1}}$를 만족할 것이다.
+즉, 어느 순간 ($K$번째에) 최적정책 $\pi_\ast$에 도달하며 그때의 정책은 $v_{\pi_K}=v_{\pi_{K-1}}$를 만족할 것이다.
 
 정책평가시 가치함수의 초깃값을 설정해야 했다.
 그 초깃값이 어떻건 항상 $v_\pi$로 수렴한다는 것은 이전 포스트에서 증명했었다.
