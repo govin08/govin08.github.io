@@ -119,7 +119,7 @@ $$
 책의 4.1절에서 다루는 것은, 주어진 정책 $\pi$에 대하여 이에 대한 가치함수 $v_\pi$를 얻어내는 것이다.
 즉 정책을 평가하는(policy evaluation, prediction problem) 것으로서 DP를 포함한 모든 강화학습에서의 중요한 두 과정 중 하나이다.
 
-가치함수를 얻어내는 방식은 식 (4.4)을
+가치함수를 얻어내는 방식은 식 (4.4)를
 
 $$
 v_{k+1}(s)=\sum_a\pi(a|s)\sum_{s',r}p(s',r|s,a)\left[r+\gamma v_k(s')\right]\tag{4.5}
@@ -191,7 +191,7 @@ $$
 
 와 같다.
 두번째 줄은 기호의 정의와 통분, 세번째 줄은 marginalization, 네번째 줄은 조건부확률의 정의에 의해 계산되었다.
-마지막 식은 $\mathbb E\left[S_{t+1}|S_t=s\right]$로도 쓸 수 있지만 위의 계산결과까지만 사용할 것이다.
+마지막 식은 $\mathbb E\left[v_\pi(S_{t+1})|S_t=s\right]$로도 쓸 수 있지만 위의 계산결과까지만 사용할 것이다.
 계산한 $A$와 $B$를 가지고 Bellman equation을 다시 쓰면
 
 $$
@@ -288,7 +288,7 @@ baby rudin (3ed)의 9.22, 9.23에 다음과 같은 내용이 있다.
 
 contraction principle은 9.23에 해당하는 다음의 정리이다.
 
-> (9.23 정리) 만약 $X$가 complete space이고 $\phi$가 $X$의 contraction이면 $\phi(x^\ast)=x^\ast$를 만족시키는 $x^\ast$가 존재하고 그러한 $x$는 유일하다.
+> (9.23 정리) 만약 $X$가 complete space이고 $\phi$가 $X$의 contraction이면 $\phi(x^\ast)=x^\ast$를 만족시키는 $x^\ast$가 존재하고 그러한 $x^\ast$는 유일하다.
 
 어떤 거리공간이 complete하다는 것은 코시수열이 수렴한다는 것을 말한다.
 이 공간에서 거리가 점점 줄어드는 함수가 있으면, 그 함수는 고정점(fixed point)이 반드시 존재한다는 아주 강력하고 재미있는 정리이다.
@@ -308,8 +308,8 @@ $$x_{n+1}=\phi(x_n)$$
 $$
 \begin{align*}
 d(x_n,x_{n+1})
-\le&d\left(\phi(x_{n-1}),\phi(x_n)\right)\\
-=&cd(x_{n-1},x_n)\\
+=&d\left(\phi(x_{n-1}),\phi(x_n)\right)\\
+\le&cd(x_{n-1},x_n)\\
 &\vdots\\
 \le&c^nd(x_0,x_1)
 \end{align*}
@@ -345,7 +345,7 @@ $$
 
 이므로 수열 $\\{x_n\\}$은 코시수열이다.
 그런데 $X$가 complete space이므로 이 수열은 어떤 점 $x^\ast$엔가에 수렴하게 된다.
-이때, contraction이 연속함수라는 건 당연하므로 $\phi$가 연속함수라는 것을 활용하면
+이때, contraction이 연속함수라는 건 당연하므로
 
 $$\phi(x^\ast)
 =\phi\left(\lim_{n\to\infty}x_n\right)
@@ -376,7 +376,7 @@ $\left(\mathbb R^n, \lvert\lvert\cdot\rvert\rvert_\infty\right)$
 
 operator norm의 [여러가지 정의](https://en.wikipedia.org/wiki/Operator_norm#Equivalent_definitions) 중 
 
-$$||A||=\sup\{Av:||v||\le1\}$$
+$$\lVert A\rVert=\sup\{\lVert Av\rVert:\lVert v\rVert\le1\}$$
 
 을 사용하자.
 <!-- 그리고 $||A^T||=||A||$라는 [잘 알려진 사실](https://math.stackexchange.com/a/3471127/746048)을 활용할 수 있다. -->
@@ -398,8 +398,8 @@ $$
 
 $$
 \left|\left|p_{i1}v_1+\cdots+p_{in}v_n\right|\right|_\infty
-\le p_{i1}||v||_\infty+\cdots+p_{in}||v||_\infty
-=||v||_\infty
+\le p_{i1}\Vert v\Vert_\infty+\cdots+p_{in}\Vert v\Vert_\infty
+=\Vert v\Vert_\infty
 $$
 
 이므로
@@ -407,14 +407,14 @@ $$
 $$
 \left|\left|Pv\right|\right|_\infty
 =\max\{\left|\left|p_{i1}v_1+\cdots+p_{in}v_n\right|\right|_\infty:i=1,\cdots,n\}
-\le||v||_\infty
+\le\Vert v\Vert_\infty
 $$
 
 이고, 따라서 
 
 $$
-||P||
-=\sup\{||Pv||_\infty:||v||_\infty\le1\}
+\Vert P\Vert
+=\sup\{\Vert Pv\Vert_\infty:\Vert v\Vert_\infty\le1\}
 \le1
 $$
 
@@ -505,16 +505,18 @@ Sutton은 PE를 구현하는 방법으로 두 가지 방법(two-array, in-place)
 two-array 방법에서는 말그대로 두 개의 array를 사용하는데 하나는 각 $s$에 대한 old values $v_k(s)$를 기록하는 array로 다른 하나는 각 new values $v_{k+1}(s)$를 기록하는 array이다.
 old array를 사용하여 new array를 만든 이후에는 new array를 old array로 생각하고 이전에 old array였던 것을 $v_{k+1}(s)$를 기록하는 new array로 두어 계속한다.
 in-place 방법에서는 하나의 array만을 사용한다.
-$s^i$에 대한 $v_k(s^i)$를 먼저 덮어씌우고(in-place) 그다음에 $v_k(s^{i+1})$을 업데이트하는데, 이것을 sweep이라고도 한다.
-모든 $i$에 대하여 다 업데이트하고 나면 다음 $k+1$번째 가치함수에 대하여 똑같이 진행하면 될 것이다.
+$s^i$에 대한 $v_k(s^i)$를 먼저 덮어씌우고(in-place) 그다음에 $v_k(s^{i+1})$을 덮어씌운다.
+모든 $i$에 대하여 다 덮어씌우고 나서는 다음 $k+1$번째 가치함수에 대하여 똑같이 진행하면 될 것이다.
 
 two-array 방식은 식 (4.5)와 다름없고 따라서 위에서 증명한 것은 two-array 방법에 대한 증명인 셈이다.
 Sutton 책에 제시된 pseudocode는 in-place 방식이다.
 
 ![pseudocode : policy evaluation]({{site.url}}\images\2025-09-18-dynamic_programming\pseudocode-policy_evaluation.png){: .img-80-center}
 
+(4.5)에 다시 나오지만 two-array 방식의 PE를 syncronous PE, in-place 방식의 PE를 asyncronous PE라고 부른다.
+
 이렇듯 PE 하나에도 많은 버전이 있다.
-심지어, 나는 V함수에 대한 PE를 증명한 셈이지만, 그것보다는 Q함수에 대한 PE가 더 중요할 수 있다.
+나는 V함수에 대한 PE를 증명한 셈이지만, 그것보다는 Q함수에 대한 PE가 더 중요할 수 있다.
 Q함수에 대해서도 마찬가지로 비슷한 버전의 policy evaluation이 가능하고 심지어 뒤에 나올 policy iteration도 가능할 것이다.
 
 ### 4.1.7 코드 구현
@@ -629,7 +631,7 @@ for r in range(env.rows - 1, -1, -1):
 ```
 
 terminal state에서의 V값이 0인 것을 확인할 수 있다.
-$(4,1)$에서의 V값이 무척 작은데 그것 또한 당연하다.
+$(4,1)$에서의 V값이 무척 작아 -1에 가까운데 그것 또한 당연하다.
 이 가치함수에 의하면 시작점에서부터 출발하여 점점 value가 높아지는 쪽으로, 그러니까 위로 두 칸 갔다가 오른쪽으로 세 칸 가는 방식의 경로를 택할 것임을 추측해볼 수 있다.
 
 하지만, 이 포스트의 주제는 벨만방정식이 아니었지.
@@ -695,7 +697,7 @@ for r in range(env.rows - 1, -1, -1):  # 2, 1, 0 순서 (상하반전)
     print(row_str)
 ```
 
-그 결과는 이전 결과와 같다 ;
+그 결과는 이전 결과와 같다.
 
 ```
 수렴 완료! (iteration: 41)
