@@ -50,7 +50,7 @@ value iteration은 policy iteration과는 많이 다르게 정책평가와 정�
 
 value iteration을 통해 optimal value function $v_\ast$를 얻을 수 있다는 것을 증명하기 위해서 operator $\bar{\mathcal T}$를 다음과 같이 정의하자.
 [Dawei Li, Zikun Ye의 자료](http://127.0.0.1:4000/data-science/policy_improvement/#44-value-iteration)를 참고하였다.
-모든 $v:\mathcal S\to\mathbb R$에 대하여 $\mathcal Tv:\mathcal S\to\mathbb R$을
+모든 $v:\mathcal S\to\mathbb R$에 대하여 $\bar{\mathcal T}v:\mathcal S\to\mathbb R$을
 
 $$
 \begin{align*}
@@ -98,7 +98,7 @@ $$
     \sum_{s',r}p(s',r\vert s,a)\left[r+\gamma v(s')\right]
     -\sum_{s',r}p(s',r\vert s,a)\left[r+\gamma w(s')\right]
 \right|\\
-&=\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
+&\le\gamma\max_a\sum_{s',r}p(s',r\vert s,a)\left|v(s')-w(s')\right|\\
 &=\gamma\sum_{s',r}p(s',r\vert s,a_\ast)\left|v(s')-w(s')\right|\\
 &=\gamma\mathbb E\left[
     \left|v(S_{t+1})-w(S_{t+1}))\right|\;\vert S_t=s, A_t=a_\ast
@@ -109,7 +109,7 @@ $$
 $$
 
 이다.
-첫번째 줄은 기호의 정의, 두번째 줄은 $(\ast)$, 세번째 줄은 단순 계산이다.
+첫번째 줄은 기호의 정의, 두번째 줄은 $(\ast)$, 세번째 줄은 삼각방정식을 사용했다.
 네번째 줄에서는 세번째 줄의 argmax를 $a_\ast$로 잡은 것이고 다섯번째 줄은 기호의 정의에 의해 당연하다.
 여섯번째 줄은 $A_t=a_\ast$인 상황보다도 더 크게 최댓값을 잡을 수 있기 때문이며, 일곱번째 줄은 기호의 정의로부터 당연하다.
 
@@ -293,8 +293,8 @@ Final Policy
 4.5절은 그다지 많이 언급할 내용이 없고, 굳이 따지자면 이전 포스트에서 이미 asyncronous policy evaluation에 대해 말했으므로 넘어가도 되겠다.
 하지만 4.6절의 GPI는 중요하므로 쓰고 넘어가려 한다.
 
-policy iteration(정책반복)은 policy evaluation(정책평가)와 policy improvement(정책개선)을 반복적으로 적용해 optimal policy $\pi_\ast$와 optimal value function $v_\ast$에 수렴해나가는 것을 말한다.
-그런데 강화학습의 대부분의 알고리즘이 이러한 두 과정의 반복으로 되어있음을 Sutton은 말하고 있다.
+policy iteration(정책반복)은 policy evaluation(정책평가)와 policy improvement(정책개선)을 반복적으로 적용해 optimal policy $\pi_\ast$와 optimal value function $v_\ast$에 수렴해나가는 것을 말한다고 했다.
+여기서 Sutton은 강화학습의 대부분의 알고리즘이 이러한 두 과정의 반복으로 되어있음을 말하고 있다.
 이 장에서 설명된 것만 해도 PE에서 state를 업데이트하는 방식에 따라 syncronous / asyncronous 버전의 두 가지 방식이 있고, sweep의 빈도에 따라 one-sweep / $k$-sweep / full sweep의 여러 방식으로 나뉠 수 있어서 policy iteration도 여러 방식이 있다고 말할 수 있지만 모두 PE와 PI를 반복해나간다는 점에서는 동일한 것이다.
 이러한 일반적인 policy iteration 방식을 GPI라고 부른다.
 
@@ -303,8 +303,8 @@ policy iteration(정책반복)은 policy evaluation(정책평가)와 policy impr
 ![GPI]({{site.url}}\images\2025-09-18-dynamic_programming\gpi.png){: .img-80-center}
 
 두 과정이 서로를 보완하며 답을 찾아나간다는 점에서 GAN(generative adversarial network)을 떠올리게 한다.
-또한, Sutton 책에는 없는 내용이지만 현대의 강화학습 주류인 actor-critic 방식도 GPI의 관점에서 해석될 수 있다.
-critic은 policy evaluation을 수행하는 도구이며, critic update를 한 번 하고 나면 정책을 개선하게 되는데 그 개선하는 대상이 actor이기 때문이다.
+또한, 현대 강화학습 주류인 actor-critic 방식도 GPI의 관점에서 해석될 수 있다.
+critic은 정책 평가를 수행하는 도구이며, critic update를 한 번 하고 나면 정책을 개선하게 되는데 그 개선하는 대상이 actor이기 때문이다.
 
 GAN과 actor-critic은 수렴조건을 찾기가 어려운 것으로 알려져 있다.
 하지만 DP는, 꽤 간단한 세팅에서 수렴 조건이 보장된다는 것이 수학적으로 증명된 알고리즘이다.
