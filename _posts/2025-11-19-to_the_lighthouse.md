@@ -21,7 +21,7 @@ author_profile: false
 어느 날은 청량리 영풍문고에 가서 이 책, 민음사의 「등대로」를 샀던 것 같다.
 그때 샀던 영수증을 지금까지도 보관하고 있다.
 
-![0_book]({{site.url}}\images\2025-11-19-to_the_lighthouse\0_receipt.png){: .img-20-center}
+![0_book]({{site.url}}\images\2025-11-19-to_the_lighthouse\0_receipt.jpg){: .img-20-center}
 
 책을 샀던 동기는 뭐였을까.
 기억은 안나지만, 아마도 버지니아 울프라는 작가가 유명하다고 들어서 무심코 서가에서 집어들었을 것이었다.
