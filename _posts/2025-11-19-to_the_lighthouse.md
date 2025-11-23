@@ -3,7 +3,7 @@ layout: single
 title:  "버지니아 울프 - 「등대로」"
 categories: literature
 tags: [Virginia Woolf, 버지니아 울프, 모더니즘, 의식의 흐름]
-publish: false
+published: false
 author_profile: false
 ---
 
