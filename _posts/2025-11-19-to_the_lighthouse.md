@@ -441,13 +441,13 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 
 ## 시「경기병여단의 돌격」
 - 알프레드 테니슨의 시 (1854)
-- 원문 : https://www.poetryfoundation.org/poems/45319/the-charge-of-the-light-brigade
-- 번역 : https://blog.naver.com/yoonphy/222202491638
+- [원문](https://www.poetryfoundation.org/poems/45319/the-charge-of-the-light-brigade)
+- [번역](https://blog.naver.com/yoonphy/222202491638)
 
 ## 시 「루리아나 루릴리」
 
 - 찰스 엘튼의 시 (1899)
-- 원문 : https://en.wikisource.org/wiki/Luriana,_Lurilee
+- [원문](https://en.wikisource.org/wiki/Luriana,_Lurilee)
 - 본문에 나온 부분
 > I wonder if it seems to you 당신도 그렇게 여길지 궁금해요
 >
@@ -464,7 +464,7 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 ## 시 「익사자」
 
 - 윌리엄 쿠퍼의 시
-- 원문 : https://www.poetryfoundation.org/poems/44027/the-castaway
+- [원문](https://www.poetryfoundation.org/poems/44027/the-castaway)
 - 본문에 나온 부분
 > But I beneath a rougher sea 그러나 나는 더 거친 바다 밑에서
 >
@@ -476,5 +476,5 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 ## 동화 「어부와 아내」
 
 - 그림 형제의 동화
-- 나무위키 설명 : https://namu.wiki/w/%EC%96%B4%EB%B6%80%EC%99%80%20%EA%B7%B8%EC%9D%98%20%EC%95%84%EB%82%B4
-- 영문위키피디아의 줄거리 : https://en.wikipedia.org/wiki/The_Fisherman_and_His_Wife#Synopsis
+- [나무위키 설명](https://namu.wiki/w/%EC%96%B4%EB%B6%80%EC%99%80%20%EA%B7%B8%EC%9D%98%20%EC%95%84%EB%82%B4)
+- [영문위키피디아의 줄거리](https://en.wikipedia.org/wiki/The_Fisherman_and_His_Wife#Synopsis)
