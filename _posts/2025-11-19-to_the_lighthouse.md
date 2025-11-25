@@ -449,6 +449,7 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 - 찰스 엘튼의 시 (1899)
 - [원문](https://en.wikisource.org/wiki/Luriana,_Lurilee)
 - 본문에 나온 부분
+
 > I wonder if it seems to you 당신도 그렇게 여길지 궁금해요
 >
 > Luriana Lurilee 루리아나 루릴리
@@ -466,6 +467,7 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 - 윌리엄 쿠퍼의 시
 - [원문](https://www.poetryfoundation.org/poems/44027/the-castaway)
 - 본문에 나온 부분
+
 > But I beneath a rougher sea 그러나 나는 더 거친 바다 밑에서
 >
 > And whelm'd in deeper gulfs than he. 그보다 더 깊은 심연에 잠겼지
