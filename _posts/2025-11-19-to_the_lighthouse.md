@@ -490,6 +490,7 @@ https://gutenberg.net.au/ebooks01/0100101.txt
 > And whelm'd in deeper gulfs than he. 그보다 더 깊은 심연에 잠겼지
 
 > 우리는 죽어갔지 We perish'd
+>
 > 각자 홀로  each alone
 
 ## 동화 「어부와 아내」
