@@ -125,11 +125,13 @@ author_profile: false
 
 이 특이한 공동체는 실제 울프네 가족이 이루었던 8남매 가족의 여름 별장을 떠올리게 하기도 하지만, 또 한편으로는 울프의 어머니가 돌아가시고 난 뒤에 버지니아 울프의 4남매가 중심이 되어 만든 '[블룸즈버리 그룹](https://ko.wikipedia.org/wiki/%EB%B8%94%EB%A3%B8%EC%A6%88%EB%B2%84%EB%A6%AC_%EA%B7%B8%EB%A3%B9)([Bloomsbury group](https://en.wikipedia.org/wiki/Bloomsbury_Group))'을 떠올리게도 한다.
 
-블룸즈베리 그룹은 다양한 영국의 인사들, 철학자와 작가들 그리고 예술가들이 함께 어울려 지냈던 친인척 단체이다.
+블룸즈버리 그룹은 다양한 영국의 인사들, 철학자와 작가들 그리고 예술가들이 함께 어울려 지냈던 친인척 단체이다.
 여기에는 버지니아 울프(작가), 존 메이너드 케인스(경제학자), E.M. 포스터(작가), 버네사 벨(화가), Lytton Strachey(비평가), 비타 색빌웨스트 (작가) 등이 소속되어 있었다.
 고등학교 사회시간에 나오는, 수정자본주의를 만든 케인스가 여기에 포함되어 있다는 사실은 참 재밌다.
 또한, 버지니아 울프의 「올랜도」의 모델이 된 사람으로 알려진 울프의 친구 색빌웨스트도 여기에 속해있다.
 유명한 수학자이자 철학자인 버트란트 러셀도 [이 그룹의 목록](https://en.wikipedia.org/wiki/List_of_Bloomsbury_Group_people)에 포함되어 있다.
+
+![2-2_bloomsbury_group]({{site.url}}\images\2025-11-19-to_the_lighthouse\2-2_bloomsbury_group.png){: .img-40-center}
 
 # 3. 램지 부인의 오지랖 : 커플 만들기
 
