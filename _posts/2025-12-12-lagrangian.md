@@ -20,7 +20,7 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
 # 1. Lagrange multiplier revisited
 
 먼저, [이전 글의 문제 정의](https://govin08.github.io/mathematics/lagrange_multiplier/#04-%EB%AC%B8%EC%A0%9C%EC%A0%95%EC%9D%98)를 벡터식으로 다시 써보자.
-문체도 바꿔야지.
+<!-- 문체도 바꿔야지. -->
 
 <!-- 
 1. 다음과 같은 최적화 문제가 있다고 합시다.
@@ -53,7 +53,7 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
 
 1. 다음과 같은 최적화 문제가 있다고 하자.
     <div class="notice--info">
-    Maximize $f(\boldsymbol x)$ subject to $g(\boldsymbol x)=\boldsymbol 0$.
+    $$\text{Maximize }f(\boldsymbol x)\text{ subject to }g(\boldsymbol x)=\boldsymbol 0.\tag1$$
     </div>
 
 2. 이 최적화문제를 풀기 위해서 다음과 같은 연립방정식을 푼다.
@@ -68,19 +68,21 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
     \boldsymbol0\\
     g(\boldsymbol x)=\boldsymbol 0
     \end{cases}
+    \tag2
     $$
     </div>
 
 3. 연립방정식의 해가 $\boldsymbol x=\boldsymbol x^{(1)}, \cdots, \boldsymbol x^{(L)}$ 과 같이 $L$개 주어진다면, 이 중에서 위 최적화문제의 답이 있다.
   그러니까, $f(\boldsymbol x^{(1)})$, $\cdots$, $f(\boldsymbol x^{(L)})$을 각각 계산하고 이 중에 가장 큰 값을 고르면 그 값이 구하고자 하는 최댓값이 된다.
 
+이때, $f,g\in C^1$이고 $\langle\cdot,\cdot\rangle$은 $\mathbb R^m$에서의 내적이다.
 이것을 정리의 형태로 쓰면 다음과 같다.
 
 <div class="notice">
 <b> 정리 </b> <br>
 제약조건 $g(\boldsymbol x)=\boldsymbol 0$ 하에서 $f$가 $P^\ast$에서 최댓값(최솟값)을 가지면
 $\frac{\partial f}{\partial\boldsymbol x}(P^\ast)
-+\boldsymbol\langle\lambda,\frac{\partial g}{\partial\boldsymbol x}(P^\ast)\rangle
++\langle\boldsymbol\lambda,\frac{\partial g}{\partial\boldsymbol x}(P^\ast)\rangle
 =\boldsymbol0$
 를 만족시키는 벡터 $\boldsymbol\lambda\in\mathbb R^m$이 존재한다.
 </div>
@@ -91,11 +93,40 @@ $\frac{\partial f}{\partial\boldsymbol x}(P^\ast)
 
 # 2. Lagrangian
 
-이 글의 주제가 라그랑지안이지만, 라그랑지 승수법 문제를 조금 다른 시각에서 보는 것에 지나지 않다.
+이 글의 주제가 라그랑지안이지만, 라그랑지안을 사용하여 라그랑지 승수법을 푸는 것은 기존 문제를 조금 다른 시각에서 보는 것에 지나지 않다.
 무언가 새로운 것을 도입하는 것이 아니라, 기존 문제를 해석하는 또다른 시각을 제시하는 것뿐이다.
+하지만 라그랑지안을 활용하면 좀 더 깔끔하게 라그랑지 승수법을 서술할 수 있다는 점이 있다.
 
 함수 $\mathcal L:\mathbb R^n\times\mathbb R^m\to\mathbb R$을
 
 $$\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right)=f(\boldsymbol x)+\langle\boldsymbol\lambda, g(\boldsymbol x)\rangle$$
 
 로 정의하자.
+그러면 (1)과
+
+<div class="notice--info">
+$$\text{Maximize }\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right).\tag3$$
+</div>
+
+는 동등하다.
+
+왜냐하면 (3)이면 $\mathcal L(\boldsymbol x,\boldsymbol\lambda)$의 모든 방향의 편미분이 0이어야 한다.
+즉,
+
+$$
+\begin{align*}
+\frac{\partial\mathcal L(\boldsymbol x,\boldsymbol\lambda)}{\partial\boldsymbol x}&=0\\
+\frac{\partial\mathcal L(\boldsymbol x,\boldsymbol\lambda)}{\partial\boldsymbol \lambda}&=0
+\end{align*}
+$$
+
+이어야 한다. 그러면
+
+$$
+\begin{align*}
+\frac{\partial\mathcal f(\boldsymbol x)}{\partial\boldsymbol x}+\langle\boldsymbol\lambda,\frac{\partial g(x)}{\partial\boldsymbol x}\rangle&=0\\
+g(\boldsymbol x)&=0
+\end{align*}
+$$
+
+이 성립한다.
