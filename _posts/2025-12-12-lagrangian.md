@@ -11,7 +11,6 @@ toc: true
 
 PCA에 대해 공부하다가 주성분을 찾는 대부분의 증명에서 lagrange multiplier method(라그랑지 승수법)를 사용한다는 것을 보았다.
 문제는, 내가 이전에 [관련된 글](https://govin08.github.io/mathematics/lagrange_multiplier/)을 적었음에도 불구하고 그 증명이 바로 이해가 되지 않았다는 사실이다.
-
 그 이유는 해당 증명들에서 lagrangian을 활용하여 라그랑지 승수법을 사용했기 때문이기도 했지만, 더 근본적으로는, 벡터 형태로 라그랑지 승수법이 사용된 것을 이해하지 못했기 때문이다.
 
 PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다.
@@ -20,34 +19,6 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
 # 1. Lagrange multiplier revisited
 
 먼저, [이전 글의 문제 정의](https://govin08.github.io/mathematics/lagrange_multiplier/#04-%EB%AC%B8%EC%A0%9C%EC%A0%95%EC%9D%98)를 벡터식으로 다시 써보자.
-<!-- 문체도 바꿔야지. -->
-
-<!-- 
-1. 다음과 같은 최적화 문제가 있다고 합시다.
-
-   <div class="notice--info">
-   Maximize $f(x_1,\cdots,x_n)$ subject to $\begin{cases}g_1(x_1,\cdots,x_n)&=k_1\\&\vdots\\g_m(x_1,\cdots,x_n)&=k_m\end{cases}$.
-   </div>
-
-2. 이 최적화문제를 풀기 위해서 다음과 같은 연립방정식을 풉니다.
-
-   <div class="notice--success">
-   $$
-   \begin{cases}
-   \nabla f(x_1,\cdots,x_n) + \lambda_1\nabla g_1(x_1,\cdots,x_n)+\cdots+\lambda_m\nabla g_m(x_1,\cdots,x_n)=0\\
-   g_j(x_1,\cdots,x_n)=k_j\quad(j=1,2,\cdots,m)
-   \end{cases}
-   $$
-   </div>
-
-3. 연립방정식의 해가 $(x_1,\cdots,x_n)=\left({x_1}^{(1)},\cdots,{x_n}^{(1)}\right), \cdots, \left({x_1}^{(L)},\cdots,{x_n}^{(L)}\right)$ 과 같이 $L$개 주어진다면, 이 중에서 위 최적화문제의 답이 있습니다.
-   그러니까,
-   $f\left({x_1}^{(1)},\cdots,{x_n}^{(1)}\right)$,
-   $\cdots$,
-   $f\left({x_1}^{(L)},\cdots,{x_n}^{(L)}\right)$
-   를 각각 계산하고 이 중에 가장 큰 값을 고르면 그 값이 구하고자 하는 최댓값이 됩니다.
-
-이것을 벡터식으로 바꿔보자. -->
 
 두 함수 $f:\mathbb R^n\to\mathbb R$와 $g:\mathbb R^n\to\mathbb R^m$에 대하여
 
@@ -76,7 +47,9 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
   그러니까, $f(\boldsymbol x^{(1)})$, $\cdots$, $f(\boldsymbol x^{(L)})$을 각각 계산하고 이 중에 가장 큰 값을 고르면 그 값이 구하고자 하는 최댓값이 된다.
 
 이때, $f,g\in C^1$이고 $\langle\cdot,\cdot\rangle$은 $\mathbb R^m$에서의 내적이다.
-이것을 정리의 형태로 쓰면 다음과 같다.
+또 $\frac{\partial f}{\partial\boldsymbol x}$는 다변수 실함수에 대한 미분이므로 $n$차원 벡터, 즉 $f$의 gradient이다.
+마찬가지로 $\frac{\partial g}{\partial\boldsymbol x}$는 $n\times m$ 행렬이 된다.
+위의 풀이과정을 정리의 형태로 쓰면 다음과 같다.
 
 <div class="notice">
 <b> 정리 </b> <br>
@@ -95,32 +68,33 @@ $\frac{\partial f}{\partial\boldsymbol x}(P^\ast)
 
 이 글의 주제가 라그랑지안이지만, 라그랑지안을 사용하여 라그랑지 승수법을 푸는 것은 기존 문제를 조금 다른 시각에서 보는 것에 지나지 않다.
 무언가 새로운 것을 도입하는 것이 아니라, 기존 문제를 해석하는 또다른 시각을 제시하는 것뿐이다.
-하지만 라그랑지안을 활용하면 좀 더 깔끔하게 라그랑지 승수법을 서술할 수 있다는 점이 있다.
+하지만 라그랑지안을 활용하면 좀 더 깔끔하게 라그랑지 승수법을 서술할 수 있다.
 
 함수 $\mathcal L:\mathbb R^n\times\mathbb R^m\to\mathbb R$을
 
 $$\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right)=f(\boldsymbol x)+\langle\boldsymbol\lambda, g(\boldsymbol x)\rangle$$
 
 로 정의하자.
-그러면 (1)과
+그러면 문제 (1)을 푸는 대신
 
 <div class="notice--info">
 $$\text{Maximize }\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right).\tag3$$
 </div>
 
-는 동등하다.
-
-왜냐하면 (3)이면 $\mathcal L(\boldsymbol x,\boldsymbol\lambda)$의 모든 방향의 편미분이 0이어야 한다.
+를 풀어도 된다.
+(3)을 풀기 위해서는 $\mathcal L(\boldsymbol x,\boldsymbol\lambda)$의 모든 방향의 편미분이 0인 점들을 찾아야 한다.
 즉,
 
 $$
-\begin{align*}
+\begin{aligned}
 \frac{\partial\mathcal L(\boldsymbol x,\boldsymbol\lambda)}{\partial\boldsymbol x}&=0\\
 \frac{\partial\mathcal L(\boldsymbol x,\boldsymbol\lambda)}{\partial\boldsymbol \lambda}&=0
-\end{align*}
+\end{aligned}
+\tag4
 $$
 
-이어야 한다. 그러면
+를 풀어야 한다.
+그런데 (4)가
 
 $$
 \begin{align*}
@@ -129,4 +103,35 @@ g(\boldsymbol x)&=0
 \end{align*}
 $$
 
-이 성립한다.
+와 같으므로 (2)와 동등하다는 것이다.
+즉, 제약조건이 있는 최적화 문제를, 변수가 늘어났지만 제약조건이 없어진 최적화 문제로 바꿀 수 있다.
+
+# 3. Example
+
+이전 글의 [예시 문제](https://govin08.github.io/mathematics/lagrange_multiplier/#11-%EB%AC%B8%EC%A0%9C)를 Lagrangian으로 풀어보자.
+원래 문제는
+
+<div class="notice--info">
+제약조건 $x^2+y^2=1$ 하에서 $8x^2-2y$의 최댓값을 구하여라.
+</div>
+
+와 같았다.
+$f(x,y)=8x^2-2y$, $g(x,y)=x^2+y^2-1$로 두면 $m=1$, $n=2$인 문제가 된다.
+라그랑지안은
+
+$$
+\begin{align*}
+\mathcal L\left(x,y,\lambda\right)
+&=f(x,y)+\langle\lambda, g(x, y)\rangle\\
+&=8x^2-2y+\lambda(x^2+y^2-1)
+\end{align*}
+$$
+
+이다.
+
+
+$$
+\begin{align*}
+\frac{\partial f}{\partial x}
+\end{align*}
+$$
