@@ -28,13 +28,12 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
     </div>
 
 2. 이 최적화문제를 풀기 위해서 다음과 같은 연립방정식을 푼다.
-(단, $\boldsymbol\lambda\in\mathbb R^m$)
     <div class="notice--success">
     $$
     \begin{cases}
     \frac{\partial f}{\partial\boldsymbol x}
     +
-    \boldsymbol\langle\boldsymbol\lambda,\frac{\partial g}{\partial\boldsymbol x}\rangle
+    \boldsymbol\lambda^T\frac{\partial g}{\partial\boldsymbol x}
     =
     \boldsymbol0\\
     g(\boldsymbol x)=\boldsymbol 0
@@ -46,18 +45,18 @@ PCA에 관한 글을 쓰기 전에 이것들을 정리하고 넘어가려 한다
 3. 연립방정식의 해가 $\boldsymbol x=\boldsymbol x^{(1)}, \cdots, \boldsymbol x^{(L)}$ 과 같이 $L$개 주어진다면, 이 중에서 위 최적화문제의 답이 있다.
   그러니까, $f(\boldsymbol x^{(1)})$, $\cdots$, $f(\boldsymbol x^{(L)})$을 각각 계산하고 이 중에 가장 큰 값을 고르면 그 값이 구하고자 하는 최댓값이 된다.
 
-이때, $f,g\in C^1$이고 $\langle\cdot,\cdot\rangle$은 $\mathbb R^m$에서의 내적이다.
+이때, $f,g\in C^1$이고 $\boldsymbol\lambda$는 $m$차원의 열벡터이다.
 또 $\frac{\partial f}{\partial\boldsymbol x}$는 다변수 실함수에 대한 미분이므로 $n$차원 벡터, 즉 $f$의 gradient이다.
-마찬가지로 $\frac{\partial g}{\partial\boldsymbol x}$는 $n\times m$ 행렬이 된다.
+마찬가지로 $\frac{\partial g}{\partial\boldsymbol x}$는 $m\times n$ 행렬이 된다.
 위의 풀이과정을 정리의 형태로 쓰면 다음과 같다.
 
 <div class="notice">
 <b> 정리 </b> <br>
 제약조건 $g(\boldsymbol x)=\boldsymbol 0$ 하에서 $f$가 $P^\ast$에서 최댓값(최솟값)을 가지면
 $\frac{\partial f}{\partial\boldsymbol x}(P^\ast)
-+\langle\boldsymbol\lambda,\frac{\partial g}{\partial\boldsymbol x}(P^\ast)\rangle
++\boldsymbol\lambda^T\frac{\partial g}{\partial\boldsymbol x}(P^\ast)
 =\boldsymbol0$
-를 만족시키는 벡터 $\boldsymbol\lambda\in\mathbb R^m$이 존재한다.
+를 만족시키는 벡터 $\boldsymbol\lambda\in\mathbb R^m$가 존재한다.
 </div>
 
 이 정리에 대한 증명은 조금 어렵다.
@@ -72,7 +71,7 @@ $\frac{\partial f}{\partial\boldsymbol x}(P^\ast)
 
 함수 $\mathcal L:\mathbb R^n\times\mathbb R^m\to\mathbb R$을
 
-$$\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right)=f(\boldsymbol x)+\langle\boldsymbol\lambda, g(\boldsymbol x)\rangle$$
+$$\mathcal L\left(\boldsymbol x,\boldsymbol\lambda\right)=f(\boldsymbol x)+\boldsymbol\lambda^Tg(\boldsymbol x)$$
 
 로 정의하자.
 그러면 문제 (1)을 푸는 대신
@@ -98,7 +97,7 @@ $$
 
 $$
 \begin{align*}
-\frac{\partial\mathcal f(\boldsymbol x)}{\partial\boldsymbol x}+\langle\boldsymbol\lambda,\frac{\partial g(x)}{\partial\boldsymbol x}\rangle&=0\\
+\frac{\partial\mathcal f(\boldsymbol x)}{\partial\boldsymbol x}+\boldsymbol\lambda^T\frac{\partial g(x)}{\partial\boldsymbol x}&=0\\
 g(\boldsymbol x)&=0
 \end{align*}
 $$
@@ -122,16 +121,35 @@ $f(x,y)=8x^2-2y$, $g(x,y)=x^2+y^2-1$로 두면 $m=1$, $n=2$인 문제가 된다.
 $$
 \begin{align*}
 \mathcal L\left(x,y,\lambda\right)
-&=f(x,y)+\langle\lambda, g(x, y)\rangle\\
+&=f(x,y)+\lambda g(x, y)\\
 &=8x^2-2y+\lambda(x^2+y^2-1)
 \end{align*}
 $$
 
 이다.
-
+$\mathcal L$을 각각의 변수에 대해 편미분하고 0으로 두면
 
 $$
 \begin{align*}
-\frac{\partial f}{\partial x}
+\frac{\partial\mathcal L}{\partial x}=0&:16x+2\lambda x=0\\
+\frac{\partial\mathcal L}{\partial y}=0&:-2+2\lambda y=0\\
+\frac{\partial\mathcal L}{\partial\lambda}=0&:x^2+y^2=1\\
 \end{align*}
 $$
+
+첫번째 식에서 $x=0$이거나 $\lambda=-8$이다.
+만약 $x=0$이면, $y=\pm1$이고 따라서 $\lambda=\pm1$이다.
+만약 $\lambda=-8$이면, $y=-\frac18$이고, $x=\pm\frac38\sqrt7$ 이다.
+따라서 $(x,y)$는 $(x,y)=(0,1), (0,-1), (\frac38\sqrt7,-\frac18), (-\frac38\sqrt7,-\frac18)$이고, 그때마다의 $f(x,y)$는
+
+$$
+\begin{align*}
+f(0,1)&=6\\
+f(0,-1)&=10\\
+f\left(\frac38\sqrt7,-\frac18\right)&=\frac{63}2+\frac14=\frac{65}2\\
+f\left(-\frac38\sqrt7,-\frac18\right)&=\frac{63}2+\frac14=\frac{65}2
+\end{align*}
+$$
+
+이다.
+따라서 $f$의 최댓값은 $\frac{65}2$이다.
