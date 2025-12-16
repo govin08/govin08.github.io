@@ -2,7 +2,7 @@
 layout: single
 title: "행렬의 직교대각화"
 categories: mathematics
-tags: [linear algebra]
+tags: [linear algebra, orthogonal diagonalization, unitary diagonalization, matrix, determinant, eigenvalue, eigenvector, diagonalization]
 use_math: true
 publish: true
 author_profile: false
