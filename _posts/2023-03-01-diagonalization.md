@@ -3339,12 +3339,12 @@ $$x_{k+1}=\frac{\hat x_{k+1}}{||\hat x_{k+1}||}.$$
 조금 더 일반적인, 보통의 Gram-schmidt process라 함은
 <a href="https://en.wikipedia.org/wiki/Gram%E2%80%93Schmidt_process">다음</a>과 같습니다
 <br>
-<center>
 innper product space (혹은 $\mathbb R^n$, $\mathbb C^n$) 에서의 $m$개의 벡터 $v_1$, $v_2$, $\cdots$, $v_m$가 선형독립일 때,
+<center>
 $$\text{span}(v_1,v_2,\cdots,v_m)=\text{span}(u_1,u_2,\cdots,u_m)$$
+</center>
 를 만족시키는 orthonormal한 $m$개의 벡터 $u_1$, $u_2$, $\cdots$, $u_m$
 가 존재합니다.
-</center>
 $u_i$를 얻어내는 방식은 성질 24에서와 거의 유사합니다.
 먼저 $u_1$는 $u_1=\frac{v_1}{||v_1||}$으로 정합니다.
 따라서 $u_1$은 크기가 1인 벡터입니다.
