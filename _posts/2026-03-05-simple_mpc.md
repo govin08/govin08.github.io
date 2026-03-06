@@ -87,7 +87,18 @@ df = pd.DataFrame(data).round(3)
 df
 ```
 
-![2_df]({{site.url}}\images\2026-03-05-simple_mpc\2_df.png){: .img-50-center}
-
+![2-1_df]({{site.url}}\images\2026-03-05-simple_mpc\2-1_df.png){: .img-50-center}
 
 위 코드에서 데이터 $\mathcal D$는 `df`로 표현되었다.
+시간에 따른 속력과 전압을 나타내면 다음과 같이 나타난다.
+전압이 높아지면 다음 순간에 속력이 높아짐을 확인할 수 있다.
+(시인성을 위해 전압은 40을 곱한 값을 시각화했다.)
+
+```
+plt.figure(figsize=(15,3))
+plt.plot(df['current_speed'], label='current_speed')
+plt.plot(df['voltage']*40, label='voltage')
+plt.legend()
+plt.show()
+```
+![2-2_voltage-speed]({{site.url}}\images\2026-03-05-simple_mpc\2-2_voltage-speed.png){: .img-50-center}
