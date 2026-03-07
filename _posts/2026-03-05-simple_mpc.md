@@ -310,6 +310,7 @@ plt.grid(True, alpha=0.3)
 
 실제로는 데이터셋만이 전체 시간에 대하여 주어져있는 경우가 많다.
 실시간으로 제어하는 대신, 주어진 데이터 셋에 대하여 각 시점에 어떤 제어값을 취했어야 하는지를 사후적으로 추천하는 방식을 택할 수 있다.
+이것을 나는 offline방식의 MPC라고 부르겠다.
 
 
 ```
@@ -361,3 +362,10 @@ plt.legend()
 plt.show()
 ```
 
+![5-2_offline_result]({{site.url}}\images\2026-03-05-simple_mpc\5-2_offline_result.png){: .img-100-center}
+
+이 방식을 다이어그램으로 나타내면 다음과 같다.
+
+![5-2_diagram]({{site.url}}\images\2026-03-05-simple_mpc\5-2_diagram.png){: .img-50-center}
+
+이상의 두 MPC 적용방식을 표로 나타내면 아래와 같다.
