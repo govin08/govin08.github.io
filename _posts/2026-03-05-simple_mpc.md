@@ -310,3 +310,54 @@ plt.grid(True, alpha=0.3)
 
 실제로는 데이터셋만이 전체 시간에 대하여 주어져있는 경우가 많다.
 실시간으로 제어하는 대신, 주어진 데이터 셋에 대하여 각 시점에 어떤 제어값을 취했어야 하는지를 사후적으로 추천하는 방식을 택할 수 있다.
+
+
+```
+df = df_duplicated.copy()
+L = len(df)
+
+# 기존 df에 컬럼 추가
+df['recommended_voltage'] = 0.0
+df['predicted_speed'] = 0.0
+
+for i in range(L):
+    current_speed = df.loc[i, 'current_speed']
+    
+    # MPC로 추천 voltage
+    recommended_voltage = mpc_control(model, current_speed, target_speed)
+    # print(i, recommended_voltage)
+    
+    # 모델 예측
+    predicted_speed = model.predict([[current_speed, recommended_voltage]])[0]
+    
+    df.loc[i, 'recommended_voltage'] = recommended_voltage
+    df.loc[i+1, 'predicted_speed'] = predicted_speed
+
+# 플롯
+plt.figure(figsize=(12, 5))
+
+t = 100
+
+plt.subplot(2, 1, 1)
+plt.title('voltage')
+plt.plot(df['voltage'], label='voltage')
+plt.scatter(t, df.loc[t, 'voltage'], color='blue', s=30, zorder=5)
+plt.plot(df['recommended_voltage'], label='recommended_voltage')
+plt.scatter(t, df.loc[t, 'recommended_voltage'], color='orange', s=30, zorder=5)
+plt.axvline(x=t, color='gray', linestyle='--', linewidth=1, alpha=0.7)  # ← 수직선
+
+plt.legend()
+plt.subplots_adjust(hspace=0.3)
+
+plt.subplot(2, 1, 2)
+plt.title('speed')
+plt.plot(df['current_speed'], label='current_speed')
+plt.scatter(t, df.loc[t, 'current_speed'], color='blue', s=30, zorder=5)
+plt.plot(df['predicted_speed'], label='predicted_speed')
+plt.scatter(t+1, df.loc[t + 1, 'predicted_speed'], color='orange', s=30, zorder=5)
+plt.axvline(x=t, color='gray', linestyle='--', linewidth=1, alpha=0.7)  # ← 수직선
+plt.legend()
+
+plt.show()
+```
+
