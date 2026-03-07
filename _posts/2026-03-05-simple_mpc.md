@@ -11,8 +11,6 @@ toc: true
 
 MPC에 대해 글을 써볼까.
 
-# 0.
-
 회사에서 제어를 위한 툴로서 강화학습과 MPC를 사용한다.
 둘 모두 실시간 제어 즉 온라인 방식을 구현해내는 것은 쉬운 일이 아니지만 이것들을 제한적으로 사용하거나 오프라인 방식으로 활용하는 방안은 충분히 생각해볼 법하다.
 
@@ -45,7 +43,7 @@ class Motor:
     def __init__(self):
         self.speed = 0.0
         
-    def apply_voltage(self, voltage, noise_std=1.0):
+    def apply_voltage(self, voltage, noise_std=10.0):
         """전압을 주면 속도가 변함"""
         # 간단한 식: 새속도 = 현재속도 * 0.8 + 전압 * 30 + noise
         noise = np.random.normal(0, noise_std)
@@ -138,12 +136,12 @@ model = train_model(df)
 print(model.coef_.round(8), round(model.intercept_,8))
 ```
 
-`[ 0.80019128 29.95026486] 0.10796784`
+`[ 0.79428807 29.74423484] 5.89475244`
 
 당연하게도 처음 가정한 시스템 동역학 식과 거의 일치하는 식이 도출된다.
 
 $$
-s_{t+1}=f(s_t,v_t)=0.80019128 s_t+29.95026486v_t+0.10796784
+s_{t+1}=f(s_t,v_t)=0.79428807 s_t + 29.74423484 v_t+5.89475244
 $$
 
 이 모델은 데이터로부터 우리가 추론해낸 시스템 동역학이다.
@@ -208,8 +206,9 @@ result = minimize(cost, initial_plan, bounds=bounds)
 print(result.x)
 ```
 
-`[30.         26.07073943 10.00339915 10.00324293 10.00360237 10.0034147
- 10.00345973 10.00324613 10.00364791 10.00353239]
+`
+[30.         26.24554965 10.17598267 10.17576185 10.17595909 10.175793
+ 10.17593034 10.17558639 10.17605522 10.17605394]
 `
 
 그 결과로 얻어지는 $v^\ast=\text{argmin}_vJ(v)=(v^\ast_0,\cdots,v^\ast_9)$를 관찰하면
@@ -258,4 +257,51 @@ print(best_voltage)
 
 ## Online MPC (50 step)
 
+각 스텝 $t$마다 $s_t$가 주어졌을 때, $J(v)$를 최소화시키는 $v^\ast=(v^\ast_0,\cdots,v^\ast_9)$를 구한 후 그 중 첫번째 값 $v^\ast_0$만을 취하여 $v_t$로 둔다.
+이후 모터의 동역학식을 적용하여 $s_{t+1}$을 구한다.
+그런 식으로 50번의 스텝을 시행한 결과는 다음과 같다. 목표변수는 목표값에 수렴해가는 모습을 보인다.
+
+```
+motor = Motor()
+results = []
+target = 1500.0
+
+for t in range(50):
+    # 현재 속도
+    speed = motor.speed
+
+    # MPC로 전압 계산
+    voltage = mpc_control(model, speed, target)
+
+    # 모터에 적용
+    new_speed = motor.apply_voltage(voltage)
+
+    # 기록
+    results.append({
+        'time': t,
+        'speed': new_speed,
+        'target': target,
+        'voltage': voltage
+    })
+results_df = pd.DataFrame(results)
+results_df.to_csv('results.csv', index=False)
+
+plt.figure(figsize=(10, 6))
+plt.plot(results_df['time'], results_df['speed'], label='실제 속도', linewidth=2)
+plt.plot(results_df['time'], results_df['target'], 'r--', label='목표 속도', linewidth=2)
+plt.xlabel('시간 (초)')
+plt.ylabel('속도 (RPM)')
+plt.title('MPC 제어 결과 (50 step, receding horizon)')
+plt.legend()
+plt.grid(True, alpha=0.3)
+```
+
+![5-1_online_result]({{site.url}}\images\2026-03-05-simple_mpc\5-1_online_result.png){: .img-100-center}
+
+위 코드에서 `apply_voltage`는 단순히 동역학 식을 넣어서 다음 스텝을 도출하는 구조였다.
+만약 정말 실시간 제어를 한다면 `apply_voltage`는 '실제로' 전압을 가하고 다음 스텝의 속도를 '관찰'하는 형태가 되어야 할 것이다.
+
 ## Offline MPC
+
+
+
