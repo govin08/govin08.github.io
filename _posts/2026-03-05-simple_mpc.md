@@ -369,3 +369,5 @@ plt.show()
 ![5-2_diagram]({{site.url}}\images\2026-03-05-simple_mpc\5-2_diagram.png){: .img-50-center}
 
 이상의 두 MPC 적용방식을 표로 나타내면 아래와 같다.
+
+![5_summary]({{site.url}}\images\2026-03-05-simple_mpc\5_summary.png){: .img-100-center}
