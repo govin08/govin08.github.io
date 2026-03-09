@@ -14,12 +14,12 @@ toc: true
 일례로 double exponential distribution (laplace distribution) 같은 것에 대해서도 쓰고 싶은데, 막상 써봤자 많은 이야기를 쓸 수는 없을 것 같아서, 그러니까 더 많은 내공이 있어야 의미있는 글을 쓸 수 있을 것 같아서 미루게 된다.
 
 하지만 'UNIT 27 이산확률분포'에 다다르니 블로그에 글을 쓰지 않고는 배기지 못하는 상황이 됐다.
-여러 이산확률분포들의 기댓값과 분산을 외워야 하는데, 이해하지 않고는 결코 외우고 싶지 않은 내 성향상, 다 이해하기를 바랐다.
+여러 이산확률분포들의 기댓값과 분산을 외워야 하는데, 이해하지 않고는 결코 외우고 싶지 않은 내 성향상 외우기가 싫었고 다 이해하기를 바랐다.
 그리고 그 이해하는 게 그렇게까지 많은 수고가 들지 않아도 되는 것이, 이미 3년 전엔가 블로그에 [아주 상세하게 이것들을 정리해놓은 바](https://govin08.github.io/mathematics/kocw_stats)가 있기 때문이다.
 
 해당 글은 너무 많은 양을 적어놔서, 글을 쓴 나조차도 다시 보기가 부담스럽다.
 그러니, 딱 이항분포들에 대한 글만 추려서 적어놓으면 좋겠다는 생각이다.
-해당 글에서 여러 이항분포들에 대한 간략한 설명과 기댓값과 분산 식에 대한 유도를 적어보자.
+여러 이항분포들에 대한 간략한 설명과 기댓값과 분산 식에 대한 유도를 적어보자.
 
 다음은 notation에 대한 간단한 규칙이다.
 표본공간은 $S$로 쓴다.
@@ -30,7 +30,7 @@ $$P(X=x)=P_X(x)$$
 라고 쓴다.
 $X$의 평균은 $E[X]$라고, 분산은 $V[X]$로 쓴다.
 $X$는 이산확률변수이므로 countable한 값만을 가진다.
-편의상 $X$가 가질 수 있는 값들을 $x_1$, $\cdots$, $x_n$, $(\cdots)$이라고 하면
+$X$가 가질 수 있는 값들을 $x_1$, $\cdots$, $x_n$, $(\cdots)$이라고 하면
 평균의 정의는 당연히
 
 $$E[X]=\sum_ixP_X(x_i)$$
@@ -88,7 +88,6 @@ E[X]
 &=\sum_{x=1}^nx\binom nxp^x(1-p)^{n-x}\\
 &=\sum_{x=1}^nn\binom{n-1}{x-1}p^x(1-p)^{n-x}\\
 &=np\sum_{x=1}^n\binom{n-1}{x-1}p^{x-1}(1-p)^{(n-1)-(x-1)}\\
-&=np\sum_{y=0}^{n-1}\binom{n-1}yp^y(1-p)^{(n-1)-y}\\
 &=np\left(p+(p-1)\right)^{n-1}\\
 &=np\\
 E[X^2]
@@ -98,7 +97,6 @@ E[X^2]
 &=\sum_{x=2}^nx(x-1)\binom nxp^x(1-p)^{n-x}+np\\
 &=\sum_{x=2}^nn(n-1)\binom{n-2}{x-2}p^x(1-p)^{n-x}+np\\
 &=n(n-1)p^2\sum_{x=2}^n\binom{n-2}{x-2}p^{x-2}(1-p)^{(n-2)-(x-2)}+np\\
-&=n(n-1)p^2\sum_{y=0}^{n-2}\binom{n-2}yp^y(1-p)^{(n-2)-y}+np\\
 &=n(n-1)p^2\left(p+(1-p)\right)^{n-2}+np\\
 &=n(n-1)p^2+np\\
 &=n^2p^2-np^2+np\\
@@ -206,10 +204,6 @@ $$
 =&\frac{\lambda^x}{x!}
 \lim_{n\to\infty}\left(1-\frac\lambda n\right)^n
 \lim_{n\to\infty}\left(1-\frac\lambda n\right)^{-x}\\
-=&\frac{\lambda^x}{x!}
-\lim_{n\to\infty}\left(\left(1-\frac\lambda n\right)^{-\frac n\lambda}\right)^{-\lambda}\times1\\
-=&\frac{\lambda^x}{x!}
-\left(\lim_{n\to\infty}\left(1-\frac\lambda n\right)^{-\frac n\lambda}\right)^{-\lambda}\\
 =&\frac{\lambda^x}{x!}e^{-\lambda}
 \end{align*}
 $$
