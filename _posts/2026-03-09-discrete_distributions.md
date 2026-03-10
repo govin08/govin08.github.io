@@ -33,7 +33,7 @@ $X$는 이산확률변수이므로 countable한 값만을 가진다.
 $X$가 가질 수 있는 값들을 $x_1$, $\cdots$, $x_n$, $(\cdots)$이라고 하면
 평균의 정의는 당연히
 
-$$E[X]=\sum_ixP_X(x_i)$$
+$$E[X]=\sum_ix_iP_X(x_i)$$
 
 이고, 분산의 정의는
 
@@ -193,13 +193,6 @@ $$
 \lim_{n\to\infty}\binom nx\left(\frac\lambda n\right)^x\left(1-\frac\lambda n\right)^{n-x}
 =&\lim_{n\to\infty}\frac{n(n-1)(n-2)\cdots(n-x+1)}{x!}\left(\frac\lambda n\right)^x\left(1-\frac\lambda n\right)^{n-x}\\
 =&\lim_{n\to\infty}\frac{n(n-1)(n-2)\cdots(n-x+1)}{n^x}\frac{\lambda^x}{x!}\left(1-\frac\lambda n\right)^{n-x}\\
-=&\frac{\lambda^x}{x!}
-\lim_{n\to\infty}\frac{n-1}n
-\times\lim_{n\to\infty}\frac{n-2}n
-\times\cdots
-\times\lim_{n\to\infty}\frac{n-x+1}n
-\times\lim_{n\to\infty}
-\left(1-\frac\lambda n\right)^{n-x}\\
 =&\frac{\lambda^x}{x!}\lim_{n\to\infty}\left(1-\frac\lambda n\right)^{n-x}\\
 =&\frac{\lambda^x}{x!}
 \lim_{n\to\infty}\left(1-\frac\lambda n\right)^n
