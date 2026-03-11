@@ -1,6 +1,6 @@
 ---
 layout: single
-title: "여러가지 이항분포"
+title: "여러가지 이산확률분포"
 categories: mathematics data-science
 tags: [probability, discrete distribution]
 use_math: true
