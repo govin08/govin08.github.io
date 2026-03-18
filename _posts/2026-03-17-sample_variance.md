@@ -20,7 +20,7 @@ s^2=\frac1{n-1}\sum_{i=1}^n\left(x_i-\bar x\right)^2
 $$
 
 으로 둔다.
-왜 $n$으로 나누지 않고 $n-1$로 나누지 않는가, 하는 질문은 너무나 당연한 질문이지만 대답하는 것이 쉽지만은 않다.
+왜 $n$으로 나누지 않고 $n-1$로 나누는가, 하는 질문은 너무나 당연한 질문이지만 대답하는 것이 쉽지만은 않다.
 이 주제를 다뤄보려고 한다.
 
 고등학교때 이 개념을 배울 때에도, 시간이 흘러 학생들을 가르칠 때에도 표본분산을 저렇게 정의하는 명확한 이유를 알지 못한 채로 계속 미뤄왔다.
@@ -36,8 +36,7 @@ $$
 이들을 모평균(population mean), 모분산(population variance)이라고 하고 각각 $\mu$, $\sigma^2$이라고 하자.
 추출한 $n$개의 변량을 $x_1$, $\cdots$, $x_n$이라고 하고 이 변량들의 집합 $\\{x_1,\cdots,x_n\\}$을 표본(sample)이라고 하자.
 또, $n$을 이 표본의 크기라고 하자.
-각각의 $x_i$들은 확률변수라고 생각할 수 있다.
-이때 앞문단에 의해 $x_i$들은 i.i.d.이다 (independent and identically distributed)
+각각의 $x_i$들은 확률변수라고 생각할 수 있고 앞문단에 의해 $x_i$들은 i.i.d.이다(independent and identically distributed).
 
 # 2. 표본의 평균, 표본의 분산
 
@@ -54,4 +53,74 @@ $$
 마찬가지로 표본의 분산 $\frac1n\sum_{i=1}^n\left(x_i-\frac1n\sum x_i\right)^2$과 표본분산 $s^2$도 구분해야 한다.
 표본평균과 표본분산은 모평균과 모분산을 추정하기 위한 값인 것이지 표본의 평균과 표본의 분산과는 의미적으로 차이가 있다는 말이다.
 
+그러면 표본평균과 표본분산은 어떻게 정의되어야 하는가?
+모평균과 모분산을 추정할 수 있도록 해야 한다.
+즉,
+
+$$
+\begin{align}
+\mathbb E[\bar x]&=\mu\label{sm}\\
+\mathbb E[s^2]&=\sigma^2\label{sv}
+\end{align}
+$$
+
+이 만족되어야 한다.
+그래야 편향되지 않은(unbiased) 추정을 수행할 수 있을테니까 말이다.
+
 # 3. 표본평균
+
+표본평균의 후보로 자연스럽게 생각할 만한 것은 당연히 표본의 평균이다.
+표본의 평균 $\frac1n\sum_{i=1}^nx_i$에 대하여 기댓값을 계산해보면 $\mathbb E$의 선형성과 $x_i$들의 독립성에 의해
+
+$$
+\begin{align*}
+\mathbb E\left[\frac1n\sum_{i=1}^nx_i\right]
+&=\frac1n\sum_{i=1}^n\mathbb E[x_i]\\
+&=\frac1n\sum_{i=1}^n\mu\\
+&=\mu
+\end{align*}
+$$
+
+이다.
+그러면 표본평균은 그냥 표본의 평균으로 두어도 되는 것이다.
+즉, 표본평균을
+
+$$
+\bar x = \frac1n\sum_{i=1}^nx_i
+$$
+
+로 정의하자.
+그러면 (\ref{sm}) 조건은 자연스럽게 만족되는 것이다.
+이후 계산을 위해 표본평균의 분산을 계산해놓자.
+
+$$
+\begin{align*}
+\mathbb V[\bar x]
+&=\mathbb V\left[\frac1n\sum_{i=1}^nx_i\right]\\
+&=\frac1{n^2}\left(\sum_{i=1}^n\mathbb V[x_i]\right)\\
+&=\frac1{n^2}\left(\sum_{i=1}^n\sigma^2\right)\\
+&=\frac{\sigma^2}n\\
+\end{align*}
+$$
+
+그리고 $\bar x^2$의 평균도 계산해놓자.
+
+$$
+\begin{align*}
+\mathbb E\left[\bar x^2\right]
+&=\mathbb V[\bar x]+\mathbb E\left[\bar x\right]^2\\
+&=\frac{\sigma^2}n+\mu^2\\
+\end{align*}
+$$
+
+# 4. 표본분산
+
+표본평균과 마찬가지로 표본분산의 후보로 자연스럽게 생각할 만한 것은 당연히 표본의 분산이다.
+즉 표본분산을
+
+$$
+\frac1n\sum_{i=1}^n\left(x_i-\bar x\right)^2
+$$
+
+로 두는 것이 자연스러워보인다.
+이에 대해 기댓값을 계산해보면
