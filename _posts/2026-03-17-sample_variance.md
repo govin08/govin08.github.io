@@ -59,8 +59,8 @@ $$
 
 $$
 \begin{align}
-\mathbb E[\bar x]&=\mu\label{sm}\\
-\mathbb E[s^2]&=\sigma^2\label{sv}
+\mathbb E[\bar x]&=\mu\label{esm}\\
+\mathbb E[s^2]&=\sigma^2\label{esv}
 \end{align}
 $$
 
@@ -86,12 +86,12 @@ $$
 그러면 표본평균은 그냥 표본의 평균으로 두어도 되는 것이다.
 즉, 표본평균을
 
-$$
-\bar x = \frac1n\sum_{i=1}^nx_i
-$$
+\begin{equation}
+\bar x = \frac1n\sum_{i=1}^nx_i\label{dsm}
+\end{equation}
 
 로 정의하자.
-그러면 (\ref{sm}) 조건은 자연스럽게 만족되는 것이다.
+그러면 (\ref{esm}) 조건은 자연스럽게 만족되는 것이다.
 이후 계산을 위해 표본평균의 분산을 계산해놓자.
 
 $$
@@ -144,5 +144,41 @@ $$
 &=\frac1n\sum_{i=1}^n\mathbb E\left[{x_i}^2\right]-\mathbb E[{\bar x}^2]\\
 &=\frac1n\sum_{i=1}^n\left(\mathbb V[x_i]+\mathbb E\left[{x_i}\right]^2\right)-\mathbb E[{\bar x}^2]\\
 &=\frac1n\sum_{i=1}^n\left(\sigma^2+\mu^2\right)-\frac{\sigma^2}n+\mu^2\\
+&=n\sigma^2+n\mu^2-\frac{\sigma^2}n+\mu^2\\
+&=\frac{n-1}n\sigma^2
 \end{align*}
 $$
+
+이다.
+다시 말해
+
+$$
+s^2=\frac1n\sum_{i=1}^n\left(x_i-\bar x\right)^2
+$$
+
+로 두면 편향이 발생한다 ; $\mathbb E[s^2]\ne\sigma^2$.
+기댓값이 모분산과 달라지는 것이다 (\ref{esv})가 성립하지 않는다.
+
+하지만 그 대신
+
+\begin{equation}
+s^2=\frac1{n-1}\sum_{i=1}^n\left(x_i-\bar x\right)^2
+\end{equation}
+
+로 두면
+
+$$
+\begin{align*}
+\mathbb E[s^2]
+&=\mathbb E\left[\frac1{n-1}\sum_{i=1}^n\left(x_i-\bar x\right)^2\right]\\
+&=\frac1{n-1}\times(n-1)\sigma^2\\
+&=\sigma^2
+\end{align*}
+$$
+
+이 된다.
+
+---
+
+정리하면, 표본분산을 (4)처럼 정의해야 표본분산의 평균이 모분산과 같아져서 모평균과 모분산을 추정하는 데에 의미가 생긴다.
+cannical하게 $n$으로 나누는 방식이면 편향이 생겨서 적절하지 못하다는 것이다.
