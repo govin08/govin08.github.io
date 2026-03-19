@@ -143,8 +143,8 @@ $$
 &=\mathbb E\left[\frac1n\sum_{i=1}^n{x_i}^2-{\bar x}^2\right]\\
 &=\frac1n\sum_{i=1}^n\mathbb E\left[{x_i}^2\right]-\mathbb E[{\bar x}^2]\\
 &=\frac1n\sum_{i=1}^n\left(\mathbb V[x_i]+\mathbb E\left[{x_i}\right]^2\right)-\mathbb E[{\bar x}^2]\\
-&=\frac1n\sum_{i=1}^n\left(\sigma^2+\mu^2\right)-\frac{\sigma^2}n+\mu^2\\
-&=n\sigma^2+n\mu^2-\frac{\sigma^2}n+\mu^2\\
+&=\frac1n\sum_{i=1}^n\left(\sigma^2+\mu^2\right)-\left(\frac{\sigma^2}n+\mu^2\right)\\
+&=\sigma^2+\mu^2-\left(\frac{\sigma^2}n+\mu^2\right)\\
 &=\frac{n-1}n\sigma^2
 \end{align*}
 $$
@@ -181,4 +181,4 @@ $$
 ---
 
 정리하면, 표본분산을 (4)처럼 정의해야 표본분산의 평균이 모분산과 같아져서 모평균과 모분산을 추정하는 데에 의미가 생긴다.
-cannical하게 $n$으로 나누는 방식이면 편향이 생겨서 적절하지 못하다는 것이다.
+canonical하게 $n$으로 나누는 방식이면 편향이 생겨서 적절하지 못하다는 것이다.
