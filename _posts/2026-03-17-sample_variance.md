@@ -46,7 +46,7 @@ $$
 가장 자연스러운 방법은, 표본의 평균과 표본의 분산을 모평균과 모분산으로 추정하는 것이다.
 핵심을 먼저 말하면
 
-> 표본의 평균을 모평균으로 추정하는 것은 적절하지만, 표본의 분산을 모분산으로 추정하는 것은 부적절하다.
+> 모평균을 표본의 평균으로 추정하는 것은 적절하지만, 모분산을 표본의 분산으로 추정하는 것은 부적절하다.
 
 즉, 두 종류의 용어를 명확히 구분해야 한다.
 표본의 평균 $\frac1n\sum_{i=1}^nx_i$과 표본평균 $\bar x$을 구분해야 한다.
@@ -82,6 +82,7 @@ $$
 $$
 
 이다.
+<!-- *모평균을 표본의 평균으로 추정하는 것은 적절하다*. -->
 그러면 표본평균은 그냥 표본의 평균으로 두어도 되는 것이다.
 즉, 표본평균을
 
@@ -124,3 +125,24 @@ $$
 
 로 두는 것이 자연스러워보인다.
 이에 대해 기댓값을 계산해보면
+
+$$
+\begin{align*}
+\frac1n\sum_{i=1}^n\left(x_i-\bar x\right)^2
+&=\frac1n\sum_{i=1}^n{x_i}^2-2\frac1n\sum_{i=1}^nx_i\bar x+\frac1n\sum_{i=1}^n{\bar x}^2\\
+&=\frac1n\sum_{i=1}^n{x_i}^2-2{\bar x}^2+{\bar x}^2\\
+&=\frac1n\sum_{i=1}^n{x_i}^2-{\bar x}^2\\
+\end{align*}
+$$
+
+으로부터
+
+$$
+\begin{align*}
+\mathbb E\left[\frac1n\sum_{i=1}^n\left(x_i-\bar x\right)^2\right]
+&=\mathbb E\left[\frac1n\sum_{i=1}^n{x_i}^2-{\bar x}^2\right]\\
+&=\frac1n\sum_{i=1}^n\mathbb E\left[{x_i}^2\right]-\mathbb E[{\bar x}^2]\\
+&=\frac1n\sum_{i=1}^n\left(\mathbb V[x_i]+\mathbb E\left[{x_i}\right]^2\right)-\mathbb E[{\bar x}^2]\\
+&=\frac1n\sum_{i=1}^n\left(\sigma^2+\mu^2\right)-\frac{\sigma^2}n+\mu^2\\
+\end{align*}
+$$
