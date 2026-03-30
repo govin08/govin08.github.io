@@ -182,3 +182,51 @@ $$
 
 정리하면, 표본분산을 (4)처럼 정의해야 표본분산의 평균이 모분산과 같아져서 모평균과 모분산을 추정하는 데에 의미가 생긴다.
 canonical하게 $n$으로 나누는 방식이면 편향이 생겨서 적절하지 못하다는 것이다.
+
+# 5. 파이썬 코드를 통한 실험
+
+여기까지만 써도 깔끔한 글이 될 것이다.
+나는, 표본분산을 구할 때 $n-1$로 구해야 함을 수식으로 증명했다.
+하지만 글쎄, 머리로 이해는 되었을지언정 확실하게 와닿지 않는다.
+그래서 코드를 짜봤다.
+
+평균이 0이고 ($\mu=0$) 모분산이 4인($\sigma^2=4$) 어떤 모집단에서 크기가 $n=10$인 표본 $\\{x_1,\cdots,x_{10}\\}$을 뽑는다고 해보자.
+이러한 추출은 한 번만 하는 게 아니고 상당히 여러 번 ($N=10$번) 수행하는 것이다.
+각각의 표본에 대하여 표본의 평균과 표본의 분산을 구할 수 있고, 여러 번의 시행에 대하여 평균을 내면 기댓값도 계산해볼 수 있다.
+
+코드는 다음과 같다.
+
+    import numpy as np
+
+    pm = 0 # 모평균 (population mean)
+    pv = 4 # 모분산 (population variance)
+    n = 10      # 표본 크기
+    N = 10000   # 반복 횟수
+
+    s_squareds = []
+    var_of_samples = []
+
+    for _ in range(N):
+        x = np.random.normal(pm, np.sqrt(pv), n)
+        sm = np.mean(x) # 표본평균 (sample mean)
+        s_squared = np.sum((x-sm)**2) / (n-1) # 표본분산 (sample variance, s²)
+        var_of_sample = np.sum((x-sm)**2) / n # 표본의 분산 (variance of sample)
+        s_squareds.append(s_squared)
+        var_of_samples.append(var_of_sample)
+
+    exp_of_s_squared = np.mean(s_squareds) # 표본분산의 기댓값
+    exp_of_var_of_samples = np.mean(var_of_samples) # 표본의 분산의 기댓값
+
+    print(f"모분산: {pv}")
+    print(f"1/(n-1) 평균: {exp_of_s_squared:.4f}")
+    print(f"1/n 평균: {exp_of_var_of_samples:.4f}")
+
+출력되는 결과는
+
+모분산: 4
+1/(n-1) 평균: 3.9888
+1/n 평균: 3.5900
+
+이다.
+매우 놀라운 결과가 아닐 수 없다.
+아니 놀라울 것이 없이, 당연한 결과이긴 한데, 막상 진실을 마주하니 매우 놀랍다.
