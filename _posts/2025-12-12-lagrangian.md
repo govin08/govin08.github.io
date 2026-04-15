@@ -2,7 +2,7 @@
 layout: single
 title: "Lagrangian"
 categories: mathematics
-tags: [lagrangian multiplier, vector calculus]
+tags: [lagrangian multiplier, vector calculus, optimization]
 use_math: true
 published: true
 author_profile: false
