@@ -2,7 +2,7 @@
 layout: single
 title: "Lagrange multiplier method"
 categories: mathematics
-tags: [calculus]
+tags: [calculus, optimization]
 use_math: true
 publish: true
 author_profile: false

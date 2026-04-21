@@ -2,7 +2,7 @@
 layout: single
 title: "Simple MPC"
 categories: data-science
-tags: [model predictive control]
+tags: [model predictive control, optimization]
 use_math: true
 published: true
 author_profile: false

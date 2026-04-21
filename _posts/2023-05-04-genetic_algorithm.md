@@ -2,7 +2,7 @@
 layout: single
 title: "유전 알고리즘으로 시험 만점 맞기"
 categories: data-science
-tags: [genetic algorithm]
+tags: [genetic algorithm, optimization]
 use_math: true
 publish: false
 author_profile: false
