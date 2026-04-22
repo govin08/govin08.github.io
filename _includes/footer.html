@@ -24,5 +24,5 @@
   {% if page.url != "/" %}
   <img src="https://hits.sh/govin08.github.io.svg"/>
   {% endif %}
-  <img src="https://hits.sh/{{ page.url | prepend: site.url }}.svg"/>
+  <img src="https://hits.sh/{{ site.url | remove: 'https://' }}{{ page.url }}.svg"/>
 </div>
