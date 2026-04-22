@@ -21,8 +21,5 @@
 <div class="page__footer-copyright">&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}. {{ site.data.ui-text[site.locale].powered_by | default: "Powered by" }} <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
 <div style="text-align:center; padding-top: 0.5rem;">
-  {% if page.url != "/" %}
   <img src="https://hits.sh/govin08.github.io.svg"/>
-  {% endif %}
-  <img src="https://hits.sh/{{ site.url | remove: 'https://' }}{{ page.url }}.svg"/>
 </div>
